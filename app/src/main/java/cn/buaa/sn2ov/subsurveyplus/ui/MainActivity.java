@@ -1,4 +1,4 @@
-package cn.buaa.sn2ov.subsurveyplus;
+package cn.buaa.sn2ov.subsurveyplus.ui;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -13,11 +13,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import cn.buaa.sn2ov.subsurveyplus.R;
+
 public class MainActivity extends AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //TEST
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -40,6 +43,8 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        //将导航栏的菜单中图标颜色恢复默认
+        navigationView.setItemIconTintList(null);
     }
 
     @Override
@@ -80,17 +85,17 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_walk_survey) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_transfer_survey) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_od_survey) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_stay_survey) {
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_reverse_survey) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_setting) {
 
         }
 

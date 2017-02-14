@@ -1,0 +1,152 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                tools:context="cn.buaa.sn2ov.subsurveyplus.ui.LoginActivity"
+                android:id="@+id/loginRL">
+
+    <ImageView
+        app:srcCompat="@drawable/app_logo"
+        android:id="@+id/loginAppLogoIV"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_height="100dp"
+        android:layout_width="100dp"/>
+
+
+
+    <RelativeLayout
+        android:id="@+id/loginInputLL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/loginAppLogoIV"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true">
+
+        <!-- Login progress -->
+        <ProgressBar
+            android:id="@+id/login_progress"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:visibility="gone"/>
+
+        <!--<ScrollView-->
+            <!--android:id="@+id/login_form"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:layout_toEndOf="@+id/login_progress">-->
+
+        <RelativeLayout
+            android:id="@+id/email_login_form"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="1"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/loginEmailTL">
+
+                <AutoCompleteTextView
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/prompt_email"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:singleLine="true"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <LinearLayout
+                android:id="@+id/loginModeLL"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="1dp"
+                android:layout_alignParentBottom="true"
+                android:gravity="bottom"
+                android:layout_gravity="bottom">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    app:srcCompat="@drawable/qq_logo"
+                    android:id="@+id/loginModeQQIV"
+                    android:layout_weight="1.02"
+                    android:layout_height="50dp"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    app:srcCompat="@drawable/weibo_logo"
+                    android:id="@+id/loginModeWeiboIV"
+                    android:layout_weight="1"
+                    android:layout_height="50dp"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:text="其他登录方式"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="22dp"
+                android:id="@+id/textView2"
+                android:layout_above="@+id/loginModeLL"
+                android:layout_centerHorizontal="true"/>
+
+            <Button
+                android:id="@+id/email_sign_in_button"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="登录"
+                android:textStyle="bold"
+                android:layout_below="@+id/loginPasswordTL"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="16dp"/>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="62dp"
+                android:id="@+id/loginPasswordTL"
+                android:layout_below="@+id/loginAppLogoIV"
+                android:layout_alignParentStart="true">
+
+                <EditText
+                    android:id="@+id/password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/prompt_password"
+                    android:imeActionId="@+id/login"
+                    android:imeActionLabel="@string/action_sign_in_short"
+                    android:imeOptions="actionUnspecified"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:layout_weight="1"
+                    android:layout_below="@+id/loginEmailTL"
+                    android:layout_alignParentStart="true"/>
+            </android.support.design.widget.TextInputLayout>
+
+        </RelativeLayout>
+        <!--</ScrollView>-->
+
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>
