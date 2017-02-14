@@ -7,7 +7,7 @@ import java.io.File;
 
 public class AppConstant {
 
-    //DATA STORE
+    //DATA STORE .
     public static final String DATA_PATH = AppContext.getInstance().getCacheDir().getAbsolutePath() + File.separator + "data";
     public static final String SDCARD_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "fastapp";
     public static final String LOG_PATH = SDCARD_PATH + File.separator + "log" + File.separator;
