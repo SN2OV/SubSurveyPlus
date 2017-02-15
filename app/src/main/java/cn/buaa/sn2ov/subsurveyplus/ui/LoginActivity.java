@@ -3,6 +3,7 @@ package cn.buaa.sn2ov.subsurveyplus.ui;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -30,10 +31,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.buaa.sn2ov.subsurveyplus.AppContext;
 import cn.buaa.sn2ov.subsurveyplus.R;
+import cn.buaa.sn2ov.subsurveyplus.api.remote.ApiFactory;
+import cn.buaa.sn2ov.subsurveyplus.base.BaseObserver;
+import cn.buaa.sn2ov.subsurveyplus.model.Entity;
+import cn.buaa.sn2ov.subsurveyplus.model.base.ListEntity;
+import cn.buaa.sn2ov.subsurveyplus.model.response.BaseResult;
+import retrofit2.adapter.rxjava.HttpException;
+import rx.Scheduler;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -47,8 +59,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     private static final int REQUEST_READ_CONTACTS = 0;
 
-    /**
-     * A dummy authentication store containing known user names and passwords.
+    /**     * A dummy authentication store containing known user names and passwords.
      * TODO: remove after connecting to a real authentication system.
      */
     private static final String[] DUMMY_CREDENTIALS = new String[]{
@@ -64,11 +75,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        context = getApplicationContext();
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
@@ -85,10 +98,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         });
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        //todo 登录监听
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin();
+//                attemptLogin();
+                login();
             }
         });
 
@@ -196,9 +211,20 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
+    private void login(){
+        String userName = mEmailView.getText().toString();
+        String password = mPasswordView.getText().toString();
+
+        ApiFactory.getTestApi().getValidation(userName,password)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(mSubscriber);
+    }
+
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
-        return email.contains("@");
+        return true;
+//        return email.contains("@");
     }
 
     private boolean isPasswordValid(String password) {
@@ -352,5 +378,34 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
         }
     }
+
+    //观察者
+    protected BaseObserver mSubscriber = new BaseObserver<BaseResult<?>>() {
+
+        @Override
+        public void onError(Throwable e) {
+           return;
+        }
+
+        @Override
+        public void onNext(BaseResult<?> result) {
+            if(!result.isOk()){
+                mPasswordView.setError(getString(R.string.error_incorrect_password));
+                mPasswordView.requestFocus();
+            }else{
+                Object data = result.getData();
+                Intent it = new Intent();
+                it.setClass(context,MainActivity.class);
+                startActivity(it);
+                finish();
+            }
+
+        }
+
+        @Override
+        public void onCompleted() {
+
+        }
+    };
 }
 

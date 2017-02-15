@@ -21,14 +21,13 @@
         android:layout_width="100dp"/>
 
 
-
     <RelativeLayout
         android:id="@+id/loginInputLL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/loginAppLogoIV"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true">
+        android:layout_below="@+id/loginAppLogoIV">
 
         <!-- Login progress -->
         <ProgressBar
@@ -52,6 +51,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:weightSum="1"
+            android:layout_below="@+id/loginAppLogoIV"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true">
 
@@ -145,8 +145,6 @@
         <!--</ScrollView>-->
 
     </RelativeLayout>
-
-
 
 
 </RelativeLayout>

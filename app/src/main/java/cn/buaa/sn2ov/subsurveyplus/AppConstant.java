@@ -32,4 +32,6 @@ public class AppConstant {
     public static final String TOKEN_FIR = "9e935900ce4683c056f4c59a67f92e7a";
     public static final String KEY_APP_ID = "58023a58959d690fff000aee";
 
+//    public static final String API_TEST_URL = "http://127.0.0.1:8080/rest/";
+    public static final String API_TEST_URL = "http://10.0.2.2:8080/rest/";
 }

@@ -27,10 +27,10 @@ public enum ClientFactory {
         if (BuildConfig.DEBUG) {
             mBuilder.addInterceptor(ClientHelper.getHttpLoggingInterceptor());
         }
-        Cache cache = new Cache(new File(AppConstant.NET_DATA_PATH), 10 * 1024 * 1024);
+//        Cache cache = new Cache(new File(AppConstant.NET_DATA_PATH), 10 * 1024 * 1024);
         mBuilder.addNetworkInterceptor(ClientHelper.getAutoCacheInterceptor());
         mBuilder.addInterceptor(ClientHelper.getAutoCacheInterceptor());
-        mBuilder.cache(cache);
+//        mBuilder.cache(cache);
         mBuilder.retryOnConnectionFailure(true)
             .readTimeout(TIMEOUT_READ, TimeUnit.SECONDS)
             .connectTimeout(TIMEOUT_CONNECTION, TimeUnit.SECONDS)
