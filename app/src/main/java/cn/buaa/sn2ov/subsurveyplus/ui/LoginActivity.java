@@ -30,20 +30,12 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.buaa.sn2ov.subsurveyplus.AppContext;
 import cn.buaa.sn2ov.subsurveyplus.R;
 import cn.buaa.sn2ov.subsurveyplus.api.remote.ApiFactory;
 import cn.buaa.sn2ov.subsurveyplus.base.BaseObserver;
-import cn.buaa.sn2ov.subsurveyplus.model.Entity;
-import cn.buaa.sn2ov.subsurveyplus.model.base.ListEntity;
 import cn.buaa.sn2ov.subsurveyplus.model.response.BaseResult;
-import retrofit2.adapter.rxjava.HttpException;
-import rx.Scheduler;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -107,7 +99,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-//        mLoginFormView = findViewById(R.id.login_form);
+        mLoginFormView = findViewById(R.id.email_login_form);
         mProgressView = findViewById(R.id.login_progress);
     }
 
@@ -212,13 +204,49 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private void login(){
+
+        // Reset errors.
+        mEmailView.setError(null);
+        mPasswordView.setError(null);
+
+        // Store values at the time of the login attempt.
         String userName = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
 
-        ApiFactory.getTestApi().getValidation(userName,password)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(mSubscriber);
+        boolean cancel = false;
+        View focusView = null;
+
+        // Check for a valid password, if the user entered one.
+        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+            mPasswordView.setError(getString(R.string.error_invalid_password));
+            focusView = mPasswordView;
+            cancel = true;
+        }
+
+        // Check for a valid email address.
+        if (TextUtils.isEmpty(userName)) {
+            mEmailView.setError(getString(R.string.error_field_required));
+            focusView = mEmailView;
+            cancel = true;
+        } else if (!isEmailValid(userName)) {
+            mEmailView.setError(getString(R.string.error_invalid_email));
+            focusView = mEmailView;
+            cancel = true;
+        }
+
+        if (cancel) {
+            // There was an error; don't attempt login and focus the first
+            // form field with an error.
+            focusView.requestFocus();
+        } else {
+            // Show a progress spinner, and kick off a background task to
+            // perform the user login attempt.
+            showProgress(true);
+            ApiFactory.getTestApi().getValidation(userName, password)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(mSubscriber);
+        }
     }
 
     private boolean isEmailValid(String email) {
@@ -389,6 +417,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         @Override
         public void onNext(BaseResult<?> result) {
+            showProgress(false);
             if(!result.isOk()){
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
