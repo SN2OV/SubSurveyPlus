@@ -36,6 +36,8 @@ import cn.buaa.sn2ov.subsurveyplus.R;
 import cn.buaa.sn2ov.subsurveyplus.api.remote.ApiFactory;
 import cn.buaa.sn2ov.subsurveyplus.base.BaseObserver;
 import cn.buaa.sn2ov.subsurveyplus.model.response.BaseResult;
+import cn.buaa.sn2ov.subsurveyplus.model.response.user.UserItem;
+import cn.buaa.sn2ov.subsurveyplus.util.AccountHelper;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -74,6 +76,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         context = getApplicationContext();
+        //初始化instatnces
+        AccountHelper.init(getApplication());
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
@@ -82,7 +86,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
+//                    attemptLogin();
+                    login();
                     return true;
                 }
                 return false;
@@ -423,9 +428,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 mPasswordView.requestFocus();
             }else{
                 Object data = result.getData();
+                UserItem user = (UserItem)data;
                 Intent it = new Intent();
                 it.setClass(context,MainActivity.class);
                 startActivity(it);
+                AccountHelper.updateUserCache(user);
                 finish();
             }
 

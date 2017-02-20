@@ -27,11 +27,11 @@
     <item android:title="Setting">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_personal"
                 android:icon="@drawable/personal_center"
                 android:title="个人中心"/>
             <item
-                android:id="@+id/nav_setting"
+                android:id="@+id/nav_syssetting"
                 android:icon="@drawable/setting"
                 android:title="系统设置"/>
         </menu>

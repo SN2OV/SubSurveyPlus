@@ -2,6 +2,7 @@ package cn.buaa.sn2ov.subsurveyplus.api.remote;
 
 import cn.buaa.sn2ov.subsurveyplus.AppConstant;
 import cn.buaa.sn2ov.subsurveyplus.api.ClientFactory;
+import cn.buaa.sn2ov.subsurveyplus.api.convert.TransNewestTaskConverterFactory;
 import cn.buaa.sn2ov.subsurveyplus.api.convert.UserGsonConverterFactory;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
@@ -16,6 +17,7 @@ public enum ApiFactory {
     INSTANCE;
 
     private static TestApi sTestApi;
+    private static TransferApi sTrasferApi;
 
     ApiFactory() {
     }
@@ -25,6 +27,13 @@ public enum ApiFactory {
             ApiFactory.sTestApi = createApi(AppConstant.API_TEST_URL,TestApi.class, UserGsonConverterFactory.create());
         }
         return sTestApi;
+    }
+
+    public static TransferApi getTranserApi(){
+        if(sTrasferApi == null){
+            ApiFactory.sTrasferApi = createApi(AppConstant.API_TEST_URL,TransferApi.class, TransNewestTaskConverterFactory.create());
+        }
+        return sTrasferApi;
     }
 
     /**

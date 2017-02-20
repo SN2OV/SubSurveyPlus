@@ -105,18 +105,21 @@
                 android:layout_marginBottom="22dp"
                 android:id="@+id/textView2"
                 android:layout_above="@+id/loginModeLL"
-                android:layout_centerHorizontal="true"/>
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/black"/>
 
             <Button
                 android:id="@+id/email_sign_in_button"
-                style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="登录"
-                android:textStyle="bold"
                 android:layout_below="@+id/loginPasswordTL"
                 android:layout_alignParentStart="true"
-                android:layout_marginTop="16dp"/>
+                android:layout_marginTop="16dp"
+                android:background="@drawable/button_blue"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                />
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"

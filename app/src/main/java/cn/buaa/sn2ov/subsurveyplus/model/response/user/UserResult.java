@@ -11,6 +11,7 @@ public class UserResult<T> implements BaseResult<T> {
     private int code;
     private int flag;
     private String msg;
+    //必须和json中对应 所以只能用user不可以为data
     private T user;
 //    private T testList;
 
@@ -48,13 +49,6 @@ public class UserResult<T> implements BaseResult<T> {
         this.msg = msg;
     }
 
-    public T getUser() {
-        return user;
-    }
-
-    public void setUser(T user) {
-        this.user = user;
-    }
 
     //    public T getTestList() {
 //        return testList;
