@@ -40,4 +40,10 @@ public class AppConstant {
     public static final String FRAGMENT_OD_SETTING = "OD调查设置";
     public static final String FRAGMENT_STAY_SETTING = "留乘调查设置";
     public static final String FRAGMENT_REVERSE_SETTING = "反向乘车调查设置";
+
+    public static final String TRANSFER_CACHE = "transfer_cache.data";
+    public static final String WALK_CACHE = "walk_cache.data";
+    public static final String OD_CACHE = "od_cache.data";
+    public static final String STAY_CACHE = "stay_cache.data";
+    public static final String REVERSE_CACHE = "reverse_cache.data";
 }

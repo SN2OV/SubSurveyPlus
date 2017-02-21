@@ -7,8 +7,8 @@ import cn.buaa.sn2ov.subsurveyplus.model.Entity;
  */
 
 public class TeamTaskItem extends Entity {
-    //没和json数据完全一致，那边为teamTaskId，看看到时候有影响没
-    private int teamTaskID;
+    //没和json数据完全一致，那边为teamTaskId，看看到时候有影响没.结果是有影响的
+    private int teamTaskId;
     private String station;
     private String surveyType;
     private String taskName;
@@ -24,12 +24,12 @@ public class TeamTaskItem extends Entity {
         return super.getId();
     }
 
-    public int getTeamTaskID() {
-        return teamTaskID;
+    public int getTeamTaskId() {
+        return teamTaskId;
     }
 
-    public void setTeamTaskID(int teamTaskID) {
-        this.teamTaskID = teamTaskID;
+    public void setTeamTaskId(int teamTaskId) {
+        this.teamTaskId = teamTaskId;
     }
 
     public String getStation() {

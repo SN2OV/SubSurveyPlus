@@ -5,8 +5,18 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.Signature;
 import android.text.TextUtils;
+import android.util.Log;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InvalidClassException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OptionalDataException;
+import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
 
@@ -173,5 +183,78 @@ public class AppContext extends BaseApplication {
 
     public boolean isAutoCacheMode() {
         return getPreferences().getBoolean(AppConstant.KEY_MODE_AUTO_CACHE, false);
+    }
+
+
+
+
+
+
+    private Object OLock = new Object();
+    /**
+     * 保存对象
+     * @param ser
+     * @param file
+     * @throws IOException
+     */
+    public boolean saveObject(Serializable ser, String file){
+        synchronized (OLock) {
+            FileOutputStream fos = null;
+            ObjectOutputStream oos = null;
+            try{
+                fos = openFileOutput(file, MODE_PRIVATE);
+                oos = new ObjectOutputStream(fos);
+                oos.writeObject(ser);
+                oos.flush();//清空缓存数据
+                return true;
+            }catch(Exception e){
+                e.printStackTrace();
+                return false;
+            }finally{
+                try {
+                    oos.close();
+                } catch (Exception e) { }
+                try {
+                    fos.close();
+                } catch (Exception e) { }
+            }
+        }
+    }
+
+    /**
+     * 读取对象
+     */
+    public Object readObject(String file) {
+        Object object = null;
+        synchronized(OLock){
+            if(isExistDataCache(file)){
+                FileInputStream fis;
+                try {
+                    fis = openFileInput(file);
+                    ObjectInputStream ois = new ObjectInputStream(fis);
+                    object = (Object) ois.readObject();
+                } catch (OptionalDataException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }else{
+                return null;
+            }
+            return object;
+        }
+    }
+
+    /**
+     * 判断缓存存在性
+     */
+    public boolean isExistDataCache(String cacheFile){
+        boolean exist = false;
+        File data = getFileStreamPath(cacheFile);
+        if(data.exists())
+            exist = true;
+        return exist;
     }
 }

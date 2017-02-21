@@ -1,7 +1,7 @@
 package cn.buaa.sn2ov.subsurveyplus.model;
 
 import cn.buaa.sn2ov.subsurveyplus.ui.LoginActivity;
-import cn.buaa.sn2ov.subsurveyplus.ui.TransferSettingFragment;
+import cn.buaa.sn2ov.subsurveyplus.ui.fragment.TransferSettingFragment;
 
 /**
  * Created by SN2OV on 2017/2/19.
