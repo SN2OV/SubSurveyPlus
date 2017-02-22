@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.MenuItemCompat;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -35,6 +36,8 @@ public class MainActivity extends AppCompatActivity
     private FragmentManager mFragmentManager;
     private Fragment DefaultFragment;
     private String tag;
+    private int fragmentID;
+    private Toolbar toolbar;
     private static final String SAVE_STATE_TAG = "tag";
 
     @Override
@@ -42,7 +45,7 @@ public class MainActivity extends AppCompatActivity
         //TEST
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -78,6 +81,8 @@ public class MainActivity extends AppCompatActivity
         TextView nav_head_roleTV = (TextView)headView.findViewById(R.id.nav_head_roleTV);
         nav_head_usernameTV.setText(user.getUserName());
         nav_head_roleTV.setText(user.getRole());
+
+        fragmentID = R.id.nav_walk_survey;
     }
 
     @Override
@@ -99,7 +104,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.menu_survey_setting, menu);
+        MenuItemCompat.setShowAsAction(menu.getItem(0),MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
         return true;
     }
 
@@ -109,9 +115,26 @@ public class MainActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_add) {
+            switch (fragmentID){
+                case R.id.nav_walk_survey:
+                    AppContext.toast("走行调查新增");
+                    break;
+                case R.id.nav_transfer_survey:
+                    AppContext.toast("换乘量调查新增",R.drawable.transfer_survey);
+                    break;
+                case R.id.nav_od_survey:
+                    break;
+                case R.id.nav_stay_survey:
+                    break;
+                case R.id.nav_reverse_survey:
+                    break;
+                case R.id.nav_personal:
+                    break;
+                case R.id.nav_syssetting:
+                    break;
+            }
             return true;
         }
 
@@ -122,22 +145,27 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_walk_survey) {
-            switchFragment(AppConstant.FRAGMENT_WALK_SETTING);
-        } else if (id == R.id.nav_transfer_survey) {
-            switchFragment(AppConstant.FRAGMENT_TRANSFER_SETTING);
-        } else if (id == R.id.nav_od_survey) {
-            switchFragment(AppConstant.FRAGMENT_OD_SETTING);
-        } else if (id == R.id.nav_stay_survey) {
-            switchFragment(AppConstant.FRAGMENT_STAY_SETTING);
-        } else if (id == R.id.nav_reverse_survey) {
-            switchFragment(AppConstant.FRAGMENT_REVERSE_SETTING);
-        } else if (id == R.id.nav_personal) {
-
-        } else if (id == R.id.nav_syssetting){
-
+        fragmentID = item.getItemId();
+        switch (fragmentID){
+            case R.id.nav_walk_survey:
+                switchFragment(AppConstant.FRAGMENT_WALK_SETTING);
+                break;
+            case R.id.nav_transfer_survey:
+                switchFragment(AppConstant.FRAGMENT_TRANSFER_SETTING);
+                break;
+            case R.id.nav_od_survey:
+                switchFragment(AppConstant.FRAGMENT_OD_SETTING);
+                break;
+            case R.id.nav_stay_survey:
+                switchFragment(AppConstant.FRAGMENT_STAY_SETTING);
+                break;
+            case R.id.nav_reverse_survey:
+                switchFragment(AppConstant.FRAGMENT_REVERSE_SETTING);
+                break;
+            case R.id.nav_personal:
+                break;
+            case R.id.nav_syssetting:
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -163,6 +191,7 @@ public class MainActivity extends AppCompatActivity
                 .commit();
             DefaultFragment = walkSettingFragment;
         }
+        toolbar.setTitle(tag);
     }
 
     private void switchFragment(String tag){
@@ -171,34 +200,7 @@ public class MainActivity extends AppCompatActivity
         transaction.hide(DefaultFragment);
         transaction.replace(R.id.content_main, surveyFragment, tag).commit();
         DefaultFragment = surveyFragment;
-
-//        if (tag.equals(AppConstant.FRAGMENT_TRANSFER_SETTING)) {
-//            Fragment transferFragment = createFragmentByTag(tag);
-//            transaction.hide(DefaultFragment);
-//            transaction.replace(R.id.content_main, transferFragment, tag).commit();
-//            DefaultFragment = transferFragment;
-//        } else if (tag.equals(AppConstant.FRAGMENT_WALK_SETTING)) {
-//            Fragment walkFragment = createFragmentByTag(tag);
-//            transaction.hide(DefaultFragment);
-//            transaction.replace(R.id.content_main, walkFragment, tag).commit();
-//            DefaultFragment = walkFragment;
-//        } else if(){
-//
-//        }else {
-//            //根据Tag判断是否已经开启了Fragment，如果开启了就直接复用，没开启就创建
-//            Fragment fragment = mFragmentManager.findFragmentByTag(tag);
-//            if (fragment == null) {
-//                transaction.hide(DefaultFragment);
-//                fragment = createFragmentByTag(tag);
-//                transaction.add(R.id.content_main, fragment, tag);
-//                DefaultFragment = fragment;
-//            } else if (fragment != null) {
-//                transaction.hide(DefaultFragment).show(fragment);
-//                DefaultFragment = fragment;
-//            }
-//            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).
-//            commit();
-//        }
+        toolbar.setTitle(tag);
     }
     private Fragment createFragmentByTag(String tag) {
         Fragment fragment = FragmentFactory.getFragment(tag);

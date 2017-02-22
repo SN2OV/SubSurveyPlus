@@ -17,7 +17,7 @@
     <application
         android:name=".AppContext"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/icon_subsurvey"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">

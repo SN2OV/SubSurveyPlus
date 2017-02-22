@@ -12,6 +12,8 @@ public class TransferNewestTaskResult implements Serializable{
     private TeamTaskItem teamTask;
     private TransferPerTaskItem perTask;
     private String station;
+    //uid字段json中没有 此处用于本地保存
+    private int uid;
 
     public boolean isOk() {
         return flag == 1;
@@ -47,5 +49,13 @@ public class TransferNewestTaskResult implements Serializable{
 
     public void setStation(String station) {
         this.station = station;
+    }
+
+    public int getUid() {
+        return uid;
+    }
+
+    public void setUid(int uid) {
+        this.uid = uid;
     }
 }

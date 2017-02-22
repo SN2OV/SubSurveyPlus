@@ -21,6 +21,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import cn.buaa.sn2ov.subsurveyplus.R;
+
 
 public class BaseApplication extends Application {
     private static String PREF_NAME = "app.pref";
@@ -184,78 +186,78 @@ public class BaseApplication extends Application {
         return sResource.getString(id, args);
     }
 
-//    public static void toast(int message) {
-//        toast(message, Toast.LENGTH_LONG, 0);
-//    }
-//
-//    public static void toast(String message) {
-//        toast(message, Toast.LENGTH_LONG, 0, Gravity.FILL_HORIZONTAL
-//                | Gravity.TOP);
-//    }
-//
-//    public static void toast(int message, int icon) {
-//        toast(message, Toast.LENGTH_LONG, icon);
-//    }
-//
-//    public static void toast(String message, int icon) {
-//        toast(message, Toast.LENGTH_LONG, icon, Gravity.FILL_HORIZONTAL
-//                | Gravity.TOP);
-//    }
-//
-//    public static void toastShort(int message) {
-//        toast(message, Toast.LENGTH_SHORT, 0);
-//    }
-//
-//    public static void toastShort(String message) {
-//        toast(message, Toast.LENGTH_SHORT, 0, Gravity.FILL_HORIZONTAL
-//                | Gravity.TOP);
-//    }
-//
-//    public static void toastShort(int message, Object... args) {
-//        toast(message, Toast.LENGTH_SHORT, 0, Gravity.FILL_HORIZONTAL
-//                | Gravity.TOP, args);
-//    }
-//
-//    public static void toast(int message, int duration, int icon) {
-//        toast(message, duration, icon, Gravity.FILL_HORIZONTAL
-//                | Gravity.TOP);
-//    }
-//
-//    public static void toast(int message, int duration, int icon,
-//                             int gravity) {
-//        toast(context().getString(message), duration, icon, gravity);
-//    }
-//
-//    public static void toast(int message, int duration, int icon,
-//                             int gravity, Object... args) {
-//        toast(context().getString(message, args), duration, icon, gravity);
-//    }
+    public static void toast(int message) {
+        toast(message, Toast.LENGTH_LONG, 0);
+    }
 
-//    public static void toast(String message, int duration, int icon,
-//                             int gravity) {
-//        if (message != null && !message.equalsIgnoreCase("")) {
-//            long time = System.currentTimeMillis();
-//            if (!message.equalsIgnoreCase(sLastToast)
-//                    || Math.abs(time - sLastToastTime) > 2000) {
-//
-//                View view = LayoutInflater.from(context()).inflate(
-//                        R.layout.view_toast, null);
-//                ((TextView) view.findViewById(R.id.title_tv)).setText(message);
-//                if (icon != 0) {
-//                    ((ImageView) view.findViewById(R.id.icon_iv))
-//                            .setImageResource(icon);
-//                    view.findViewById(R.id.icon_iv)
-//                            .setVisibility(View.VISIBLE);
-//                }
-//                Toast toast = new Toast(context());
-//                toast.setView(view);
-//                toast.setDuration(duration);
-//                toast.show();
-//
-//                sLastToast = message;
-//                sLastToastTime = System.currentTimeMillis();
-//            }
-//        }
-//    }
+    public static void toast(String message) {
+        toast(message, Toast.LENGTH_LONG, 0, Gravity.FILL_HORIZONTAL
+                | Gravity.TOP);
+    }
+
+    public static void toast(int message, int icon) {
+        toast(message, Toast.LENGTH_LONG, icon);
+    }
+
+    public static void toast(String message, int icon) {
+        toast(message, Toast.LENGTH_LONG, icon, Gravity.FILL_HORIZONTAL
+                | Gravity.TOP);
+    }
+
+    public static void toastShort(int message) {
+        toast(message, Toast.LENGTH_SHORT, 0);
+    }
+
+    public static void toastShort(String message) {
+        toast(message, Toast.LENGTH_SHORT, 0, Gravity.FILL_HORIZONTAL
+                | Gravity.TOP);
+    }
+
+    public static void toastShort(int message, Object... args) {
+        toast(message, Toast.LENGTH_SHORT, 0, Gravity.FILL_HORIZONTAL
+                | Gravity.TOP, args);
+    }
+
+    public static void toast(int message, int duration, int icon) {
+        toast(message, duration, icon, Gravity.FILL_HORIZONTAL
+                | Gravity.TOP);
+    }
+
+    public static void toast(int message, int duration, int icon,
+                             int gravity) {
+        toast(context().getString(message), duration, icon, gravity);
+    }
+
+    public static void toast(int message, int duration, int icon,
+                             int gravity, Object... args) {
+        toast(context().getString(message, args), duration, icon, gravity);
+    }
+
+    public static void toast(String message, int duration, int icon,
+                             int gravity) {
+        if (message != null && !message.equalsIgnoreCase("")) {
+            long time = System.currentTimeMillis();
+            if (!message.equalsIgnoreCase(sLastToast)
+                    || Math.abs(time - sLastToastTime) > 2000) {
+
+                View view = LayoutInflater.from(context()).inflate(
+                        R.layout.view_toast, null);
+                ((TextView) view.findViewById(R.id.title_tv)).setText(message);
+                if (icon != 0) {
+                    ((ImageView) view.findViewById(R.id.icon_iv))
+                            .setImageResource(icon);
+                    view.findViewById(R.id.icon_iv)
+                            .setVisibility(View.VISIBLE);
+                }
+                Toast toast = new Toast(context());
+                toast.setView(view);
+                toast.setDuration(duration);
+                toast.show();
+
+                sLastToast = message;
+                sLastToastTime = System.currentTimeMillis();
+            }
+        }
+    }
 
 }

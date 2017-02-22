@@ -2,6 +2,7 @@ package cn.buaa.sn2ov.subsurveyplus.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +38,7 @@ public class TransferSettingFragment extends BaseFragment {
     private Unbinder unbinder;
     private AppContext appContext;
     private Object transferCache;
+    private UserItem user;
 
     @BindView(R.id.transSetting_titleTV)
     TextView transSetting_titleTV;
@@ -48,6 +50,10 @@ public class TransferSettingFragment extends BaseFragment {
     TextView transSetting_surStation_TV;
     @BindView(R.id.transSetting_perTask_TV)
     TextView transSetting_perTask_TV;
+    @BindView(R.id.transSetting_task_CV)
+    CardView transSetting_task_CV;
+    @BindView(R.id.transSetting_chooseCV)
+    CardView transSetting_chooseCV;
 
     @Override
     protected int getLayoutId() {
@@ -85,12 +91,17 @@ public class TransferSettingFragment extends BaseFragment {
         @Override
         public void onNext(TransferNewestTaskResult result) {
             if(!result.isOk()){
-                return;
+                transSetting_titleTV.setText("暂无换乘量调查");
+                transSetting_task_CV.setVisibility(View.GONE);
+                transSetting_chooseCV.setVisibility(View.GONE);
             }else{
                 fillIntoTask(result);
                 //TODO station好像没获取到啊 看下
-                appContext.saveObject(result, AppConstant.TRANSFER_CACHE);
+                transSetting_task_CV.setVisibility(View.VISIBLE);
+                transSetting_chooseCV.setVisibility(View.VISIBLE);
             }
+            result.setUid(user.getUid());
+            appContext.saveObject(result, AppConstant.TRANSFER_CACHE);
         }
 
         @Override
@@ -106,7 +117,10 @@ public class TransferSettingFragment extends BaseFragment {
 
     }
 
+    //有任务情形
     private void fillIntoTask(TransferNewestTaskResult result){
+        transSetting_task_CV.setVisibility(View.VISIBLE);
+        transSetting_chooseCV.setVisibility(View.VISIBLE);
         TeamTaskItem teamTask = result.getTeamTask();
         TransferPerTaskItem perTaskItem = result.getPerTask();
         transSetting_titleTV.setText(teamTask.getTaskName());
@@ -115,17 +129,30 @@ public class TransferSettingFragment extends BaseFragment {
         transSetting_perTask_TV.setText(perTaskItem.getName());
     }
 
+    //无任务情形
+    private void fillIntoTask(){
+        transSetting_titleTV.setText("暂无换乘量调查");
+        transSetting_task_CV.setVisibility(View.GONE);
+        transSetting_chooseCV.setVisibility(View.GONE);
+    }
+
     @Override
     public void initView(View view) {
+        user = AccountHelper.getUser();
         if(transferCache!=null){
             TransferNewestTaskResult result = (TransferNewestTaskResult)transferCache;
-            fillIntoTask(result);
-        }else{
-            // TODO: 2017/2/21 uid从前缓存中获取
-            ApiFactory.getTranserApi().getNewestTransTask(3)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(mSubscriber);
+            if(result.getUid() == user.getUid()){
+                if(result.isOk()){
+                    fillIntoTask(result);
+                }else{
+                    fillIntoTask();
+                }
+                return;
+            }
         }
+        ApiFactory.getTranserApi().getNewestTransTask(user.getUid())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(mSubscriber);
     }
 }
