@@ -2,6 +2,7 @@ package cn.buaa.sn2ov.subsurveyplus.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +11,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,7 +37,7 @@ import rx.schedulers.Schedulers;
  * Created by SN2OV on 2017/2/19.
  */
 
-public class TransferSettingFragment extends BaseFragment {
+public class TransferSettingFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener{
 
     private Unbinder unbinder;
     private AppContext appContext;
@@ -54,6 +58,8 @@ public class TransferSettingFragment extends BaseFragment {
     CardView transSetting_task_CV;
     @BindView(R.id.transSetting_chooseCV)
     CardView transSetting_chooseCV;
+    @BindView(R.id.transSetting_swipeRefeshL)
+    SwipeRefreshLayout transSetting_swipeRefeshL;
 
     @Override
     protected int getLayoutId() {
@@ -106,7 +112,8 @@ public class TransferSettingFragment extends BaseFragment {
 
         @Override
         public void onCompleted() {
-
+            executeOnLoadFinish();
+            AppContext.toast("刷新完成");
         }
     };
 
@@ -138,6 +145,7 @@ public class TransferSettingFragment extends BaseFragment {
 
     @Override
     public void initView(View view) {
+        transSetting_swipeRefeshL.setOnRefreshListener(this);
         user = AccountHelper.getUser();
         if(transferCache!=null){
             TransferNewestTaskResult result = (TransferNewestTaskResult)transferCache;
@@ -150,9 +158,62 @@ public class TransferSettingFragment extends BaseFragment {
                 return;
             }
         }
+        refresh();
+    }
+
+    private void sendRequest(){
         ApiFactory.getTranserApi().getNewestTransTask(user.getUid())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(mSubscriber);
+    }
+
+    @Override
+    public void onRefresh() {
+        if (mState == STATE_REFRESH || mState == STATE_LOADMORE) {
+            return;
+        }
+        setRefreshLoadingState();
+        mState = STATE_REFRESH;
+        sendRequest();
+    }
+
+    protected void setRefreshLoadingState() {
+        if (transSetting_swipeRefeshL != null) {
+            transSetting_swipeRefeshL.setRefreshing(true);
+            transSetting_swipeRefeshL.setEnabled(false);
+        }
+    }
+
+
+    protected void setRefreshLoadedState() {
+        if (transSetting_swipeRefeshL != null) {
+            transSetting_swipeRefeshL.setRefreshing(false);
+            transSetting_swipeRefeshL.setEnabled(true);
+        }
+    }
+
+//    protected void executeOnLoadDataSuccess(List<T> data) {
+//        if (data == null) {
+//            data = new ArrayList<T>();
+//        }
+//
+//    }
+
+    protected void executeOnLoadDataError(String error) {
+    }
+
+    protected void executeOnLoadFinish() {
+        setRefreshLoadedState();
+        mState = STATE_NONE;
+    }
+
+    public void refresh() {
+        transSetting_swipeRefeshL.measure(0,0);
+        transSetting_swipeRefeshL.setRefreshing(true);
+        if (mState == STATE_REFRESH || mState == STATE_LOADMORE) {
+            return;
+        }
+        sendRequest();
     }
 }

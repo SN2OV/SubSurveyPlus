@@ -12,6 +12,8 @@ import com.trello.rxlifecycle.components.support.RxFragment;
 import cn.buaa.sn2ov.subsurveyplus.AppContext;
 import cn.buaa.sn2ov.subsurveyplus.api.remote.ApiFactory;
 import cn.buaa.sn2ov.subsurveyplus.base.interf.IBaseFragment;
+import cn.buaa.sn2ov.subsurveyplus.view.dialog.IDialog;
+import cn.buaa.sn2ov.subsurveyplus.view.dialog.WaitDialog;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -20,6 +22,31 @@ import rx.schedulers.Schedulers;
  */
 
 public class BaseFragment extends RxFragment implements IBaseFragment,View.OnClickListener{
+
+    /**
+     * 正常
+     */
+    public static final int STATE_NONE = 0;
+    /**
+     * 刷新中
+     */
+    public static final int STATE_REFRESH = 1;
+    /**
+     * 加载更多
+     */
+    public static final int STATE_LOADMORE = 2;
+    /**
+     * 没有更多
+     */
+    public static final int STATE_NOMORE = 3;
+    /**
+     * 下拉中,但还未触发刷新
+     */
+    public static final int STATE_PRESSNONE = 4;
+
+    public static int mState = STATE_NONE;
+
+
     protected LayoutInflater mInflater;
 
     public AppContext getApplication() {
@@ -66,32 +93,32 @@ public class BaseFragment extends RxFragment implements IBaseFragment,View.OnCli
         return false;
     }
 
-//    protected void hideDialog() {
-//        FragmentActivity activity = getActivity();
-//        if (activity instanceof IDialog) {
-//            ((IDialog) activity).hideWaitDialog();
-//        }
-//    }
-//
-//    protected WaitDialog showDialog() {
-//        return showDialog(R.string.loading);
-//    }
-//
-//    protected WaitDialog showDialog(int resid) {
-//        FragmentActivity activity = getActivity();
-//        if (activity instanceof IDialog) {
-//            return ((IDialog) activity).showWaitDialog(resid);
-//        }
-//        return null;
-//    }
-//
-//    protected WaitDialog showDialog(String str) {
-//        FragmentActivity activity = getActivity();
-//        if (activity instanceof IDialog) {
-//            return ((IDialog) activity).showWaitDialog(str);
-//        }
-//        return null;
-//    }
+    protected void hideDialog() {
+        FragmentActivity activity = getActivity();
+        if (activity instanceof IDialog) {
+            ((IDialog) activity).hideWaitDialog();
+        }
+    }
+
+    protected WaitDialog showDialog() {
+        return showDialog("加载中…");
+    }
+
+    protected WaitDialog showDialog(int resid) {
+        FragmentActivity activity = getActivity();
+        if (activity instanceof IDialog) {
+            return ((IDialog) activity).showWaitDialog(resid);
+        }
+        return null;
+    }
+
+    protected WaitDialog showDialog(String str) {
+        FragmentActivity activity = getActivity();
+        if (activity instanceof IDialog) {
+            return ((IDialog) activity).showWaitDialog(str);
+        }
+        return null;
+    }
 
     @Override
     public void initView(View view) {
