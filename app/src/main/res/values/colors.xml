@@ -82,7 +82,7 @@
     <color name="half_transparent">#aa000000</color>
 
     <color name="bright_foreground_light">#ff000000</color>
-    <color name="bright_foreground_light_inverse">#ffffffff</color>
+    <color name="bright_foreground_light_inverse">#eceaea</color>
     <color name="bright_foreground_light_disabled">#80000000</color>
 
     <color name="dim_foreground_light">#808080</color>
@@ -138,6 +138,8 @@
     <color name="grey_300">#e0e0e0</color>
 
     <color name="g_default_loading_bg">@color/grey_300</color>
+
+    <color name="background">#EEEEEE</color>
 
 
     <array name="g_default_loading_fg">

@@ -1,9 +1,11 @@
 package cn.buaa.sn2ov.subsurveyplus.base.ui;
 
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,17 +19,21 @@ import cn.buaa.sn2ov.subsurveyplus.AppContext;
 import cn.buaa.sn2ov.subsurveyplus.AppManager;
 import cn.buaa.sn2ov.subsurveyplus.R;
 import cn.buaa.sn2ov.subsurveyplus.base.interf.IBaseView;
+import cn.buaa.sn2ov.subsurveyplus.view.dialog.DialogHelper;
+import cn.buaa.sn2ov.subsurveyplus.view.dialog.IDialog;
+import cn.buaa.sn2ov.subsurveyplus.view.dialog.WaitDialog;
 
 /**
  * Created by SN2OV on 2017/2/7.
  */
 
-public abstract class BaseActivity extends RxAppCompatActivity implements View.OnClickListener,IBaseView{
+public abstract class BaseActivity extends RxAppCompatActivity implements View.OnClickListener,IBaseView,IDialog{
 
     private boolean mIsVisible;
     protected LayoutInflater mInflater;
     private Toolbar mToolbar;
     private TextView mActionTitle;
+    private WaitDialog mDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,14 +44,15 @@ public abstract class BaseActivity extends RxAppCompatActivity implements View.O
             supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         }
         AppManager.getAppManager().addActivity(this);
-//        onBeforeSetContentLayout();
+        onBeforeSetContentLayout();
 
         if (getLayoutId() != 0) {
             setContentView(getLayoutId());
         }
 
         //布局中需要添加默认的toolbar布局文件,并令其id为actionBar
-//        mToolbar = (Toolbar) findViewById(R.id.actionBar);//getSupportActionBar();
+        //todo 这里设置
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);//getSupportActionBar();
         mInflater = getLayoutInflater();
         if (hasActionBar()) {
             initActionBar(mToolbar);
@@ -59,6 +66,18 @@ public abstract class BaseActivity extends RxAppCompatActivity implements View.O
         initData();
 
         mIsVisible = true;
+    }
+
+    @Override
+    public void hideWaitDialog() {
+        if (mIsVisible && mDialog != null) {
+            try {
+                mDialog.dismiss();
+                mDialog = null;
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 
     protected boolean hasActionBar() {
@@ -131,7 +150,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements View.O
 
         //back button
         if (hasBackButton()) {
-            actionBar.setNavigationIcon(R.drawable.actionbar_back_icon_normal);
+            actionBar.setNavigationIcon(R.drawable.actionbar_back_icon_normal_x);
             actionBar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -182,7 +201,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements View.O
     @Override
     protected void onPause() {
         mIsVisible = false;
-//        hideWaitDialog();
+        hideWaitDialog();
         super.onPause();
     }
 
@@ -192,4 +211,41 @@ public abstract class BaseActivity extends RxAppCompatActivity implements View.O
         super.onResume();
     }
 
+    protected int getActionBarSize() {
+        TypedValue typedValue = new TypedValue();
+        int[] textSizeAttr = new int[]{R.attr.actionBarSize};
+        int indexOfAttrTextSize = 0;
+        TypedArray a = obtainStyledAttributes(typedValue.data, textSizeAttr);
+        int actionBarSize = a.getDimensionPixelSize(indexOfAttrTextSize, -1);
+        a.recycle();
+        return actionBarSize;
+    }
+
+    protected void onBeforeSetContentLayout() {
+    }
+
+    @Override
+    public WaitDialog showWaitDialog() {
+        return showWaitDialog(R.string.loading);
+    }
+
+    @Override
+    public WaitDialog showWaitDialog(int resid) {
+        return showWaitDialog(getString(resid));
+    }
+
+    @Override
+    public WaitDialog showWaitDialog(String message) {
+        if (mIsVisible) {
+            if (mDialog == null) {
+                mDialog = DialogHelper.getWaitDialog(this, message);
+            }
+            if (mDialog != null) {
+                mDialog.setMessage(message);
+                mDialog.show();
+            }
+            return mDialog;
+        }
+        return null;
+    }
 }

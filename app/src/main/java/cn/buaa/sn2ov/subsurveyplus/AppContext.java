@@ -228,10 +228,11 @@ public class AppContext extends BaseApplication {
         Object object = null;
         synchronized(OLock){
             if(isExistDataCache(file)){
-                FileInputStream fis;
+                FileInputStream fis = null;
+                ObjectInputStream ois = null;
                 try {
                     fis = openFileInput(file);
-                    ObjectInputStream ois = new ObjectInputStream(fis);
+                    ois = new ObjectInputStream(fis);
                     object = (Object) ois.readObject();
                 } catch (OptionalDataException e) {
                     e.printStackTrace();
@@ -239,6 +240,17 @@ public class AppContext extends BaseApplication {
                     e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
+                }finally {
+                    try {
+                        fis.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        ois.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }else{
                 return null;

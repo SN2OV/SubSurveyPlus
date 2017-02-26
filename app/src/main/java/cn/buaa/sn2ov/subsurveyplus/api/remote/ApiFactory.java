@@ -2,12 +2,12 @@ package cn.buaa.sn2ov.subsurveyplus.api.remote;
 
 import cn.buaa.sn2ov.subsurveyplus.AppConstant;
 import cn.buaa.sn2ov.subsurveyplus.api.ClientFactory;
+import cn.buaa.sn2ov.subsurveyplus.api.convert.BaseGsonConverterFactory;
 import cn.buaa.sn2ov.subsurveyplus.api.convert.TransNewestTaskConverterFactory;
 import cn.buaa.sn2ov.subsurveyplus.api.convert.UserGsonConverterFactory;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by SN2OV on 2017/2/10.
@@ -17,7 +17,8 @@ public enum ApiFactory {
     INSTANCE;
 
     private static TestApi sTestApi;
-    private static TransferApi sTrasferApi;
+    private static TransferNewestApi sTrasferApi;
+    private static TransferAllApi sTransferAllApi;
 
     ApiFactory() {
     }
@@ -29,11 +30,18 @@ public enum ApiFactory {
         return sTestApi;
     }
 
-    public static TransferApi getTranserApi(){
+    public static TransferNewestApi getTranserApi(){
         if(sTrasferApi == null){
-            ApiFactory.sTrasferApi = createApi(AppConstant.API_TEST_URL,TransferApi.class, TransNewestTaskConverterFactory.create());
+            ApiFactory.sTrasferApi = createApi(AppConstant.API_TEST_URL,TransferNewestApi.class, TransNewestTaskConverterFactory.create());
         }
         return sTrasferApi;
+    }
+
+    public static TransferAllApi getTranserAllApi(){
+        if(sTransferAllApi == null){
+            ApiFactory.sTransferAllApi = createApi(AppConstant.API_TEST_URL,TransferAllApi.class, BaseGsonConverterFactory.create());
+        }
+        return sTransferAllApi;
     }
 
     /**

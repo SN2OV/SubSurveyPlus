@@ -14,7 +14,8 @@ import java.lang.ref.WeakReference;
 import cn.buaa.sn2ov.subsurveyplus.R;
 import cn.buaa.sn2ov.subsurveyplus.base.ui.BaseActivity;
 import cn.buaa.sn2ov.subsurveyplus.base.ui.BaseFragment;
-import cn.buaa.sn2ov.subsurveyplus.model.SimpleBackPage;
+import cn.buaa.sn2ov.subsurveyplus.router.SimpleBackPage;
+import cn.buaa.sn2ov.subsurveyplus.view.dialog.WaitDialog;
 
 /**
  * Created by SN2OV on 2017/2/19.
@@ -95,7 +96,6 @@ public class SimpleBackActivity extends BaseActivity{
 
             FragmentTransaction trans = getSupportFragmentManager()
                 .beginTransaction();
-            // 尝试替换这个R.id.content_main，但是这个不是该Activity中的组件啊
             trans.replace(R.id.container, fragment, TAG);
             trans.commitAllowingStateLoss();
 

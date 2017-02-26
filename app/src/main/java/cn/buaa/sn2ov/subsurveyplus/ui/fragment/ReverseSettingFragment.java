@@ -1,4 +1,4 @@
-package cn.buaa.sn2ov.subsurveyplus.ui;
+package cn.buaa.sn2ov.subsurveyplus.ui.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,15 +16,15 @@ import cn.buaa.sn2ov.subsurveyplus.base.ui.BaseFragment;
  * Created by SN2OV on 2017/2/20.
  */
 
-public class WalkSettingFragment extends BaseFragment {
-    @BindView(R.id.walkSetting_tv)
-    TextView walkSetting_tv;
+public class ReverseSettingFragment extends BaseFragment {
+    @BindView(R.id.reverseSetting_tv)
+    TextView reverseSetting_tv;
 
     private Unbinder unbinder;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_walk_setting;
+        return R.layout.fragment_reverse_setting;
     }
 
     @Override

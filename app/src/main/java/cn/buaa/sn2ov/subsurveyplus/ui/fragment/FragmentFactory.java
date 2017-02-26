@@ -1,8 +1,7 @@
-package cn.buaa.sn2ov.subsurveyplus.ui;
+package cn.buaa.sn2ov.subsurveyplus.ui.fragment;
 
 import cn.buaa.sn2ov.subsurveyplus.AppConstant;
 import cn.buaa.sn2ov.subsurveyplus.base.ui.BaseFragment;
-import cn.buaa.sn2ov.subsurveyplus.ui.fragment.TransferSettingFragment;
 
 /**
  * Created by SN2OV on 2017/2/20.

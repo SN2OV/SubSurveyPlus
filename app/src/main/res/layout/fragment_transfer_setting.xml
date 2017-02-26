@@ -185,7 +185,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:id="@+id/transSetting_chooseRL">
+                        android:id="@+id/transSetting_getMoreTaskRL">
 
                         <TextView
                             android:text="选择其他任务"

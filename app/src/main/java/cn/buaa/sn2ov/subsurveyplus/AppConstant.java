@@ -46,4 +46,11 @@ public class AppConstant {
     public static final String OD_CACHE = "od_cache.data";
     public static final String STAY_CACHE = "stay_cache.data";
     public static final String REVERSE_CACHE = "reverse_cache.data";
+
+    public static final int TRANSFER_SETTING_CODE = 1;
+    public static final int WALK_SETTING_CODE = 2;
+    public static final int OD_SETTING_CODE = 3;
+    public static final int STAY_SETTING_CODE = 4;
+    public static final int REVERSE_SETTING_CODE = 5;
+
 }

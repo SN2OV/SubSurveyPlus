@@ -2,19 +2,14 @@ package cn.buaa.sn2ov.subsurveyplus.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -26,9 +21,12 @@ import cn.buaa.sn2ov.subsurveyplus.base.BaseObserver;
 import cn.buaa.sn2ov.subsurveyplus.base.ui.BaseFragment;
 import cn.buaa.sn2ov.subsurveyplus.model.response.BaseResult;
 import cn.buaa.sn2ov.subsurveyplus.model.response.task.TeamTaskItem;
+import cn.buaa.sn2ov.subsurveyplus.model.response.task.TransferAllTaskItem;
 import cn.buaa.sn2ov.subsurveyplus.model.response.task.TransferNewestTaskResult;
 import cn.buaa.sn2ov.subsurveyplus.model.response.task.TransferPerTaskItem;
 import cn.buaa.sn2ov.subsurveyplus.model.response.user.UserItem;
+import cn.buaa.sn2ov.subsurveyplus.router.Router;
+import cn.buaa.sn2ov.subsurveyplus.router.SimpleBackPage;
 import cn.buaa.sn2ov.subsurveyplus.util.AccountHelper;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -60,6 +58,8 @@ public class TransferSettingFragment extends BaseFragment implements SwipeRefres
     CardView transSetting_chooseCV;
     @BindView(R.id.transSetting_swipeRefeshL)
     SwipeRefreshLayout transSetting_swipeRefeshL;
+    @BindView(R.id.transSetting_getMoreTaskRL)
+    RelativeLayout transSetting_getMoreTaskRL;
 
     @Override
     protected int getLayoutId() {
@@ -143,20 +143,50 @@ public class TransferSettingFragment extends BaseFragment implements SwipeRefres
         transSetting_chooseCV.setVisibility(View.GONE);
     }
 
+    private void fillIntoTask(TransferAllTaskItem transferAllTaskItem){
+        transSetting_task_CV.setVisibility(View.VISIBLE);
+        transSetting_chooseCV.setVisibility(View.VISIBLE);
+        TeamTaskItem teamTask = transferAllTaskItem.getTeamTask();
+        TransferPerTaskItem perTaskItem = transferAllTaskItem.getPerTask();
+        transSetting_titleTV.setText(teamTask.getTaskName());
+        transSetting_surDate_TV.setText(teamTask.getSurveyDate());
+        transSetting_surTime_TV.setText(teamTask.getTimeStart()+"~"+teamTask.getTimeEnd());
+        transSetting_perTask_TV.setText(perTaskItem.getName());
+    }
+
     @Override
     public void initView(View view) {
         transSetting_swipeRefeshL.setOnRefreshListener(this);
+        transSetting_getMoreTaskRL.setOnClickListener(this);
+        transSetting_swipeRefeshL.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
         user = AccountHelper.getUser();
+        Bundle bundle = getArguments();
+        if(bundle!=null){
+            TransferAllTaskItem transferAllTaskItem = (TransferAllTaskItem)bundle.getSerializable("transferAllTaskItem");
+            fillIntoTask(transferAllTaskItem);
+            appContext.saveObject(transferAllTaskItem, AppConstant.TRANSFER_CACHE);
+            return;
+        }
         if(transferCache!=null){
-            TransferNewestTaskResult result = (TransferNewestTaskResult)transferCache;
-            if(result.getUid() == user.getUid()){
-                if(result.isOk()){
-                    fillIntoTask(result);
-                }else{
-                    fillIntoTask();
+            //两种情况：1）从换乘量设置界面获取最新任务的缓存 2）从所有换乘量任务回传的缓存
+            if(transferCache instanceof TransferNewestTaskResult){
+                TransferNewestTaskResult resultFromPerTask = (TransferNewestTaskResult)transferCache;
+                if(resultFromPerTask.getUid() == user.getUid()){
+                    if(resultFromPerTask.isOk()){
+                        fillIntoTask(resultFromPerTask);
+                    }else{
+                        fillIntoTask();
+                    }
+                    return;
                 }
-                return;
+            }else if(transferCache instanceof TransferAllTaskItem){
+                TransferAllTaskItem resultFromAllTask = (TransferAllTaskItem)transferCache;
+                if(resultFromAllTask.getUid() == user.getUid()){
+                    fillIntoTask(resultFromAllTask);
+                    return;
+                }
             }
+
         }
         refresh();
     }
@@ -215,5 +245,10 @@ public class TransferSettingFragment extends BaseFragment implements SwipeRefres
             return;
         }
         sendRequest();
+    }
+
+    @Override
+    public void onClick(View v) {
+        Router.showSimpleBackForResult(getFragmentManager().findFragmentByTag(AppConstant.FRAGMENT_TRANSFER_SETTING),AppConstant.TRANSFER_SETTING_CODE,SimpleBackPage.TRANSFER_ALL);
     }
 }

@@ -1,7 +1,7 @@
-package cn.buaa.sn2ov.subsurveyplus.model;
+package cn.buaa.sn2ov.subsurveyplus.router;
 
 import cn.buaa.sn2ov.subsurveyplus.ui.LoginActivity;
-import cn.buaa.sn2ov.subsurveyplus.ui.fragment.TransferSettingFragment;
+import cn.buaa.sn2ov.subsurveyplus.ui.fragment.TransAllTaskFragment;
 
 /**
  * Created by SN2OV on 2017/2/19.
@@ -10,14 +10,14 @@ import cn.buaa.sn2ov.subsurveyplus.ui.fragment.TransferSettingFragment;
 public enum SimpleBackPage {
 
     TEST(0,"登录", LoginActivity.class),
-    TRANSFER_SETTING(1,"换乘量线路预览", TransferSettingFragment.class);
+    TRANSFER_ALL(1,"换乘量调查全部任务", TransAllTaskFragment.class);
 
+    private int id;
     private String title;
     private Class<?> clz;
-    private int value;
 
-    private SimpleBackPage(int value, String title, Class<?> clz) {
-        this.value = value;
+    private SimpleBackPage(int id, String title, Class<?> clz) {
+        this.id = id;
         this.title = title;
         this.clz = clz;
     }
@@ -38,17 +38,17 @@ public enum SimpleBackPage {
         this.clz = clz;
     }
 
-    public int getValue() {
-        return value;
+    public int getId() {
+        return id;
     }
 
-    public void setValue(int value) {
-        this.value = value;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public static SimpleBackPage getPageByValue(int val) {
         for (SimpleBackPage p : values()) {
-            if (p.getValue() == val)
+            if (p.getId() == val)
                 return p;
         }
         return null;

@@ -1,9 +1,6 @@
-package cn.buaa.sn2ov.subsurveyplus.ui;
+package cn.buaa.sn2ov.subsurveyplus.ui.fragment;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,15 +12,19 @@ import butterknife.Unbinder;
 import cn.buaa.sn2ov.subsurveyplus.R;
 import cn.buaa.sn2ov.subsurveyplus.base.ui.BaseFragment;
 
-public class ODSettingFragment extends BaseFragment {
-    @BindView(R.id.odSetting_tv)
-    TextView odSetting_tv;
+/**
+ * Created by SN2OV on 2017/2/20.
+ */
+
+public class StaySettingFragment extends BaseFragment {
+    @BindView(R.id.staySetting_tv)
+    TextView staySetting_tv;
 
     private Unbinder unbinder;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_od_setting;
+        return R.layout.fragment_stay_setting;
     }
 
     @Override
@@ -42,7 +43,7 @@ public class ODSettingFragment extends BaseFragment {
 
     @Override
     public void initView(View view) {
-//        walkSetting_tv.setText("走行调查嘿嘿");
+//        transSetting_tv.setText("换乘量调查嘿嘿");
     }
 
     @Override

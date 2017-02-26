@@ -10,7 +10,7 @@ import rx.Observable;
  * Created by SN2OV on 2017/2/20.
  */
 
-public interface TransferApi {
+public interface TransferNewestApi {
 
     @GET("transfer/new")
     Observable<TransferNewestTaskResult> getNewestTransTask(@Query("uid")int uid);

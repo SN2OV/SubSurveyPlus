@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import cn.buaa.sn2ov.subsurveyplus.model.SimpleBackPage;
+import cn.buaa.sn2ov.subsurveyplus.router.SimpleBackPage;
 import cn.buaa.sn2ov.subsurveyplus.ui.SimpleBackActivity;
 
 /**
@@ -15,7 +15,7 @@ public class UIHelper {
 
     public static void showSimpleBack(Context context, SimpleBackPage page) {
         Intent intent = new Intent(context, SimpleBackActivity.class);
-        intent.putExtra(SimpleBackActivity.BUNDLE_KEY_PAGE, page.getValue());
+        intent.putExtra(SimpleBackActivity.BUNDLE_KEY_PAGE, page.getId());
         context.startActivity(intent);
     }
 
@@ -23,7 +23,7 @@ public class UIHelper {
                                       Bundle args) {
         Intent intent = new Intent(context, SimpleBackActivity.class);
         intent.putExtra(SimpleBackActivity.BUNDLE_KEY_ARGS, args);
-        intent.putExtra(SimpleBackActivity.BUNDLE_KEY_PAGE, page.getValue());
+        intent.putExtra(SimpleBackActivity.BUNDLE_KEY_PAGE, page.getId());
         context.startActivity(intent);
     }
 
