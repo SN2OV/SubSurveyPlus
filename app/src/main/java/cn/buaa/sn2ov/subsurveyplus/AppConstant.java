@@ -40,6 +40,8 @@ public class AppConstant {
     public static final String FRAGMENT_OD_SETTING = "OD当前任务";
     public static final String FRAGMENT_STAY_SETTING = "留乘当前任务";
     public static final String FRAGMENT_REVERSE_SETTING = "反向乘车当前任务";
+    public static final String FRAGMENT_PERSONAL_SETTING = "个人中心";
+    public static final String FRAGMENT_SYSTEM_SETTING = "系统设置";
 
     public static final String TRANSFER_CACHE = "transfer_cache.data";
     public static final String WALK_CACHE = "walk_cache.data";

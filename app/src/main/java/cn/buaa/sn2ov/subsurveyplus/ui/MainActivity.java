@@ -165,8 +165,10 @@ public class MainActivity extends AppCompatActivity
                 switchFragment(AppConstant.FRAGMENT_REVERSE_SETTING);
                 break;
             case R.id.nav_personal:
+                switchFragment(AppConstant.FRAGMENT_PERSONAL_SETTING);
                 break;
             case R.id.nav_syssetting:
+                switchFragment(AppConstant.FRAGMENT_SYSTEM_SETTING);
                 break;
         }
 

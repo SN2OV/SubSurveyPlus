@@ -26,6 +26,12 @@ public class FragmentFactory {
             case AppConstant.FRAGMENT_REVERSE_SETTING:
                 fragment = new ReverseSettingFragment();
                 break;
+            case AppConstant.FRAGMENT_PERSONAL_SETTING:
+                fragment = new PersonCenterFragment();
+                break;
+            case AppConstant.FRAGMENT_SYSTEM_SETTING:
+                fragment = new SysSettingFragment();
+                break;
         }
         return fragment;
     }
