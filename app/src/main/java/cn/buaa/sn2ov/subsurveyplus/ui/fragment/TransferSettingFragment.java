@@ -10,12 +10,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import java.io.IOException;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cn.buaa.sn2ov.subsurveyplus.AppConstant;
 import cn.buaa.sn2ov.subsurveyplus.AppContext;
 import cn.buaa.sn2ov.subsurveyplus.R;
+import cn.buaa.sn2ov.subsurveyplus.api.exception.ApiException;
 import cn.buaa.sn2ov.subsurveyplus.api.remote.ApiFactory;
 import cn.buaa.sn2ov.subsurveyplus.base.BaseObserver;
 import cn.buaa.sn2ov.subsurveyplus.base.ui.BaseFragment;
@@ -28,6 +32,8 @@ import cn.buaa.sn2ov.subsurveyplus.model.response.user.UserItem;
 import cn.buaa.sn2ov.subsurveyplus.router.Router;
 import cn.buaa.sn2ov.subsurveyplus.router.SimpleBackPage;
 import cn.buaa.sn2ov.subsurveyplus.util.AccountHelper;
+import cn.buaa.sn2ov.subsurveyplus.view.empty.EmptyLayout;
+import retrofit2.adapter.rxjava.HttpException;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -60,6 +66,8 @@ public class TransferSettingFragment extends BaseFragment implements SwipeRefres
     SwipeRefreshLayout transSetting_swipeRefeshL;
     @BindView(R.id.transSetting_getMoreTaskRL)
     RelativeLayout transSetting_getMoreTaskRL;
+    @BindView(R.id.transSetting_error_layout)
+    EmptyLayout mErrorLayout;
 
     @Override
     protected int getLayoutId() {
@@ -91,11 +99,29 @@ public class TransferSettingFragment extends BaseFragment implements SwipeRefres
 
         @Override
         public void onError(Throwable e) {
-            return;
+
+            if (e instanceof HttpException) {
+                executeOnLoadDataError(null);
+            } else if (e instanceof IOException) {
+                executeOnLoadDataError(null);
+            } else if (e instanceof ApiException) {
+                ApiException exception = (ApiException) e;
+                if (exception.isTokenExpried()) {
+                    if (isAdded()) {
+                        //handle ui
+                    }
+                } else {
+                    AppContext.toast(exception.getMessage());
+                }
+            } else {
+                executeOnLoadDataError(null);
+            }
+            executeOnLoadFinish();
         }
 
         @Override
         public void onNext(TransferNewestTaskResult result) {
+            mErrorLayout.setErrorType(EmptyLayout.STATE_HIDE_LAYOUT);
             if(!result.isOk()){
                 transSetting_titleTV.setText("暂无换乘量调查");
                 transSetting_task_CV.setVisibility(View.GONE);
@@ -156,6 +182,15 @@ public class TransferSettingFragment extends BaseFragment implements SwipeRefres
 
     @Override
     public void initView(View view) {
+        //EmptyLayout监听
+        mErrorLayout.setOnLayoutClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mState = STATE_REFRESH;
+                mErrorLayout.setErrorType(EmptyLayout.STATE_NETWORK_LOADING);
+                sendRequest();
+            }
+        });
         transSetting_swipeRefeshL.setOnRefreshListener(this);
         transSetting_getMoreTaskRL.setOnClickListener(this);
         transSetting_swipeRefeshL.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
@@ -231,6 +266,7 @@ public class TransferSettingFragment extends BaseFragment implements SwipeRefres
 //    }
 
     protected void executeOnLoadDataError(String error) {
+        mErrorLayout.setErrorType(EmptyLayout.STATE_NETWORK_ERROR);
     }
 
     protected void executeOnLoadFinish() {
