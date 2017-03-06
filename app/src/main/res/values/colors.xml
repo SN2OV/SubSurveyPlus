@@ -139,8 +139,8 @@
 
     <color name="g_default_loading_bg">@color/grey_300</color>
 
-    <color name="background">#EEEEEE</color>
-
+    <!--<color name="background">#EEEEEE</color>-->
+    <color name="background">#EFEFF4</color>
 
     <array name="g_default_loading_fg">
         <item>@color/cyan_500</item>

@@ -71,28 +71,6 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/sysSetting_shareRL"
-        android:layout_below="@+id/sysSetting_suggestionRL"
-        android:layout_alignStart="@+id/sysSetting_suggestionRL"
-        style="@style/sysSettingRL"
-        >
-
-        <ImageView
-            android:id="@+id/sysSetting_shareIV"
-            app:srcCompat="@drawable/share"
-            style="@style/sysSettingIV"
-            />
-
-        <TextView
-            android:text="分享"
-            android:id="@+id/sysSetting_shareTagTV"
-            android:layout_toEndOf="@+id/sysSetting_shareIV"
-            style="@style/sysSettingTagTV"
-            />
-
-    </RelativeLayout>
-
-    <RelativeLayout
         android:id="@+id/sysSetting_suggestionRL"
         style="@style/sysSettingRL"
         android:layout_below="@+id/sysSetting_githubRL"
@@ -143,5 +121,57 @@
             />
 
     </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/sysSetting_shareRL"
+        style="@style/sysSettingRL"
+        android:layout_below="@+id/sysSetting_suggestionRL"
+        android:layout_alignParentStart="true">
+
+        <ImageView
+            android:id="@+id/sysSetting_shareIV"
+            app:srcCompat="@drawable/share"
+            style="@style/sysSettingIV"
+            />
+
+        <TextView
+            android:text="分享"
+            android:id="@+id/sysSetting_shareTagTV"
+            android:layout_toEndOf="@+id/sysSetting_shareIV"
+            style="@style/sysSettingTagTV"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_marginBottom="59dp"
+        android:id="@+id/sysSetting_logoutRL"
+        android:background="@color/white"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:text="退出账号"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/sysSetting_logoutTagTV"
+            android:layout_alignBottom="@+id/sysSetting_logoutRL"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="15dp"
+            android:textColor="@color/main_red"
+            android:layout_centerVertical="true"
+            android:textSize="16sp"/>
+    </RelativeLayout>
+
+    <TextView
+        android:text="客流调查 1.0.0 ·  SN2OV "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="21dp"
+        android:id="@+id/sysSetting_versionTV"/>
 
 </RelativeLayout>

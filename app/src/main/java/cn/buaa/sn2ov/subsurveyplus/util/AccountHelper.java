@@ -43,18 +43,6 @@ public class AccountHelper {
         return getUser().getUid();
     }
 
-    public synchronized static UserItem getUser() {
-        if (instances == null) {
-            TLog.error("AccountHelper instances is null, you need call init() method.");
-            return new UserItem();
-        }
-        if (instances.user == null)
-            instances.user = SharedPreferencesHelper.loadFormSource(instances.application, UserItem.class);
-        if (instances.user == null)
-            instances.user = new UserItem();
-        return instances.user;
-    }
-
     public static void updateUserCache(UserItem user) {
         if (user == null)
             return;
@@ -67,6 +55,16 @@ public class AccountHelper {
         SharedPreferencesHelper.save(instances.application, user);
     }
 
+    public synchronized static UserItem getUser() {
+        if (instances == null) {
+            TLog.error("AccountHelper instances is null, you need call init() method.");
+            return null;
+        }
+        if (instances.user == null)
+            instances.user = SharedPreferencesHelper.loadFormSource(instances.application, UserItem.class);
+        return instances.user;
+    }
+
     private static void  initInstances(){
         if (instances.user == null)
             instances.user = SharedPreferencesHelper.loadFormSource(instances.application, UserItem.class);
@@ -74,7 +72,7 @@ public class AccountHelper {
             instances.user = new UserItem();
     }
 
-    private static void clearUserCache() {
+    public static void clearUserCache() {
         instances.user = null;
         SharedPreferencesHelper.remove(instances.application, UserItem.class);
     }

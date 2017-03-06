@@ -1,14 +1,23 @@
 package cn.buaa.sn2ov.subsurveyplus.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.buaa.sn2ov.subsurveyplus.AppContext;
 import cn.buaa.sn2ov.subsurveyplus.R;
 import cn.buaa.sn2ov.subsurveyplus.base.ui.BaseFragment;
+import cn.buaa.sn2ov.subsurveyplus.ui.LoginActivity;
+import cn.buaa.sn2ov.subsurveyplus.util.AccountHelper;
+import cn.buaa.sn2ov.subsurveyplus.util.UIHelper;
 
 /**
  * Created by SN2OV on 2017/2/26.
@@ -16,6 +25,9 @@ import cn.buaa.sn2ov.subsurveyplus.base.ui.BaseFragment;
 
 public class SysSettingFragment extends BaseFragment {
     private Unbinder unbinder;
+
+    @BindView(R.id.sysSetting_logoutRL)
+    RelativeLayout sysSetting_logoutRL;
 
     @Override
     protected int getLayoutId() {
@@ -45,5 +57,14 @@ public class SysSettingFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @OnClick(R.id.sysSetting_logoutRL)
+    public void onClick(){
+       Intent it = new Intent();
+       it.setClass(getContext(), LoginActivity.class);
+       startActivity(it);
+       getActivity().finish();
+       AccountHelper.clearUserCache();
     }
 }

@@ -95,7 +95,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         });
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-        //todo 登录监听
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -106,6 +105,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.email_login_form);
         mProgressView = findViewById(R.id.login_progress);
+        //自动登录
+        UserItem user = AccountHelper.getUser();
+        if(user!=null)
+            loginWithCache(user);
+
+
     }
 
     private void populateAutoComplete() {
@@ -252,6 +257,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mSubscriber);
         }
+    }
+
+    private void loginWithCache(UserItem user){
+        String userName = user.getUserName();
+        String password = user.getPassword();
+        showProgress(true);
+        ApiFactory.getTestApi().getValidation(userName, password)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(mSubscriber);
     }
 
     private boolean isEmailValid(String email) {

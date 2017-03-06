@@ -10,10 +10,10 @@
         android:layout_width="match_parent"
         android:id="@+id/personCenter_taskRL"
         android:layout_marginTop="40dp"
-        android:background="@color/white"
         android:layout_below="@+id/personCenter_personInfoCV"
         android:layout_alignStart="@+id/personCenter_personInfoCV"
         android:layout_alignEnd="@+id/personCenter_personInfoCV"
+        android:background="@color/white"
         android:layout_height="50dp">
 
         <ImageView
@@ -50,12 +50,12 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:id="@+id/personCenter_noticeRL"
-        android:background="@color/white"
         android:layout_below="@+id/personCenter_taskRL"
         android:layout_alignStart="@+id/personCenter_taskRL"
         android:layout_alignEnd="@+id/personCenter_taskRL"
         android:layout_marginTop="2dp"
-        android:layout_height="50dp">
+        android:layout_height="50dp"
+        android:background="@color/white">
 
         <ImageView
             android:layout_width="30dp"
