@@ -1,4 +1,4 @@
-package cn.buaa.sn2ov.subsurveyplus.ui;
+package cn.buaa.sn2ov.subsurveyplus.ui.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -252,7 +252,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            ApiFactory.getTestApi().getValidation(userName, password)
+            ApiFactory.getUserApi().getValidation(userName, password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mSubscriber);
@@ -263,7 +263,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         String userName = user.getUserName();
         String password = user.getPassword();
         showProgress(true);
-        ApiFactory.getTestApi().getValidation(userName, password)
+        ApiFactory.getUserApi().getValidation(userName, password)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(mSubscriber);

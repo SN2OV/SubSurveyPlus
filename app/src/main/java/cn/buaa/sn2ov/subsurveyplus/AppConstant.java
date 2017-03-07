@@ -32,9 +32,8 @@ public class AppConstant {
     public static final String TOKEN_FIR = "9e935900ce4683c056f4c59a67f92e7a";
     public static final String KEY_APP_ID = "58023a58959d690fff000aee";
 
-//    public static final String API_TEST_URL = "http://127.0.0.1:8080/rest/";
-//    public static final String API_TEST_URL = "http://10.0.2.2:8080/rest/";
-    public static final String API_TEST_URL = "http://123.206.20.236:9998/rest/";
+    public static final String API_TEST_URL = "http://10.0.2.2:8080/rest/";
+//    public static final String API_TEST_URL = "http://123.206.20.236:9998/rest/";
     public static final String FRAGMENT_TRANSFER_SETTING = "换乘量当前任务";
     public static final String FRAGMENT_WALK_SETTING = "走行时间当前任务";
     public static final String FRAGMENT_OD_SETTING = "OD当前任务";
@@ -42,6 +41,8 @@ public class AppConstant {
     public static final String FRAGMENT_REVERSE_SETTING = "反向乘车当前任务";
     public static final String FRAGMENT_PERSONAL_SETTING = "个人中心";
     public static final String FRAGMENT_SYSTEM_SETTING = "系统设置";
+    public static final String FRAGMENT_PERSONAL_INFO_SETTING = "个人信息设置";
+
 
     public static final String TRANSFER_CACHE = "transfer_cache.data";
     public static final String WALK_CACHE = "walk_cache.data";

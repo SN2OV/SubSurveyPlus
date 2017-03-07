@@ -1,4 +1,4 @@
-package cn.buaa.sn2ov.subsurveyplus.ui;
+package cn.buaa.sn2ov.subsurveyplus.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;

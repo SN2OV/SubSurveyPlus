@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import cn.buaa.sn2ov.subsurveyplus.router.SimpleBackPage;
-import cn.buaa.sn2ov.subsurveyplus.ui.SimpleBackActivity;
+import cn.buaa.sn2ov.subsurveyplus.ui.activity.SimpleBackActivity;
 
 /**
  * Created by SN2OV on 2017/2/19.

@@ -122,6 +122,7 @@ public class BaseFragment extends RxFragment implements IBaseFragment,View.OnCli
 
     @Override
     public void initView(View view) {
+
     }
 
     @Override

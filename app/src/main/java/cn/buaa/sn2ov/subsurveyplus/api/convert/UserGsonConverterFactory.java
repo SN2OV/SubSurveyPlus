@@ -38,9 +38,9 @@ public class UserGsonConverterFactory extends Converter.Factory {
         return new UserGsonResponseBodyConverter<>(gson, adapter);
     }
 
-//    @Override
-//    public Converter<?, RequestBody> requestBodyConverter(Type type, Annotation[] parameterAnnotations, Annotation[] methodAnnotations, Retrofit retrofit) {
-//        TypeAdapter<?> adapter = gson.getAdapter(TypeToken.get(type));
-//        return new UserGsonRequestBodyConverter<>(gson, adapter);
-//    }
+    @Override
+    public Converter<?, RequestBody> requestBodyConverter(Type type, Annotation[] parameterAnnotations, Annotation[] methodAnnotations, Retrofit retrofit) {
+        TypeAdapter<?> adapter = gson.getAdapter(TypeToken.get(type));
+        return new UserGsonRequestBodyConverter<>(gson, adapter);
+    }
 }

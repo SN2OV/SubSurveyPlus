@@ -4,11 +4,22 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.buaa.sn2ov.subsurveyplus.AppConstant;
 import cn.buaa.sn2ov.subsurveyplus.R;
 import cn.buaa.sn2ov.subsurveyplus.base.ui.BaseFragment;
+import cn.buaa.sn2ov.subsurveyplus.model.response.user.UserItem;
+import cn.buaa.sn2ov.subsurveyplus.router.Router;
+import cn.buaa.sn2ov.subsurveyplus.router.SimpleBackPage;
+import cn.buaa.sn2ov.subsurveyplus.util.AccountHelper;
 
 /**
  * Created by SN2OV on 2017/2/26.
@@ -16,6 +27,12 @@ import cn.buaa.sn2ov.subsurveyplus.base.ui.BaseFragment;
 
 public class PersonCenterFragment extends BaseFragment {
     private Unbinder unbinder;
+    private UserItem user;
+
+    @BindView(R.id.personCenter_persionInfoRL)
+    RelativeLayout personCenter_persionInfoRL;
+    @BindView(R.id.personCenter_usernameTV)
+    TextView personCenter_usernameTV;
 
     @Override
     protected int getLayoutId() {
@@ -25,25 +42,35 @@ public class PersonCenterFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initData();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(getLayoutId(), container, false);
         unbinder = ButterKnife.bind(this,view);
+        initData();
         initView(view);
         return view;
     }
 
     @Override
+    public void initData() {
+        user = AccountHelper.getUser();
+    }
+
+    @Override
     public void initView(View view) {
-//        walkSetting_tv.setText("走行调查嘿嘿");
+        personCenter_usernameTV.setText(user.getUserName());
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @OnClick(R.id.personCenter_persionInfoRL)
+    public void onClick(){
+        Router.showSimpleBack(getFragmentManager().findFragmentByTag(AppConstant.FRAGMENT_PERSONAL_SETTING),SimpleBackPage.PERSON_INFO_SETTING);
     }
 }

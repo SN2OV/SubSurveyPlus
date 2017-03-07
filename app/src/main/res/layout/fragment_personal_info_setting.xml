@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/background">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="20dp"
+        android:id="@+id/persInfoSetting_avatarRL"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:background="@color/white"
+        android:layout_height="80dp">
+
+        <TextView
+            android:text="头像"
+            android:id="@+id/persInfoSetting_avatarTagTV"
+            style="@style/persInfoSettingTagTV"/>
+
+        <ImageView
+            app:srcCompat="@drawable/avatar"
+            android:id="@+id/personInfoSetting_avatarIV"
+            android:layout_alignParentTop="true"
+            android:layout_toStartOf="@+id/personInfoSetting_avatarArrowIV"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            style="@style/sysSettingRL"/>
+
+        <ImageView
+            app:srcCompat="@drawable/common_icon_arrow"
+            android:id="@+id/personInfoSetting_avatarArrowIV"
+            android:layout_alignBottom="@+id/persInfoSetting_avatarTagTV"
+            style="@style/persInfoSettingArrowIV"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/persInfoSetting_mobileRL"
+        android:layout_below="@+id/persInfoSetting_realNameRL"
+        style="@style/sysSettingRL">
+
+        <TextView
+            android:text="手机号"
+            android:id="@+id/persInfoSetting_mobileTagTV"
+            style="@style/persInfoSettingTagTV"/>
+
+        <ImageView
+            app:srcCompat="@drawable/common_icon_arrow"
+            android:id="@+id/personInfoSetting_mobileArrowIV"
+            android:layout_alignBottom="@+id/persInfoSetting_mobileTagTV"
+            style="@style/persInfoSettingArrowIV"/>
+
+        <TextView
+            android:text="18200279098"
+            android:id="@+id/persInfoSetting_mobileTV"
+            android:layout_toStartOf="@+id/personInfoSetting_mobileArrowIV"
+            style="@style/persInfoSettingTV"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/persInfoSetting_IDCardRL"
+        android:layout_below="@+id/persInfoSetting_mobileRL"
+        style="@style/sysSettingRL">
+
+        <TextView
+            android:text="身份证号"
+            android:id="@+id/persInfoSetting_IDCardTagTV"
+            style="@style/persInfoSettingTagTV"/>
+
+        <ImageView
+            app:srcCompat="@drawable/common_icon_arrow"
+            android:id="@+id/personInfoSetting_IDCardArrowIV"
+            android:layout_alignBottom="@+id/persInfoSetting_IDCardTagTV"
+            style="@style/persInfoSettingArrowIV"/>
+
+        <TextView
+            android:text="131028199404091218"
+            android:id="@+id/persInfoSetting_IDCardTV"
+            android:layout_toStartOf="@+id/personInfoSetting_IDCardArrowIV"
+            style="@style/persInfoSettingTV"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/persInfoSetting_NFCRL"
+        android:layout_below="@+id/persInfoSetting_IDCardRL"
+        style="@style/sysSettingRL">
+
+        <TextView
+            android:text="公交卡号"
+            android:id="@+id/persInfoSetting_NFCTagTV"
+            style="@style/persInfoSettingTagTV"/>
+
+        <ImageView
+            app:srcCompat="@drawable/common_icon_arrow"
+            android:id="@+id/personInfoSetting_NFCArrowIV"
+            android:layout_alignBottom="@+id/persInfoSetting_NFCTagTV"
+            style="@style/persInfoSettingArrowIV"/>
+
+        <TextView
+            android:text="44567675332689098"
+            android:id="@+id/persInfoSetting_NFCTV"
+            android:layout_toStartOf="@+id/personInfoSetting_NFCArrowIV"
+            style="@style/persInfoSettingTV"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/persInfoSetting_realNameRL"
+        style="@style/sysSettingRL"
+        android:layout_below="@+id/persInfoSetting_userNameRL"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:text="姓名"
+            android:id="@+id/persInfoSetting_realNameTagTV"
+            style="@style/persInfoSettingTagTV"/>
+
+        <ImageView
+            app:srcCompat="@drawable/common_icon_arrow"
+            android:id="@+id/personInfoSetting_realNameArrowIV"
+            android:layout_alignBottom="@+id/persInfoSetting_realNameTagTV"
+            android:visibility="invisible"
+            style="@style/persInfoSettingArrowIV"/>
+
+        <TextView
+            android:text="刘笑凡"
+            android:id="@+id/persInfoSetting_realNameTV"
+            android:layout_toStartOf="@+id/personInfoSetting_realNameArrowIV"
+            style="@style/persInfoSettingTV"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/persInfoSetting_userNameRL"
+        style="@style/sysSettingRL"
+        android:layout_below="@+id/persInfoSetting_avatarRL"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:text="用户名"
+            android:id="@+id/persInfoSetting_userNameTagTV"
+            style="@style/persInfoSettingTagTV"/>
+
+        <ImageView
+            app:srcCompat="@drawable/common_icon_arrow"
+            android:id="@+id/personInfoSetting_userNameArrowIV"
+            style="@style/persInfoSettingArrowIV"/>
+
+        <TextView
+            android:text="sn2ov"
+            android:id="@+id/persInfoSetting_userNameTV"
+            android:layout_toStartOf="@+id/personInfoSetting_userNameArrowIV"
+            style="@style/persInfoSettingTV"/>
+    </RelativeLayout>
+</RelativeLayout>

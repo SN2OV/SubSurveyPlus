@@ -16,18 +16,18 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 public enum ApiFactory {
     INSTANCE;
 
-    private static TestApi sTestApi;
+    private static UserApi sUserApi;
     private static TransferNewestApi sTrasferApi;
     private static TransferAllApi sTransferAllApi;
 
     ApiFactory() {
     }
 
-    public static TestApi getTestApi(){
-        if(sTestApi == null){
-            ApiFactory.sTestApi = createApi(AppConstant.API_TEST_URL,TestApi.class, UserGsonConverterFactory.create());
+    public static UserApi getUserApi(){
+        if(sUserApi == null){
+            ApiFactory.sUserApi = createApi(AppConstant.API_TEST_URL,UserApi.class, UserGsonConverterFactory.create());
         }
-        return sTestApi;
+        return sUserApi;
     }
 
     public static TransferNewestApi getTranserApi(){

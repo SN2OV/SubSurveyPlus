@@ -150,7 +150,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements View.O
 
         //back button
         if (hasBackButton()) {
-            actionBar.setNavigationIcon(R.drawable.actionbar_back_icon_normal_x);
+            actionBar.setNavigationIcon(R.drawable.abc_ic_ab_back_material);
             actionBar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

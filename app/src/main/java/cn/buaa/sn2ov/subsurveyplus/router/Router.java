@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
-import cn.buaa.sn2ov.subsurveyplus.ui.SimpleBackActivity;
+import cn.buaa.sn2ov.subsurveyplus.ui.activity.SimpleBackActivity;
 
 /**
  * Created by SN2OV on 2017/2/24.
@@ -16,6 +16,12 @@ public class Router {
         Intent intent = new Intent(context, SimpleBackActivity.class);
         intent.putExtra(SimpleBackActivity.BUNDLE_KEY_PAGE, page.getId());
         context.startActivity(intent);
+    }
+
+    public static void showSimpleBack(Fragment fragment, SimpleBackPage page) {
+        Intent intent = new Intent(fragment.getActivity(), SimpleBackActivity.class);
+        intent.putExtra(SimpleBackActivity.BUNDLE_KEY_PAGE, page.getId());
+        fragment.getActivity().startActivity(intent);
     }
 
     public static void showSimpleBackForResult(Fragment fragment,

@@ -1,4 +1,4 @@
-package cn.buaa.sn2ov.subsurveyplus.ui;
+package cn.buaa.sn2ov.subsurveyplus.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity
     private int fragmentID;
     private Toolbar toolbar;
     private static final String SAVE_STATE_TAG = "tag";
+    private long mLastExitTime;
+    private Menu mMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,14 +100,19 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+            return;
+        }
+        if (System.currentTimeMillis() - mLastExitTime < 2000) {
             super.onBackPressed();
+        } else {
+            mLastExitTime = System.currentTimeMillis();
+            AppContext.toastShort(R.string.tip_click_back_again_to_exist);
         }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        mMenu = menu;
         getMenuInflater().inflate(R.menu.menu_survey_setting, menu);
         MenuItemCompat.setShowAsAction(menu.getItem(0),MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
         return true;
@@ -146,8 +153,8 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         fragmentID = item.getItemId();
+        mMenu.findItem(R.id.action_add).setVisible(true);
         switch (fragmentID){
             case R.id.nav_walk_survey:
                 switchFragment(AppConstant.FRAGMENT_WALK_SETTING);
@@ -166,12 +173,13 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_personal:
                 switchFragment(AppConstant.FRAGMENT_PERSONAL_SETTING);
+                mMenu.findItem(R.id.action_add).setVisible(false);
                 break;
             case R.id.nav_syssetting:
                 switchFragment(AppConstant.FRAGMENT_SYSTEM_SETTING);
+                mMenu.findItem(R.id.action_add).setVisible(false);
                 break;
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -236,4 +244,5 @@ public class MainActivity extends AppCompatActivity
                 break;
         }
     }
+
 }

@@ -6,69 +6,6 @@
                 android:background="@color/background"
                 android:id="@+id/sysSetting_rootRL">
 
-    <RelativeLayout
-        android:id="@+id/sysSetting_pushSwitchRL"
-        android:layout_width="match_parent"
-        android:layout_marginTop="20dp"
-        android:background="@color/white"
-        android:layout_height="50dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        >
-
-        <ImageView
-            android:id="@+id/sysSetting_pushSwitchIV"
-            app:srcCompat="@drawable/pull"
-            style="@style/sysSettingIV"
-            />
-
-        <TextView
-            android:text="接收推送"
-            android:id="@+id/sysSetting_pushSwitchTagTV"
-            android:layout_toEndOf="@+id/sysSetting_pushSwitchIV"
-            style="@style/sysSettingTagTV"
-            />
-
-        <Switch
-            android:id="@+id/sysSetting_pushSwitch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="12dp"
-            />
-
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:id="@+id/sysSetting_updateRL"
-        android:layout_below="@+id/sysSetting_pushSwitchRL"
-        android:layout_alignStart="@+id/sysSetting_pushSwitchRL"
-        style="@style/sysSettingRL"
-        android:layout_alignParentEnd="true">
-
-        <ImageView
-            android:layout_width="30dp"
-            app:srcCompat="@drawable/task"
-            android:layout_marginStart="21dp"
-            android:id="@+id/sysSetting_updateIV"
-            android:layout_height="40dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentStart="true"/>
-
-        <TextView
-            android:text="检查更新"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:id="@+id/sysSetting_updateTagTV"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/sysSetting_updateIV"
-            android:layout_centerInParent="true"
-            android:textColor="@color/black"/>
-
-    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/sysSetting_suggestionRL"
@@ -173,5 +110,66 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="21dp"
         android:id="@+id/sysSetting_versionTV"/>
+
+    <RelativeLayout
+        android:id="@+id/sysSetting_pushSwitchRL"
+        android:layout_width="match_parent"
+        android:layout_marginTop="18dp"
+        android:background="@color/white"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <ImageView
+            android:id="@+id/sysSetting_pushSwitchIV"
+            app:srcCompat="@drawable/pull"
+            style="@style/sysSettingIV"
+            />
+
+        <TextView
+            android:text="接收推送"
+            android:id="@+id/sysSetting_pushSwitchTagTV"
+            android:layout_toEndOf="@+id/sysSetting_pushSwitchIV"
+            style="@style/sysSettingTagTV"
+            />
+
+        <Switch
+            android:id="@+id/sysSetting_pushSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="12dp"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/sysSetting_updateRL"
+        style="@style/sysSettingRL"
+        android:layout_below="@+id/sysSetting_pushSwitchRL"
+        android:layout_alignParentStart="true">
+
+        <ImageView
+            android:layout_width="30dp"
+            app:srcCompat="@drawable/task"
+            android:layout_marginStart="21dp"
+            android:id="@+id/sysSetting_updateIV"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"/>
+
+        <TextView
+            android:text="检查更新"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:id="@+id/sysSetting_updateTagTV"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/sysSetting_updateIV"
+            android:layout_centerInParent="true"
+            android:textColor="@color/black"/>
+
+    </RelativeLayout>
 
 </RelativeLayout>

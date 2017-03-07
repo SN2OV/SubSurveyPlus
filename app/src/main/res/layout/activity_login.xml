@@ -9,7 +9,7 @@
                 android:paddingLeft="@dimen/activity_horizontal_margin"
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingTop="@dimen/activity_vertical_margin"
-                tools:context="cn.buaa.sn2ov.subsurveyplus.ui.LoginActivity"
+                tools:context="cn.buaa.sn2ov.subsurveyplus.ui.activity.LoginActivity"
                 android:id="@+id/loginRL">
 
     <ImageView

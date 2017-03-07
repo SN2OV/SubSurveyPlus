@@ -6,18 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import cn.buaa.sn2ov.subsurveyplus.AppContext;
 import cn.buaa.sn2ov.subsurveyplus.R;
 import cn.buaa.sn2ov.subsurveyplus.base.ui.BaseFragment;
-import cn.buaa.sn2ov.subsurveyplus.ui.LoginActivity;
+import cn.buaa.sn2ov.subsurveyplus.ui.activity.LoginActivity;
 import cn.buaa.sn2ov.subsurveyplus.util.AccountHelper;
-import cn.buaa.sn2ov.subsurveyplus.util.UIHelper;
 
 /**
  * Created by SN2OV on 2017/2/26.
