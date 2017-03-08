@@ -15,7 +15,7 @@ import java.net.UnknownHostException;
 import java.util.Date;
 
 import cn.buaa.sn2ov.subsurveyplus.util.FileUtils;
-import cn.buaa.sn2ov.subsurveyplus.util.OSUtil;
+import cn.buaa.sn2ov.subsurveyplus.util.FromOSChina.OSUtil;
 
 
 public class AppCrash extends Exception implements UncaughtExceptionHandler {

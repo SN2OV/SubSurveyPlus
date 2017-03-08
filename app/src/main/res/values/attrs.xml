@@ -15,4 +15,14 @@
         <attr name="gAutoRun" format="boolean"/>
         <attr name="gProgressFloat" format="float"/>
     </declare-styleable>
+
+    <string-array name="avatar_option">
+        <item>更换头像</item>
+        <item>查看大头像</item>
+    </string-array>
+
+    <declare-styleable name="CircleImageView">
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
+    </declare-styleable>
 </resources>

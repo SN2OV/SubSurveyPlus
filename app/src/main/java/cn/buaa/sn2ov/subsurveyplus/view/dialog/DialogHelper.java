@@ -1,98 +1,121 @@
 package cn.buaa.sn2ov.subsurveyplus.view.dialog;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
-import android.text.Html;
+import android.support.v7.widget.AppCompatEditText;
 import android.text.TextUtils;
+import android.view.View;
 
 import cn.buaa.sn2ov.subsurveyplus.R;
 
+/**
+ * Created by SN2OV on 2017/3/8.
+ */
 
 public class DialogHelper {
-
-
     public static AlertDialog.Builder getDialog(Context context) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        return builder;
+        return new AlertDialog.Builder(context, R.style.App_Theme_Dialog_Alert);
     }
 
-
-    public static WaitDialog getWaitDialog(Context context, String message) {
-        WaitDialog waitDialog = null;
-        waitDialog = new WaitDialog(context, R.style.loading_progress);
-        waitDialog.setMessage(message);
-        return waitDialog;
+    /**
+     * 获取一个普通的消息对话框，没有取消按钮
+     */
+    public static AlertDialog.Builder getMessageDialog(
+        Context context,
+        String title,
+        String message,
+        boolean cancelable) {
+        return getDialog(context)
+            .setCancelable(cancelable)
+            .setTitle(title)
+            .setMessage(message)
+            .setPositiveButton("确定", null);
     }
 
-    public static AlertDialog.Builder getMessageDialog(Context context, String message, DialogInterface.OnClickListener onClickListener) {
-        AlertDialog.Builder builder = getDialog(context);
-        builder.setMessage(message);
-        builder.setPositiveButton("确定", onClickListener);
-        return builder;
+    /**
+     * 获取一个普通的消息对话框，没有取消按钮
+     */
+    public static AlertDialog.Builder getMessageDialog(
+        Context context,
+        String title,
+        String message) {
+        return getMessageDialog(context, title, message, false);
     }
 
+    /**
+     * 获取一个普通的消息对话框，没有取消按钮
+     */
     public static AlertDialog.Builder getMessageDialog(Context context, String message) {
-        return getMessageDialog(context, message, null);
+        return getMessageDialog(context, "", message, false);
     }
 
-    public static AlertDialog.Builder getConfirmDialog(Context context, String message, DialogInterface.OnClickListener onClickListener) {
-        AlertDialog.Builder builder = getDialog(context);
-        builder.setMessage(Html.fromHtml(message));
-        builder.setPositiveButton("确定", onClickListener);
-        builder.setNegativeButton("取消", null);
-        return builder;
-    }
-
-    public static AlertDialog.Builder getConfirmDialog(Context context, String message, DialogInterface.OnClickListener onOkClickListener, DialogInterface.OnClickListener onCancleClickListener) {
-        AlertDialog.Builder builder = getDialog(context);
-        builder.setMessage(message);
-        builder.setPositiveButton("确定", onOkClickListener);
-        builder.setNegativeButton("取消", onCancleClickListener);
-        return builder;
-    }
-
-    public static AlertDialog.Builder getConfirmDialog(Context context,
-                                                       String message,
-                                                       String okString,
-                                                       String cancleString,
-                                                       DialogInterface.OnClickListener onOkClickListener,
-                                                       DialogInterface.OnClickListener onCancleClickListener) {
-        return getConfirmDialog(context, "", message, okString, cancleString, onOkClickListener, onCancleClickListener);
+    /**
+     * 获取一个普通的消息对话框，没有取消按钮
+     */
+    public static AlertDialog.Builder getMessageDialog(
+        Context context,
+        String title,
+        String message,
+        String positiveText) {
+        return getDialog(context)
+            .setCancelable(false)
+            .setTitle(title)
+            .setMessage(message)
+            .setPositiveButton(positiveText, null);
     }
 
     public static AlertDialog.Builder getConfirmDialog(Context context,
                                                        String title,
-                                                       String message,
-                                                       String okString,
-                                                       String cancleString,
-                                                       DialogInterface.OnClickListener onOkClickListener,
-                                                       DialogInterface.OnClickListener onCancleClickListener) {
-        AlertDialog.Builder builder = getDialog(context);
-        if (!TextUtils.isEmpty(title)) {
-            builder.setTitle(title);
-        }
-        builder.setMessage(message);
-        builder.setPositiveButton(okString, onOkClickListener);
-        builder.setNegativeButton(cancleString, onCancleClickListener);
-        return builder;
+                                                       View view,
+                                                       DialogInterface.OnClickListener positiveListener) {
+        return getDialog(context)
+            .setTitle(title)
+            .setView(view)
+            .setPositiveButton("确定", positiveListener)
+            .setNegativeButton("取消", null);
     }
 
-    public static AlertDialog.Builder getSelectDialog(Context context, String title, String[] arrays, DialogInterface.OnClickListener onClickListener) {
-        AlertDialog.Builder builder = getDialog(context);
-        builder.setItems(arrays, onClickListener);
-        if (!TextUtils.isEmpty(title)) {
-            builder.setTitle(title);
-        }
-        builder.setPositiveButton("取消", null);
-        return builder;
+    /**
+     * 获取一个验证对话框
+     */
+    public static AlertDialog.Builder getConfirmDialog(
+        Context context,
+        String title,
+        String message,
+        String positiveText,
+        String negativeText,
+        boolean cancelable,
+        DialogInterface.OnClickListener positiveListener,
+        DialogInterface.OnClickListener negativeListener) {
+        return getDialog(context)
+            .setCancelable(cancelable)
+            .setTitle(title)
+            .setMessage(message)
+            .setPositiveButton(positiveText, positiveListener)
+            .setNegativeButton(negativeText, negativeListener);
     }
 
-    public static AlertDialog.Builder getSelectDialog(Context context, String[] arrays, DialogInterface.OnClickListener onClickListener) {
-        return getSelectDialog(context, "", arrays, onClickListener);
+    /**
+     * 获取一个验证对话框
+     */
+    public static AlertDialog.Builder getConfirmDialog(
+        Context context, String message,
+        DialogInterface.OnClickListener positiveListener,
+        DialogInterface.OnClickListener negativeListener) {
+        return getDialog(context)
+            .setMessage(message)
+            .setPositiveButton("确定", positiveListener)
+            .setNegativeButton("取消", negativeListener);
     }
 
-    public static AlertDialog.Builder getSingleChoiceDialog(Context context, String title, String[] arrays, int selectIndex, DialogInterface.OnClickListener onClickListener) {
+    public static AlertDialog.Builder getSingleChoiceDialog(
+        Context context,
+        String title,
+        String[] arrays,
+        int selectIndex,
+        DialogInterface.OnClickListener onClickListener) {
         AlertDialog.Builder builder = getDialog(context);
         builder.setSingleChoiceItems(arrays, selectIndex, onClickListener);
         if (!TextUtils.isEmpty(title)) {
@@ -102,8 +125,268 @@ public class DialogHelper {
         return builder;
     }
 
-    public static AlertDialog.Builder getSingleChoiceDialog(Context context, String[] arrays, int selectIndex, DialogInterface.OnClickListener onClickListener) {
-        return getSingleChoiceDialog(context, "", arrays, selectIndex, onClickListener);
+
+    /**
+     * 获取一个验证对话框，没有点击事件
+     */
+    public static AlertDialog.Builder getConfirmDialog(
+        Context context,
+        String title,
+        String message,
+        String positiveText,
+        String negativeText,
+        boolean cancelable,
+        DialogInterface.OnClickListener positiveListener) {
+        return getConfirmDialog(
+            context, title, message, positiveText,
+            negativeText, cancelable, positiveListener, null);
     }
 
+    /**
+     * 获取一个验证对话框，没有点击事件
+     */
+    public static AlertDialog.Builder getConfirmDialog(
+        Context context,
+        String title,
+        String message,
+        String positiveText,
+        String negativeText,
+        DialogInterface.OnClickListener positiveListener) {
+        return getConfirmDialog(
+            context, title, message, positiveText, negativeText, false, positiveListener, null);
+    }
+
+
+    /**
+     * 获取一个验证对话框，没有点击事件
+     */
+    public static AlertDialog.Builder getConfirmDialog(
+        Context context,
+        String title,
+        String message,
+        String positiveText,
+        String negativeText,
+        boolean cancelable) {
+        return getConfirmDialog(
+            context, title, message, positiveText, negativeText, cancelable, null, null);
+    }
+
+    /**
+     * 获取一个验证对话框，没有点击事件
+     */
+    public static AlertDialog.Builder getConfirmDialog(
+        Context context,
+        String message,
+        String positiveText,
+        String negativeText,
+        boolean cancelable) {
+        return getConfirmDialog(context, "", message, positiveText, negativeText
+            , cancelable, null, null);
+    }
+
+    /**
+     * 获取一个验证对话框，没有点击事件，取消、确定
+     */
+    public static AlertDialog.Builder getConfirmDialog(
+        Context context,
+        String title,
+        String message,
+        boolean cancelable) {
+        return getConfirmDialog(context, title, message, "确定", "取消", cancelable, null, null);
+    }
+
+    /**
+     * 获取一个验证对话框，没有点击事件，取消、确定
+     */
+    public static AlertDialog.Builder getConfirmDialog(
+        Context context,
+        String message,
+        boolean cancelable,
+        DialogInterface.OnClickListener positiveListener) {
+        return getConfirmDialog(context, "", message, "确定", "取消", cancelable, positiveListener, null);
+    }
+
+    /**
+     * 获取一个验证对话框，没有点击事件，取消、确定
+     */
+    public static AlertDialog.Builder getConfirmDialog(
+        Context context,
+        String message,
+        DialogInterface.OnClickListener positiveListener) {
+        return getConfirmDialog(context, "", message, "确定", "取消", positiveListener);
+    }
+
+    /**
+     * 获取一个验证对话框，没有点击事件，取消、确定
+     */
+    public static AlertDialog.Builder getConfirmDialog(
+        Context context,
+        String title,
+        String message) {
+        return getConfirmDialog(context, title, message, "确定", "取消", false, null, null);
+    }
+
+    /**
+     * 获取一个输入对话框
+     */
+    public static AlertDialog.Builder getInputDialog(
+        Context context,
+        String title,
+        AppCompatEditText editText,
+        String positiveText,
+        String negativeText,
+        boolean cancelable,
+        DialogInterface.OnClickListener positiveListener,
+        DialogInterface.OnClickListener negativeListener) {
+        return getDialog(context)
+            .setCancelable(cancelable)
+            .setTitle(title)
+            .setView(editText)
+            .setPositiveButton(positiveText, positiveListener)
+            .setNegativeButton(negativeText, negativeListener);
+    }
+
+    /**
+     * 获取一个输入对话框
+     */
+    public static AlertDialog.Builder getInputDialog(
+        Context context, String title,
+        AppCompatEditText editText,
+        String positiveText,
+        String negativeText,
+        boolean cancelable,
+        DialogInterface.OnClickListener positiveListener) {
+        return getInputDialog(
+            context,
+            title,
+            editText,
+            positiveText,
+            negativeText,
+            cancelable,
+            positiveListener,
+            null);
+    }
+
+    /**
+     * 获取一个输入对话框
+     */
+    public static AlertDialog.Builder getInputDialog(
+        Context context,
+        String title,
+        AppCompatEditText editText,
+        boolean cancelable,
+        DialogInterface.OnClickListener positiveListener) {
+        return getInputDialog(context, title, editText, "确定", "取消"
+            , cancelable, positiveListener, null);
+    }
+
+    /**
+     * 获取一个输入对话框
+     */
+    public static AlertDialog.Builder getInputDialog(
+        Context context, String title, AppCompatEditText editText, String positiveText,
+        boolean cancelable,
+        DialogInterface.OnClickListener positiveListener,
+        DialogInterface.OnClickListener negativeListener) {
+        return getInputDialog(
+            context, title, editText, positiveText, "取消", cancelable
+            , positiveListener, negativeListener);
+    }
+
+    /**
+     * 获取一个输入对话框
+     */
+    public static AlertDialog.Builder getInputDialog(
+        Context context, String title, AppCompatEditText editText,
+        boolean cancelable,
+        DialogInterface.OnClickListener positiveListener,
+        DialogInterface.OnClickListener negativeListener) {
+        return getInputDialog(
+            context, title, editText, "确定", "取消", cancelable
+            , positiveListener, negativeListener);
+    }
+
+
+    /**
+     * 获取一个等待对话框
+     */
+    public static ProgressDialog getProgressDialog(Context context) {
+        return new ProgressDialog(context);
+    }
+
+    /**
+     * 获取一个等待对话框
+     */
+    public static ProgressDialog getProgressDialog(Context context, boolean cancelable) {
+        ProgressDialog dialog = getProgressDialog(context);
+        dialog.setCancelable(cancelable);
+        return dialog;
+    }
+
+    /**
+     * 获取一个等待对话框
+     */
+    public static ProgressDialog getProgressDialog(Context context, String message) {
+        ProgressDialog dialog = getProgressDialog(context);
+        dialog.setMessage(message);
+        return dialog;
+    }
+
+    /**
+     * 获取一个等待对话框
+     */
+    public static ProgressDialog getProgressDialog(
+        Context context, String title, String message, boolean cancelable) {
+        ProgressDialog dialog = getProgressDialog(context);
+        dialog.setCancelable(cancelable);
+        dialog.setTitle(title);
+        dialog.setMessage(message);
+        return dialog;
+    }
+
+    /**
+     * 获取一个等待对话框
+     */
+    public static ProgressDialog getProgressDialog(
+        Context context, String message, boolean cancelable) {
+        ProgressDialog dialog = getProgressDialog(context);
+        dialog.setCancelable(cancelable);
+        dialog.setMessage(message);
+        return dialog;
+    }
+
+    public static AlertDialog.Builder getSelectDialog(
+        Context context, String title, String[] items,
+        String positiveText,
+        DialogInterface.OnClickListener itemListener) {
+        return getDialog(context)
+            .setTitle(title)
+            .setItems(items, itemListener)
+            .setPositiveButton(positiveText, null);
+
+    }
+
+    public static AlertDialog.Builder getSelectDialog(
+        Context context, String[] items,
+        String positiveText,
+        DialogInterface.OnClickListener itemListener) {
+        return getDialog(context)
+            .setItems(items, itemListener)
+            .setPositiveButton(positiveText, null);
+
+    }
+
+    public static AlertDialog.Builder getSelectDialog(Context context, View view, String positiveText,
+                                                      DialogInterface.OnClickListener itemListener) {
+        return getDialog(context)
+            .setView(view)
+            .setPositiveButton(positiveText, null);
+    }
+
+    public static WaitDialog getWaitDialog(Context context, String message) {
+        WaitDialog waitDialog = null;
+        waitDialog = new WaitDialog(context, R.style.loading_progress);
+        waitDialog.setMessage(message);
+        return waitDialog;
+    }
 }

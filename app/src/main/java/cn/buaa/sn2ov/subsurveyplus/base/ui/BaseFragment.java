@@ -7,8 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
 import com.trello.rxlifecycle.components.support.RxFragment;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import cn.buaa.sn2ov.subsurveyplus.AppContext;
 import cn.buaa.sn2ov.subsurveyplus.api.remote.ApiFactory;
 import cn.buaa.sn2ov.subsurveyplus.base.interf.IBaseFragment;
@@ -45,9 +49,10 @@ public class BaseFragment extends RxFragment implements IBaseFragment,View.OnCli
     public static final int STATE_PRESSNONE = 4;
 
     public static int mState = STATE_NONE;
-
-
+    private RequestManager mImgLoader;
     protected LayoutInflater mInflater;
+    private Unbinder unBinder;
+    protected View mRoot;
 
     public AppContext getApplication() {
         return (AppContext) getActivity().getApplication();
@@ -61,9 +66,25 @@ public class BaseFragment extends RxFragment implements IBaseFragment,View.OnCli
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        this.mInflater = inflater;
-        View view = super.onCreateView(inflater, container, savedInstanceState);
-        return view;
+        if (mRoot != null) {
+            ViewGroup parent = (ViewGroup) mRoot.getParent();
+            if (parent != null)
+                parent.removeView(mRoot);
+        } else {
+            mRoot = inflater.inflate(getLayoutId(), container, false);
+            mInflater = inflater;
+            View view = inflater.inflate(getLayoutId(), container, false);
+            unBinder = ButterKnife.bind(this, view);
+            initData();
+            initView(view);
+            return view;
+        }
+        return mRoot;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
 
     @Override
@@ -133,5 +154,16 @@ public class BaseFragment extends RxFragment implements IBaseFragment,View.OnCli
     @Override
     public void onClick(View v) {
 
+    }
+
+    /**
+     * 获取一个图片加载管理器
+     *
+     * @return RequestManager
+     */
+    public synchronized RequestManager getImgLoader() {
+        if (mImgLoader == null)
+            mImgLoader = Glide.with(this);
+        return mImgLoader;
     }
 }

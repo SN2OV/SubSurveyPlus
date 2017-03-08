@@ -30,14 +30,16 @@ public class AccountHelper {
         instances = new AccountHelper(application);
     }
 
-//    public static boolean isLogin() {
-//        return getUserId() > 0 && !TextUtils.isEmpty(getCookie());
-//    }
+    public static boolean isLogin() {
+        return getUserId() > 0 && !TextUtils.isEmpty(getCookie());
+    }
 
-//    public static String getCookie() {
+    public static String getCookie() {
+        //TODO  暂不保留Cookie信息
 //        String cookie = getUser().getCookie();
-//        return cookie == null ? "" : cookie;
-//    }
+        String cookie = null;
+        return cookie == null ? "" : cookie;
+    }
 
     public static int getUserId() {
         return getUser().getUid();

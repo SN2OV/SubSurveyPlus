@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import cn.buaa.sn2ov.subsurveyplus.R;
-import cn.buaa.sn2ov.subsurveyplus.util.OSUtil;
+import cn.buaa.sn2ov.subsurveyplus.util.FromOSChina.OSUtil;
 
 
 public class WaitDialog extends Dialog {

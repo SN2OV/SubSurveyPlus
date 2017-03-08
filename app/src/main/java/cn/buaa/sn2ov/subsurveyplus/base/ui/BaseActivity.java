@@ -1,17 +1,22 @@
 package cn.buaa.sn2ov.subsurveyplus.base.ui;
 
+import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import butterknife.ButterKnife;
@@ -22,6 +27,8 @@ import cn.buaa.sn2ov.subsurveyplus.base.interf.IBaseView;
 import cn.buaa.sn2ov.subsurveyplus.view.dialog.DialogHelper;
 import cn.buaa.sn2ov.subsurveyplus.view.dialog.IDialog;
 import cn.buaa.sn2ov.subsurveyplus.view.dialog.WaitDialog;
+
+import static cn.buaa.sn2ov.subsurveyplus.R.id.container;
 
 /**
  * Created by SN2OV on 2017/2/7.
@@ -34,6 +41,8 @@ public abstract class BaseActivity extends RxAppCompatActivity implements View.O
     private Toolbar mToolbar;
     private TextView mActionTitle;
     private WaitDialog mDialog;
+    protected RequestManager mImageLoader;
+    protected View mRoot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +67,11 @@ public abstract class BaseActivity extends RxAppCompatActivity implements View.O
             initActionBar(mToolbar);
         }
 
+        if (initBundle(getIntent().getExtras())) {
+            initWindow();
+            initWidget();
+        }
+
         //通过注解绑定控件
         ButterKnife.bind(this);
 
@@ -67,6 +81,10 @@ public abstract class BaseActivity extends RxAppCompatActivity implements View.O
 
         mIsVisible = true;
     }
+
+    public void initWidget() {
+    }
+
 
     @Override
     public void hideWaitDialog() {
@@ -247,5 +265,17 @@ public abstract class BaseActivity extends RxAppCompatActivity implements View.O
             return mDialog;
         }
         return null;
+    }
+
+    protected boolean initBundle(Bundle bundle) {
+        return true;
+    }
+    protected void initWindow() {
+    }
+
+    public synchronized RequestManager getImageLoader() {
+        if (mImageLoader == null)
+            mImageLoader = Glide.with(this);
+        return mImageLoader;
     }
 }

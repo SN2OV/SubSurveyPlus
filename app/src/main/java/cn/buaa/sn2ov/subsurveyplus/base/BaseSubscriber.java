@@ -2,7 +2,6 @@ package cn.buaa.sn2ov.subsurveyplus.base;
 
 import android.content.Context;
 
-import cn.buaa.sn2ov.subsurveyplus.util.OSUtil;
 import rx.Subscriber;
 
 public class BaseSubscriber<T> extends Subscriber<T> {

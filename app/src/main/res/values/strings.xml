@@ -48,4 +48,24 @@
     <string name="error_unknown">发生了一点问题，稍后再试</string>
     <string name="error_service">服务不可用</string>
     <string name="tip_click_back_again_to_exist">再按一次退出</string>
+
+    <string name="state_network_error">网络错误</string>
+    <string name="state_loading">正在加载…</string>
+    <string name="state_not_more">没有更多数据</string>
+    <string name="state_load_error">加载失败</string>
+    <string name="state_refreshing">正在刷新</string>
+    <string name="state_loading_error">数据加载中&#8230;</string>
+    <string name="state_submit">正在提交中&#8230;</string>
+
+
+    <string name="gallery_save_file_not_have_external_storage">没有外部存储!</string>
+    <string name="gallery_save_file_success">保存成功!</string>
+    <string name="gallery_save_file_failed">存储失败!</string>
+    <string name="image_select_opt_done">完成</string>
+    <string name="image_select_opt_preview">预览</string>
+
+    <!-- 个人信息-->
+    <string name="action_select">选择操作</string>
+    <string name="title_icon_null">图像不存在，上传失败</string>
+    <string name="title_update_fail_status">个人信息更新失败&#8230;</string>
 </resources>

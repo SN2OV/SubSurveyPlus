@@ -9,7 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import cn.buaa.sn2ov.subsurveyplus.R;
-import cn.buaa.sn2ov.subsurveyplus.util.OSUtil;
+import cn.buaa.sn2ov.subsurveyplus.util.FromOSChina.OSUtil;
 import cn.buaa.sn2ov.subsurveyplus.view.loading.Loading;
 
 public class EmptyLayout extends LinearLayout {
@@ -37,6 +37,15 @@ public class EmptyLayout extends LinearLayout {
      * 未登录
      */
     public static final int STATE_NO_LOGIN = 6;
+
+    //From OSChina
+    public static final int HIDE_LAYOUT = 4;
+    public static final int NETWORK_ERROR = 1;
+    public static final int NETWORK_LOADING = 2;
+    public static final int NODATA = 3;
+    public static final int NODATA_ENABLE_CLICK = 5;
+    public static final int NO_LOGIN = 6;
+    //
 
     private Loading mLoading;
     private boolean clickEnable = true;

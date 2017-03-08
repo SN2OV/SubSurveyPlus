@@ -15,6 +15,7 @@ public class UserItem extends Entity{
     private String mobile;
     private String idCard;
     private String nfc;
+    private String portrait;
 
     public int getUid() {
         return uid;
@@ -78,5 +79,13 @@ public class UserItem extends Entity{
 
     public void setNfc(String nfc) {
         this.nfc = nfc;
+    }
+
+    public String getPortrait() {
+        return portrait;
+    }
+
+    public void setPortrait(String portrait) {
+        this.portrait = portrait;
     }
 }

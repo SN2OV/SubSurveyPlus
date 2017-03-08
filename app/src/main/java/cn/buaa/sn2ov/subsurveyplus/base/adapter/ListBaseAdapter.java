@@ -17,7 +17,7 @@ import java.util.List;
 
 import cn.buaa.sn2ov.subsurveyplus.R;
 import cn.buaa.sn2ov.subsurveyplus.model.Entity;
-import cn.buaa.sn2ov.subsurveyplus.util.OSUtil;
+import cn.buaa.sn2ov.subsurveyplus.util.FromOSChina.OSUtil;
 import cn.buaa.sn2ov.subsurveyplus.util.StringUtils;
 
 /**

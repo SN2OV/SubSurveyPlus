@@ -23,7 +23,7 @@ import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
 
 import cn.buaa.sn2ov.subsurveyplus.AppContext;
-import cn.buaa.sn2ov.subsurveyplus.util.OSUtil;
+import cn.buaa.sn2ov.subsurveyplus.util.FromOSChina.OSUtil;
 import okhttp3.CacheControl;
 import okhttp3.Interceptor;
 import okhttp3.JavaNetCookieJar;

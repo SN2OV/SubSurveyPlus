@@ -5,14 +5,11 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.Signature;
 import android.text.TextUtils;
-import android.util.Log;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InvalidClassException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OptionalDataException;
@@ -22,7 +19,7 @@ import java.util.UUID;
 
 import cn.buaa.sn2ov.subsurveyplus.base.BaseApplication;
 import cn.buaa.sn2ov.subsurveyplus.util.LogUtils;
-import cn.buaa.sn2ov.subsurveyplus.util.OSUtil;
+import cn.buaa.sn2ov.subsurveyplus.util.FromOSChina.OSUtil;
 import cn.buaa.sn2ov.subsurveyplus.util.SafeUtils;
 import cn.buaa.sn2ov.subsurveyplus.util.StringUtils;
 

@@ -1,4 +1,4 @@
-package cn.buaa.sn2ov.subsurveyplus.util;
+package cn.buaa.sn2ov.subsurveyplus.util.FromOSChina;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -38,6 +38,8 @@ import java.util.List;
 import cn.buaa.sn2ov.subsurveyplus.AppContext;
 import cn.buaa.sn2ov.subsurveyplus.R;
 import cn.buaa.sn2ov.subsurveyplus.base.BaseApplication;
+import cn.buaa.sn2ov.subsurveyplus.util.LogUtils;
+import cn.buaa.sn2ov.subsurveyplus.util.StringUtils;
 
 
 @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)

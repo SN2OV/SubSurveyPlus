@@ -43,6 +43,11 @@
             android:windowSoftInputMode="stateHidden|stateUnchanged"/>
         <activity android:name=".ui.activity.InfoEditActivity">
         </activity>
+        <activity
+            android:name=".media.SelectImageActivity"
+            android:theme="@style/AppTheme.MyNoActionBar">
+        </activity>
+        <activity android:name=".media.crop.CropActivity"/>
     </application>
 
 </manifest>
