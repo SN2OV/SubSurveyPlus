@@ -8,8 +8,11 @@ import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.io.File;
 import java.util.Calendar;
@@ -46,6 +49,9 @@ import rx.schedulers.Schedulers;
 public class PersonCenterInfoSettingFragment extends BaseFragment {
 
     private Unbinder unbinder;
+
+    @BindView(R.id.personInfoSetting_avatarIV)
+    ImageView personInfoSetting_avatarIV;
 
     @BindView(R.id.persInfoSetting_avatarRL)
     RelativeLayout persInfoSetting_avatarRL;
@@ -160,8 +166,11 @@ public class PersonCenterInfoSettingFragment extends BaseFragment {
 
                         case 1:
                             if (user == null
-                                || TextUtils.isEmpty(user.getPortrait())) return;
-                            UIHelper.showUserAvatar(getActivity(), user.getPortrait());
+                                || TextUtils.isEmpty(user.getAvatarUrl())) return;
+                            //TODO 调试好代码
+//                            UIHelper.showUserAvatar(getActivity(), user.getAvatarUrl());
+//                            UIHelper.showUserAvatar(getActivity(), "http://10.0.2.2:8080/avatar/get/20170309_110344.jpg");
+                            Glide.with(getContext()).load("http://10.0.2.2:8080/avatar/get/20170309_110344.jpg"). placeholder(R.drawable.back).into(personInfoSetting_avatarIV);
                             break;
                     }
                 }
@@ -173,8 +182,8 @@ public class PersonCenterInfoSettingFragment extends BaseFragment {
             AppContext.toast(getString(R.string.title_icon_null));
         } else {
             RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
-            String photoName = DateFormat.format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA))+"";
-            ApiFactory.getUserApi().uploadAvatar(photoName,requestBody)
+            String photoName = DateFormat.format("yyyyMMddhhmmss", Calendar.getInstance(Locale.CHINA))+"";
+            ApiFactory.getUserApi().uploadAvatar(photoName,user.getUid(),requestBody)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mSubscriber);

@@ -31,7 +31,7 @@ public interface UserApi {
 
     @Multipart
     @POST("avatar/upload/")
-    Observable<BaseResult> uploadAvatar(@Part("fileName") String description, @Part("file\"; filename=myAvatar.png\"") RequestBody file);
+    Observable<BaseResult> uploadAvatar(@Part("fileName") String description,@Part("uid")int uid, @Part("file\"; filename=myAvatar.png\"") RequestBody file);
 //    Observable<BaseResult> uploadAvatar(@Part("file\"; filename=myAvatar.png\"") RequestBody file);
 
 }

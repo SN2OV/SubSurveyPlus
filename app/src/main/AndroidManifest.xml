@@ -48,6 +48,7 @@
             android:theme="@style/AppTheme.MyNoActionBar">
         </activity>
         <activity android:name=".media.crop.CropActivity"/>
+        <activity android:name=".media.ImageGalleryActivity"/>
     </application>
 
 </manifest>
