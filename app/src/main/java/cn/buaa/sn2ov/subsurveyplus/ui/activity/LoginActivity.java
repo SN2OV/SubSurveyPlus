@@ -35,7 +35,7 @@ import java.util.List;
 import cn.buaa.sn2ov.subsurveyplus.R;
 import cn.buaa.sn2ov.subsurveyplus.api.remote.ApiFactory;
 import cn.buaa.sn2ov.subsurveyplus.base.BaseObserver;
-import cn.buaa.sn2ov.subsurveyplus.model.response.BaseResult;
+import cn.buaa.sn2ov.subsurveyplus.base.interf.IBaseResult;
 import cn.buaa.sn2ov.subsurveyplus.model.response.user.UserItem;
 import cn.buaa.sn2ov.subsurveyplus.util.AccountHelper;
 import rx.android.schedulers.AndroidSchedulers;
@@ -428,7 +428,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     //观察者
-    protected BaseObserver mSubscriber = new BaseObserver<BaseResult<?>>() {
+    protected BaseObserver mSubscriber = new BaseObserver<IBaseResult<?>>() {
 
         @Override
         public void onError(Throwable e) {
@@ -437,7 +437,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         @Override
-        public void onNext(BaseResult<?> result) {
+        public void onNext(IBaseResult<?> result) {
             showProgress(false);
             if(!result.isOk()){
                 mPasswordView.setError(getString(R.string.error_incorrect_password));

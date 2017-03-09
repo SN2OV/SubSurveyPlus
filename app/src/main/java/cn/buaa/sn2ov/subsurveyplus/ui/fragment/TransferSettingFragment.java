@@ -1,8 +1,6 @@
 package cn.buaa.sn2ov.subsurveyplus.ui.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
@@ -23,7 +21,6 @@ import cn.buaa.sn2ov.subsurveyplus.api.exception.ApiException;
 import cn.buaa.sn2ov.subsurveyplus.api.remote.ApiFactory;
 import cn.buaa.sn2ov.subsurveyplus.base.BaseObserver;
 import cn.buaa.sn2ov.subsurveyplus.base.ui.BaseFragment;
-import cn.buaa.sn2ov.subsurveyplus.model.response.BaseResult;
 import cn.buaa.sn2ov.subsurveyplus.model.response.task.TeamTaskItem;
 import cn.buaa.sn2ov.subsurveyplus.model.response.task.TransferAllTaskItem;
 import cn.buaa.sn2ov.subsurveyplus.model.response.task.TransferNewestTaskResult;

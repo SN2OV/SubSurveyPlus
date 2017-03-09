@@ -1,8 +1,6 @@
 package cn.buaa.sn2ov.subsurveyplus.ui.activity;
 
-import android.content.Intent;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,18 +9,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 import cn.buaa.sn2ov.subsurveyplus.AppContext;
 import cn.buaa.sn2ov.subsurveyplus.R;
 import cn.buaa.sn2ov.subsurveyplus.api.remote.ApiFactory;
 import cn.buaa.sn2ov.subsurveyplus.base.BaseObserver;
 import cn.buaa.sn2ov.subsurveyplus.base.ui.BaseActivity;
-import cn.buaa.sn2ov.subsurveyplus.model.response.BaseResult;
+import cn.buaa.sn2ov.subsurveyplus.base.interf.IBaseResult;
 import cn.buaa.sn2ov.subsurveyplus.model.response.user.UserItem;
 import cn.buaa.sn2ov.subsurveyplus.util.AccountHelper;
-import cn.buaa.sn2ov.subsurveyplus.util.UIHelper;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -110,7 +105,7 @@ public class InfoEditActivity extends BaseActivity {
     }
 
     //观察者
-    protected BaseObserver mSubscriber = new BaseObserver<BaseResult<?>>() {
+    protected BaseObserver mSubscriber = new BaseObserver<IBaseResult<?>>() {
 
         @Override
         public void onError(Throwable e) {
@@ -118,7 +113,7 @@ public class InfoEditActivity extends BaseActivity {
         }
 
         @Override
-        public void onNext(BaseResult<?> result) {
+        public void onNext(IBaseResult<?> result) {
             if(!result.isOk()){
                 AppContext.toast("网络问题，保存失败");
             }else{

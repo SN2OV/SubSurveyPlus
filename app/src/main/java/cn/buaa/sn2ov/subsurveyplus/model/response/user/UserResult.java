@@ -1,12 +1,12 @@
 package cn.buaa.sn2ov.subsurveyplus.model.response.user;
 
-import cn.buaa.sn2ov.subsurveyplus.model.response.BaseResult;
+import cn.buaa.sn2ov.subsurveyplus.base.interf.IBaseResult;
 
 /**
  * Created by SN2OV on 2017/2/14.
  */
 
-public class UserResult<T> implements BaseResult<T> {
+public class UserResult<T> implements IBaseResult<T> {
 
     private int code;
     private int flag;

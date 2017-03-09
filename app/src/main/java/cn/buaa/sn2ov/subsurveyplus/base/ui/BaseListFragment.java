@@ -1,9 +1,7 @@
 package cn.buaa.sn2ov.subsurveyplus.base.ui;
 
-import android.os.Binder;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,8 +23,7 @@ import cn.buaa.sn2ov.subsurveyplus.base.BaseObserver;
 import cn.buaa.sn2ov.subsurveyplus.base.adapter.ListBaseAdapter;
 import cn.buaa.sn2ov.subsurveyplus.model.Entity;
 import cn.buaa.sn2ov.subsurveyplus.model.base.ListEntity;
-import cn.buaa.sn2ov.subsurveyplus.model.response.BaseResult;
-import cn.buaa.sn2ov.subsurveyplus.util.UIHelper;
+import cn.buaa.sn2ov.subsurveyplus.base.interf.IBaseResult;
 import cn.buaa.sn2ov.subsurveyplus.view.empty.EmptyLayout;
 import retrofit2.adapter.rxjava.HttpException;
 
@@ -58,7 +55,7 @@ public abstract class BaseListFragment<T extends Entity> extends BaseFragment
     private Unbinder unBinder;
 
     //观察者
-    protected BaseObserver mSubscriber = new BaseObserver<BaseResult<?>>() {
+    protected BaseObserver mSubscriber = new BaseObserver<IBaseResult<?>>() {
 
         @Override
         public void onError(Throwable e) {
@@ -84,7 +81,7 @@ public abstract class BaseListFragment<T extends Entity> extends BaseFragment
         }
 
         @Override
-        public void onNext(BaseResult<?> result) {
+        public void onNext(IBaseResult<?> result) {
             if (!result.isOk()) {
                 executeOnLoadDataError(null);
                 return;
