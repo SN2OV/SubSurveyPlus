@@ -19,7 +19,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import cn.buaa.sn2ov.subsurveyplus.AppConstant;
 import cn.buaa.sn2ov.subsurveyplus.AppContext;
@@ -83,9 +86,15 @@ public class MainActivity extends AppCompatActivity
         View headView = navigationView.getHeaderView(0);
         TextView nav_head_usernameTV = (TextView)headView.findViewById(R.id.nav_head_usernameTV);
         TextView nav_head_roleTV = (TextView)headView.findViewById(R.id.nav_head_roleTV);
+        ImageView nav_head_avatarIV = (ImageView)headView.findViewById(R.id.nav_head_avatarIV);
         nav_head_usernameTV.setText(user.getUserName());
         nav_head_roleTV.setText(user.getRole());
-
+        if(user.getAvatarUrl()==null)
+            nav_head_avatarIV.setImageDrawable(getResources().getDrawable(R.drawable.avatar_default));
+        else{
+            String avatarUrl = AppConstant.API_REST_URL+"avatar/get/"+user.getAvatarUrl()+"_s.jpg";
+            Glide.with(this).load(avatarUrl).into(nav_head_avatarIV);
+        }
         fragmentID = R.id.nav_walk_survey;
     }
 

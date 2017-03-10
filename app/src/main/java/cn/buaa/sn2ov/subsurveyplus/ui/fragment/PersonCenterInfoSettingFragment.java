@@ -22,6 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.buaa.sn2ov.subsurveyplus.AppConstant;
 import cn.buaa.sn2ov.subsurveyplus.AppContext;
 import cn.buaa.sn2ov.subsurveyplus.R;
 import cn.buaa.sn2ov.subsurveyplus.api.remote.ApiFactory;
@@ -137,6 +138,12 @@ public class PersonCenterInfoSettingFragment extends BaseFragment {
         persInfoSetting_mobileTV.setText(user.getMobile());
         persInfoSetting_IDCardTV.setText(user.getIdCard());
         persInfoSetting_NFCTV.setText(user.getNfc());
+        if(user.getAvatarUrl()==null)
+            personInfoSetting_avatarIV.setImageDrawable(getResources().getDrawable(R.drawable.avatar_default));
+        else{
+            String avatarUrl = AppConstant.API_REST_URL+"avatar/get/"+user.getAvatarUrl()+"_s.jpg";
+            Glide.with(this).load(avatarUrl).into(personInfoSetting_avatarIV);
+        }
     }
 
     /**
@@ -163,15 +170,11 @@ public class PersonCenterInfoSettingFragment extends BaseFragment {
                                     }
                                 }).build());
                             break;
-
                         case 1:
                             if (user == null
                                 || TextUtils.isEmpty(user.getAvatarUrl())) return;
-                            //TODO 调试好代码
-//                            UIHelper.showUserAvatar(getActivity(), user.getAvatarUrl());
-//                            UIHelper.showUserAvatar(getActivity(), "http://10.0.2.2:8080/avatar/get/20170309_110344.jpg");
-                            Glide.with(getContext()).load("http://10.0.2.2:8080/avatar/get/20170309_110344.jpg"). placeholder(R.drawable.back).into(personInfoSetting_avatarIV);
-                            break;
+                            String avatarUrl = AppConstant.API_REST_URL+"avatar/get/"+user.getAvatarUrl()+".jpg";
+                            UIHelper.showUserAvatar(getActivity(),avatarUrl);
                     }
                 }
             }).show();

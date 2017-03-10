@@ -44,8 +44,8 @@ public class UIHelper {
         if (TextUtils.isEmpty(avatarUrl)) {
             return;
         }
-        String url = AvatarView.getLargeAvatar(avatarUrl);
-        ImageGalleryActivity.show(context, url);
+//        String url = AvatarView.getLargeAvatar(avatarUrl);
+        ImageGalleryActivity.show(context, avatarUrl);
     }
 
 }

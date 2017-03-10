@@ -25,21 +25,21 @@ public enum ApiFactory {
 
     public static UserApi getUserApi(){
         if(sUserApi == null){
-            ApiFactory.sUserApi = createApi(AppConstant.API_TEST_URL,UserApi.class, UserGsonConverterFactory.create());
+            ApiFactory.sUserApi = createApi(AppConstant.API_REST_URL,UserApi.class, UserGsonConverterFactory.create());
         }
         return sUserApi;
     }
 
     public static TransferNewestApi getTranserApi(){
         if(sTrasferApi == null){
-            ApiFactory.sTrasferApi = createApi(AppConstant.API_TEST_URL,TransferNewestApi.class, TransNewestTaskConverterFactory.create());
+            ApiFactory.sTrasferApi = createApi(AppConstant.API_REST_URL,TransferNewestApi.class, TransNewestTaskConverterFactory.create());
         }
         return sTrasferApi;
     }
 
     public static TransferAllApi getTranserAllApi(){
         if(sTransferAllApi == null){
-            ApiFactory.sTransferAllApi = createApi(AppConstant.API_TEST_URL,TransferAllApi.class, BaseGsonConverterFactory.create());
+            ApiFactory.sTransferAllApi = createApi(AppConstant.API_REST_URL,TransferAllApi.class, BaseGsonConverterFactory.create());
         }
         return sTransferAllApi;
     }

@@ -4,8 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import org.w3c.dom.Text;
 
@@ -33,6 +36,8 @@ public class PersonCenterFragment extends BaseFragment {
     RelativeLayout personCenter_persionInfoRL;
     @BindView(R.id.personCenter_usernameTV)
     TextView personCenter_usernameTV;
+    @BindView(R.id.personCenter_avatraIV)
+    ImageView personCenter_avatarIV;
 
     @Override
     protected int getLayoutId() {
@@ -61,6 +66,12 @@ public class PersonCenterFragment extends BaseFragment {
     @Override
     public void initView(View view) {
         personCenter_usernameTV.setText(user.getUserName());
+        if(user.getAvatarUrl()==null)
+            personCenter_avatarIV.setImageDrawable(getResources().getDrawable(R.drawable.avatar_default));
+        else{
+            String avatarUrl = AppConstant.API_REST_URL+"avatar/get/"+user.getAvatarUrl()+"_s.jpg";
+            Glide.with(this).load(avatarUrl).into(personCenter_avatarIV);
+        }
     }
 
     @Override
