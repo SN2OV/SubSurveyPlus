@@ -3,6 +3,7 @@ package cn.buaa.sn2ov.subsurveyplus.router;
 import cn.buaa.sn2ov.subsurveyplus.ui.activity.LoginActivity;
 import cn.buaa.sn2ov.subsurveyplus.ui.fragment.PersonCenterInfoSettingFragment;
 import cn.buaa.sn2ov.subsurveyplus.ui.fragment.TransAllTaskFragment;
+import cn.buaa.sn2ov.subsurveyplus.ui.fragment.TransferRecordedFragment;
 
 /**
  * Created by SN2OV on 2017/2/19.
@@ -13,7 +14,8 @@ public enum SimpleBackPage {
     TEST(0,"登录", LoginActivity.class),
     TRANSFER_ALL(1,"换乘量调查全部任务", TransAllTaskFragment.class),
 
-    PERSON_INFO_SETTING(6,"个人信息设置",PersonCenterInfoSettingFragment.class)
+    PERSON_INFO_SETTING(6,"个人信息设置",PersonCenterInfoSettingFragment.class),
+    TRANSFER_RECORDED(7,"换乘量调查", TransferRecordedFragment.class)
     ;
 
     private int id;

@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -202,5 +204,12 @@ public class StringUtils {
         return b2;
     }
 
+    public static String getSystemTime(){
+        //获取系统时间
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+        Date curTime = new Date(System.currentTimeMillis());//获取当前时间
+        String time = formatter.format(curTime).toString();
+        return time;
+    }
 
 }

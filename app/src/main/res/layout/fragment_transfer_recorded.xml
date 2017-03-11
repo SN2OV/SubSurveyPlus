@@ -1,0 +1,62 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+    <HorizontalScrollView
+        android:id="@+id/tsnHorizontalScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tsnAddRL"
+        android:fillViewport="true" >
+    </HorizontalScrollView>
+
+    <ListView
+        android:id="@+id/tsnDataPerLV"
+        android:layout_width="wrap_content"
+        android:layout_height="154dp"
+        android:layout_above="@+id/tsnHorizontalScrollView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:scrollbars="none" >
+
+    </ListView>
+
+    <RelativeLayout
+        android:id="@+id/tsnAddRL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="24dp" >
+
+        <ImageView
+            android:id="@+id/tsnAddOneIV"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="38dp"
+            android:src="@drawable/add_one_selector"
+            android:layout_width="50dp"/>
+
+        <ImageView
+            android:id="@+id/tsnAddTwoIV"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/add_two_selector" />
+
+        <ImageView
+            android:id="@+id/tsnAddFiveIV"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="18dp"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/add_five_selector" />
+    </RelativeLayout>
+
+</RelativeLayout>

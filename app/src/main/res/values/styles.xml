@@ -121,6 +121,22 @@
         <item name="android:layout_centerVertical">true</item>
     </style>
 
+
+    <style name = "InfoTextViewStyle">
+        <item name = "android:layout_height">wrap_content</item>
+        <item name = "android:gravity">center_vertical|center_horizontal</item>
+        <item name = "android:padding">5dp</item>
+        <item name = "android:singleLine">true</item>
+        <item name = "android:textColor">@color/black</item>
+        <item name = "android:textSize">16dp</item>
+    </style>
+
+    <style name="vertical_layout">
+        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:background">@drawable/domo_toolbar_bg</item>
+    </style>
+
     <style name="App.Theme.Dialog.Alert" parent="ThemeOverlay.AppCompat.Dialog.Alert">
         <item name="android:textColorPrimary">#f0000000</item>
     </style>

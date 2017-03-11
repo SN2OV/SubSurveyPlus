@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
@@ -15,6 +17,7 @@ import cn.buaa.sn2ov.subsurveyplus.R;
 import cn.buaa.sn2ov.subsurveyplus.base.ui.BaseActivity;
 import cn.buaa.sn2ov.subsurveyplus.base.ui.BaseFragment;
 import cn.buaa.sn2ov.subsurveyplus.router.SimpleBackPage;
+import cn.buaa.sn2ov.subsurveyplus.ui.fragment.TransferRecordedFragment;
 import cn.buaa.sn2ov.subsurveyplus.view.dialog.WaitDialog;
 
 /**
@@ -134,4 +137,37 @@ public class SimpleBackActivity extends BaseActivity{
         super.onActivityResult(arg0, arg1, arg2);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.transfer_survey_menu_revoke:
+                if (mFragment.get() instanceof TransferRecordedFragment) {
+                    ((TransferRecordedFragment)mFragment.get()).transferReVoke();
+                } else {
+                    return super.onOptionsItemSelected(item);
+                }
+                break;
+//            case R.id.chat_friend_home:
+//                if (mFragment.get() instanceof MessageDetailFragment) {
+//                    ((MessageDetailFragment)mFragment.get()).showFriendUserCenter();
+//                } else {
+//                    return super.onOptionsItemSelected(item);
+//                }
+//                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (mFragment.get() instanceof TransferRecordedFragment) {
+            getMenuInflater().inflate(R.menu.transfer_survey_time_recorded, menu);
+        }
+//        else if (mFragment.get() instanceof MessageDetailFragment){
+//            getMenuInflater().inflate(R.menu.chat_menu, menu);
+//        }
+        return super.onCreateOptionsMenu(menu);
+    }
 }

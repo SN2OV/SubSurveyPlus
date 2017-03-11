@@ -8,37 +8,6 @@
 
 
     <RelativeLayout
-        android:id="@+id/sysSetting_suggestionRL"
-        style="@style/sysSettingRL"
-        android:layout_below="@+id/sysSetting_githubRL"
-        android:layout_alignStart="@+id/sysSetting_githubRL">
-
-        <ImageView
-            android:id="@+id/sysSetting_suggestionIV"
-            app:srcCompat="@drawable/suggestion"
-            style="@style/sysSettingIV"
-            />
-
-        <TextView
-            android:text="反馈与建议"
-            android:id="@+id/sysSetting_suggestionTagTV"
-            android:layout_toEndOf="@+id/sysSetting_suggestionIV"
-            style="@style/sysSettingTagTV"
-            />
-
-        <ImageView
-            android:id="@+id/sysSetting_suggestionArrowIV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/common_icon_arrow"
-            android:layout_alignParentTop="false"
-            android:layout_marginEnd="12dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"/>
-
-    </RelativeLayout>
-
-    <RelativeLayout
         android:id="@+id/sysSetting_githubRL"
         style="@style/sysSettingRL"
         android:layout_below="@+id/sysSetting_updateRL"
@@ -169,6 +138,37 @@
             android:layout_toEndOf="@+id/sysSetting_updateIV"
             android:layout_centerInParent="true"
             android:textColor="@color/black"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/sysSetting_suggestionRL"
+        style="@style/sysSettingRL"
+        android:layout_below="@+id/sysSetting_githubRL"
+        android:layout_alignParentStart="true">
+
+        <ImageView
+            android:id="@+id/sysSetting_suggestionIV"
+            app:srcCompat="@drawable/suggestion"
+            style="@style/sysSettingIV"
+            />
+
+        <TextView
+            android:text="反馈与建议"
+            android:id="@+id/sysSetting_suggestionTagTV"
+            android:layout_toEndOf="@+id/sysSetting_suggestionIV"
+            style="@style/sysSettingTagTV"
+            />
+
+        <ImageView
+            android:id="@+id/sysSetting_suggestionArrowIV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/common_icon_arrow"
+            android:layout_alignParentTop="false"
+            android:layout_marginEnd="12dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"/>
 
     </RelativeLayout>
 

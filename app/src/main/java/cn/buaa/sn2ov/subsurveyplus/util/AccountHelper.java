@@ -9,6 +9,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.View;
 
+import cn.buaa.sn2ov.subsurveyplus.model.TaskInfo;
 import cn.buaa.sn2ov.subsurveyplus.model.response.user.UserItem;
 import retrofit2.http.Header;
 
@@ -18,6 +19,7 @@ import retrofit2.http.Header;
 
 public class AccountHelper {
     private UserItem user;
+    private TaskInfo task;
     private Application application;
     @SuppressLint("StaticFieldLeak")
     private static AccountHelper instances;
@@ -142,4 +144,25 @@ public class AccountHelper {
 //        Intent intent = new Intent(Constants.INTENT_ACTION_LOGOUT);
 //        LocalBroadcastManager.getInstance(application).sendBroadcast(intent);
 //    }
+
+    public static void updateTaskCache(TaskInfo task) {
+        if (task == null)
+            return;
+        if(instances == null)
+            initInstances();
+        instances.task = task;
+        SharedPreferencesHelper.save(instances.application, task);
+    }
+
+    public synchronized static TaskInfo getTasks() {
+        if (instances == null) {
+            TLog.error("AccountHelper instances is null, you need call init() method.");
+            return null;
+        }
+        if (instances.task == null)
+            instances.task = SharedPreferencesHelper.loadFormSource(instances.application, TaskInfo.class);
+        if (instances.task == null)
+            instances.task = new TaskInfo();
+        return instances.task;
+    }
 }

@@ -29,6 +29,8 @@ import cn.buaa.sn2ov.subsurveyplus.AppContext;
 import cn.buaa.sn2ov.subsurveyplus.R;
 import cn.buaa.sn2ov.subsurveyplus.model.response.task.TransferAllTaskItem;
 import cn.buaa.sn2ov.subsurveyplus.model.response.user.UserItem;
+import cn.buaa.sn2ov.subsurveyplus.router.Router;
+import cn.buaa.sn2ov.subsurveyplus.router.SimpleBackPage;
 import cn.buaa.sn2ov.subsurveyplus.ui.fragment.FragmentFactory;
 import cn.buaa.sn2ov.subsurveyplus.ui.fragment.TransferSettingFragment;
 import cn.buaa.sn2ov.subsurveyplus.ui.fragment.WalkSettingFragment;
@@ -75,9 +77,16 @@ public class MainActivity extends AppCompatActivity
         //将导航栏的菜单中图标颜色恢复默认
         navigationView.setItemIconTintList(null);
 
+        fragmentID = R.id.nav_walk_survey;
         initView();
         initFragment(savedInstanceState);
 
+    }
+
+    @Override
+    protected void onResume() {
+        initView();
+        super.onResume();
     }
 
     public void initView() {
@@ -95,7 +104,6 @@ public class MainActivity extends AppCompatActivity
             String avatarUrl = AppConstant.API_REST_URL+"avatar/get/"+user.getAvatarUrl()+"_s.jpg";
             Glide.with(this).load(avatarUrl).into(nav_head_avatarIV);
         }
-        fragmentID = R.id.nav_walk_survey;
     }
 
     @Override
@@ -140,7 +148,7 @@ public class MainActivity extends AppCompatActivity
                     AppContext.toast("走行调查新增");
                     break;
                 case R.id.nav_transfer_survey:
-                    AppContext.toast("换乘量调查新增",R.drawable.transfer_survey);
+                    Router.showSimpleBack(this, SimpleBackPage.TRANSFER_RECORDED);
                     break;
                 case R.id.nav_od_survey:
                     break;

@@ -21,6 +21,7 @@ import cn.buaa.sn2ov.subsurveyplus.api.exception.ApiException;
 import cn.buaa.sn2ov.subsurveyplus.api.remote.ApiFactory;
 import cn.buaa.sn2ov.subsurveyplus.base.BaseObserver;
 import cn.buaa.sn2ov.subsurveyplus.base.ui.BaseFragment;
+import cn.buaa.sn2ov.subsurveyplus.model.TaskInfo;
 import cn.buaa.sn2ov.subsurveyplus.model.response.task.TeamTaskItem;
 import cn.buaa.sn2ov.subsurveyplus.model.response.task.TransferAllTaskItem;
 import cn.buaa.sn2ov.subsurveyplus.model.response.task.TransferNewestTaskResult;
@@ -44,6 +45,7 @@ public class TransferSettingFragment extends BaseFragment implements SwipeRefres
     private AppContext appContext;
     private Object transferCache;
     private UserItem user;
+    private TaskInfo taskInfo;
 
     @BindView(R.id.transSetting_titleTV)
     TextView transSetting_titleTV;
@@ -57,8 +59,8 @@ public class TransferSettingFragment extends BaseFragment implements SwipeRefres
     TextView transSetting_perTask_TV;
     @BindView(R.id.transSetting_task_CV)
     CardView transSetting_task_CV;
-    @BindView(R.id.transSetting_chooseCV)
-    CardView transSetting_chooseCV;
+    @BindView(R.id.transSetting_chooseRL)
+    RelativeLayout transSetting_chooseRL;
     @BindView(R.id.transSetting_swipeRefeshL)
     SwipeRefreshLayout transSetting_swipeRefeshL;
     @BindView(R.id.transSetting_getMoreTaskRL)
@@ -122,15 +124,19 @@ public class TransferSettingFragment extends BaseFragment implements SwipeRefres
             if(!result.isOk()){
                 transSetting_titleTV.setText("暂无换乘量调查");
                 transSetting_task_CV.setVisibility(View.GONE);
-                transSetting_chooseCV.setVisibility(View.GONE);
+                transSetting_chooseRL.setVisibility(View.GONE);
             }else{
                 fillIntoTask(result);
                 //TODO station好像没获取到啊 看下
                 transSetting_task_CV.setVisibility(View.VISIBLE);
-                transSetting_chooseCV.setVisibility(View.VISIBLE);
+                transSetting_chooseRL.setVisibility(View.VISIBLE);
             }
             result.setUid(user.getUid());
             appContext.saveObject(result, AppConstant.TRANSFER_CACHE);
+            //将路线信息保存,两个地方。1)刷新获取新的当前任务 2)从全部任务页面回传
+            taskInfo.setTsLoc(result.getPerTask().getPointLocation());
+            taskInfo.setTsTimePeriod(result.getTeamTask().getTimeStart()+"~"+result.getTeamTask().getTimeEnd());
+            AccountHelper.updateTaskCache(taskInfo);
         }
 
         @Override
@@ -143,14 +149,14 @@ public class TransferSettingFragment extends BaseFragment implements SwipeRefres
     @Override
     public void initData() {
         appContext = (AppContext)getActivity().getApplication();
+        taskInfo = AccountHelper.getTasks();
         transferCache = appContext.readObject(AppConstant.TRANSFER_CACHE);
-
     }
 
     //有任务情形
     private void fillIntoTask(TransferNewestTaskResult result){
         transSetting_task_CV.setVisibility(View.VISIBLE);
-        transSetting_chooseCV.setVisibility(View.VISIBLE);
+        transSetting_chooseRL.setVisibility(View.VISIBLE);
         TeamTaskItem teamTask = result.getTeamTask();
         TransferPerTaskItem perTaskItem = result.getPerTask();
         transSetting_titleTV.setText(teamTask.getTaskName());
@@ -163,12 +169,12 @@ public class TransferSettingFragment extends BaseFragment implements SwipeRefres
     private void fillIntoTask(){
         transSetting_titleTV.setText("暂无换乘量调查");
         transSetting_task_CV.setVisibility(View.GONE);
-        transSetting_chooseCV.setVisibility(View.GONE);
+        transSetting_chooseRL.setVisibility(View.GONE);
     }
 
     private void fillIntoTask(TransferAllTaskItem transferAllTaskItem){
         transSetting_task_CV.setVisibility(View.VISIBLE);
-        transSetting_chooseCV.setVisibility(View.VISIBLE);
+        transSetting_chooseRL.setVisibility(View.VISIBLE);
         TeamTaskItem teamTask = transferAllTaskItem.getTeamTask();
         TransferPerTaskItem perTaskItem = transferAllTaskItem.getPerTask();
         transSetting_titleTV.setText(teamTask.getTaskName());
@@ -197,6 +203,10 @@ public class TransferSettingFragment extends BaseFragment implements SwipeRefres
             TransferAllTaskItem transferAllTaskItem = (TransferAllTaskItem)bundle.getSerializable("transferAllTaskItem");
             fillIntoTask(transferAllTaskItem);
             appContext.saveObject(transferAllTaskItem, AppConstant.TRANSFER_CACHE);
+            //将路线信息保存
+            taskInfo.setTsLoc(transferAllTaskItem.getPerTask().getPosition());
+            taskInfo.setTsTimePeriod(transferAllTaskItem.getTeamTask().getTimeStart()+"~"+transferAllTaskItem.getTeamTask().getTimeEnd());
+            AccountHelper.updateTaskCache(taskInfo);
             return;
         }
         if(transferCache!=null){

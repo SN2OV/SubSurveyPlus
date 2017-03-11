@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" >
+
+        <TextView
+            android:id="@+id/tsTotal_IDTV"
+            style="@style/InfoTextViewStyle"
+            android:layout_width="50dp" />
+
+        <View style="@style/vertical_layout" />
+        
+        <TextView
+            android:id="@+id/tsTotal_NameTV"
+            style="@style/InfoTextViewStyle"
+            android:layout_width="60dp" />
+
+        <View style="@style/vertical_layout" />
+
+        <TextView
+            android:id="@+id/tsTotal_DateTV"
+            style="@style/InfoTextViewStyle"
+            android:layout_width="100dp" />
+
+        <View style="@style/vertical_layout" />
+
+        <TextView
+            android:id="@+id/tsTotal_TimePeriodTV"
+            style="@style/InfoTextViewStyle"
+            android:layout_width="80dp" />
+
+        <View style="@style/vertical_layout" />
+
+        <TextView
+            android:id="@+id/tsTotal_StationTV"
+            style="@style/InfoTextViewStyle"
+            android:layout_width="100dp" />
+
+        <View style="@style/vertical_layout" />
+        
+        <TextView
+            android:id="@+id/tsTotal_LineTV"
+            style="@style/InfoTextViewStyle"
+            android:layout_width="100dp" />
+
+        <View style="@style/vertical_layout" />
+        
+        <TextView
+            android:id="@+id/tsTotal_TimeTV"
+            style="@style/InfoTextViewStyle"
+            android:layout_width="100dp" />
+
+        <View style="@style/vertical_layout" />
+
+        <TextView
+            android:id="@+id/tsTotal_CountTotalTV"
+            style="@style/InfoTextViewStyle"
+            android:layout_width="50dp" />
+    </LinearLayout>
+
+</RelativeLayout>

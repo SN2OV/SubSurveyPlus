@@ -59,12 +59,17 @@ public class PersonCenterFragment extends BaseFragment {
     }
 
     @Override
+    public void onResume() {
+        initView();
+        super.onResume();
+    }
+
+    @Override
     public void initData() {
         user = AccountHelper.getUser();
     }
 
-    @Override
-    public void initView(View view) {
+    public void initView() {
         personCenter_usernameTV.setText(user.getUserName());
         if(user.getAvatarUrl()==null)
             personCenter_avatarIV.setImageDrawable(getResources().getDrawable(R.drawable.avatar_default));
