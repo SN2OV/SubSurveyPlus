@@ -7,8 +7,27 @@ import cn.buaa.sn2ov.subsurveyplus.model.base.Base;
  */
 
 public class TaskInfo extends Base {
+
+    private String tsDate;
+    private String tsStation;
     private String tsLoc;
     private String tsTimePeriod;
+
+    public String getTsDate() {
+        return tsDate;
+    }
+
+    public void setTsDate(String tsDate) {
+        this.tsDate = tsDate;
+    }
+
+    public String getTsStation() {
+        return tsStation;
+    }
+
+    public void setTsStation(String tsStation) {
+        this.tsStation = tsStation;
+    }
 
     public String getTsLoc() {
         return tsLoc;

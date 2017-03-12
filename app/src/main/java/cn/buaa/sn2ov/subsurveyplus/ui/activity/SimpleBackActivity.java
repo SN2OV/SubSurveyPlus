@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.MenuItemCompat;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +18,7 @@ import cn.buaa.sn2ov.subsurveyplus.R;
 import cn.buaa.sn2ov.subsurveyplus.base.ui.BaseActivity;
 import cn.buaa.sn2ov.subsurveyplus.base.ui.BaseFragment;
 import cn.buaa.sn2ov.subsurveyplus.router.SimpleBackPage;
+import cn.buaa.sn2ov.subsurveyplus.ui.fragment.TransferDataTotalFragment;
 import cn.buaa.sn2ov.subsurveyplus.ui.fragment.TransferRecordedFragment;
 import cn.buaa.sn2ov.subsurveyplus.view.dialog.WaitDialog;
 
@@ -143,17 +145,17 @@ public class SimpleBackActivity extends BaseActivity{
             case R.id.transfer_survey_menu_revoke:
                 if (mFragment.get() instanceof TransferRecordedFragment) {
                     ((TransferRecordedFragment)mFragment.get()).transferReVoke();
+                }else{
+                    return super.onOptionsItemSelected(item);
+                }
+                break;
+            case R.id.survey_data_export:
+                if (mFragment.get() instanceof TransferDataTotalFragment) {
+                    ((TransferDataTotalFragment)mFragment.get()).showExportDialog();
                 } else {
                     return super.onOptionsItemSelected(item);
                 }
                 break;
-//            case R.id.chat_friend_home:
-//                if (mFragment.get() instanceof MessageDetailFragment) {
-//                    ((MessageDetailFragment)mFragment.get()).showFriendUserCenter();
-//                } else {
-//                    return super.onOptionsItemSelected(item);
-//                }
-//                break;
             default:
                 break;
         }
@@ -165,9 +167,10 @@ public class SimpleBackActivity extends BaseActivity{
         if (mFragment.get() instanceof TransferRecordedFragment) {
             getMenuInflater().inflate(R.menu.transfer_survey_time_recorded, menu);
         }
-//        else if (mFragment.get() instanceof MessageDetailFragment){
-//            getMenuInflater().inflate(R.menu.chat_menu, menu);
-//        }
+        else if (mFragment.get() instanceof TransferDataTotalFragment){
+            getMenuInflater().inflate(R.menu.survey_data_export, menu);
+        }
+        MenuItemCompat.setShowAsAction(menu.getItem(0), MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
         return super.onCreateOptionsMenu(menu);
     }
 }

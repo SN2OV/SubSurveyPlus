@@ -13,6 +13,7 @@ import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.buaa.sn2ov.subsurveyplus.AppConstant;
 import cn.buaa.sn2ov.subsurveyplus.AppContext;
@@ -65,6 +66,8 @@ public class TransferSettingFragment extends BaseFragment implements SwipeRefres
     SwipeRefreshLayout transSetting_swipeRefeshL;
     @BindView(R.id.transSetting_getMoreTaskRL)
     RelativeLayout transSetting_getMoreTaskRL;
+    @BindView(R.id.transSetting_moreDataRL)
+    RelativeLayout transSetting_moreDataRL;
     @BindView(R.id.transSetting_error_layout)
     EmptyLayout mErrorLayout;
 
@@ -134,7 +137,9 @@ public class TransferSettingFragment extends BaseFragment implements SwipeRefres
             result.setUid(user.getUid());
             appContext.saveObject(result, AppConstant.TRANSFER_CACHE);
             //将路线信息保存,两个地方。1)刷新获取新的当前任务 2)从全部任务页面回传
-            taskInfo.setTsLoc(result.getPerTask().getPointLocation());
+            taskInfo.setTsDate(result.getTeamTask().getSurveyDate());
+            taskInfo.setTsStation(result.getStation());
+            taskInfo.setTsLoc(result.getPerTask().getPosition());
             taskInfo.setTsTimePeriod(result.getTeamTask().getTimeStart()+"~"+result.getTeamTask().getTimeEnd());
             AccountHelper.updateTaskCache(taskInfo);
         }
@@ -194,9 +199,8 @@ public class TransferSettingFragment extends BaseFragment implements SwipeRefres
                 sendRequest();
             }
         });
-        transSetting_swipeRefeshL.setOnRefreshListener(this);
-        transSetting_getMoreTaskRL.setOnClickListener(this);
         transSetting_swipeRefeshL.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
+        transSetting_swipeRefeshL.setOnRefreshListener(this);
         user = AccountHelper.getUser();
         Bundle bundle = getArguments();
         if(bundle!=null){
@@ -204,6 +208,8 @@ public class TransferSettingFragment extends BaseFragment implements SwipeRefres
             fillIntoTask(transferAllTaskItem);
             appContext.saveObject(transferAllTaskItem, AppConstant.TRANSFER_CACHE);
             //将路线信息保存
+            taskInfo.setTsDate(transferAllTaskItem.getTeamTask().getSurveyDate());
+            taskInfo.setTsStation(transferAllTaskItem.getStation());
             taskInfo.setTsLoc(transferAllTaskItem.getPerTask().getPosition());
             taskInfo.setTsTimePeriod(transferAllTaskItem.getTeamTask().getTimeStart()+"~"+transferAllTaskItem.getTeamTask().getTimeEnd());
             AccountHelper.updateTaskCache(taskInfo);
@@ -231,6 +237,7 @@ public class TransferSettingFragment extends BaseFragment implements SwipeRefres
 
         }
         refresh();
+        super.initView(view);
     }
 
     private void sendRequest(){
@@ -290,8 +297,20 @@ public class TransferSettingFragment extends BaseFragment implements SwipeRefres
         sendRequest();
     }
 
-    @Override
-    public void onClick(View v) {
-        Router.showSimpleBackForResult(getFragmentManager().findFragmentByTag(AppConstant.FRAGMENT_TRANSFER_SETTING),AppConstant.TRANSFER_SETTING_CODE,SimpleBackPage.TRANSFER_ALL);
+    @OnClick({R.id.transSetting_getMoreTaskRL,R.id.transSetting_moreDataRL})
+    public void onClick(View v){
+        switch (v.getId()){
+            case R.id.transSetting_getMoreTaskRL:
+                Router.showSimpleBackForResult(getFragmentManager().findFragmentByTag(AppConstant.FRAGMENT_TRANSFER_SETTING),AppConstant.TRANSFER_SETTING_CODE,SimpleBackPage.TRANSFER_ALL);
+                break;
+            case R.id.transSetting_moreDataRL:
+                Router.showSimpleBack(getFragmentManager().findFragmentByTag(AppConstant.FRAGMENT_TRANSFER_SETTING),SimpleBackPage.TRANSFER_DATA_TOTAL);
+                break;
+        }
     }
+
+//    @Override
+//    public void onClick(View v) {
+//        Router.showSimpleBackForResult(getFragmentManager().findFragmentByTag(AppConstant.FRAGMENT_TRANSFER_SETTING),AppConstant.TRANSFER_SETTING_CODE,SimpleBackPage.TRANSFER_ALL);
+//    }
 }

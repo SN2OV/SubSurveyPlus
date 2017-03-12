@@ -23,13 +23,21 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.buaa.sn2ov.subsurveyplus.AppConstant;
 import cn.buaa.sn2ov.subsurveyplus.AppContext;
 import cn.buaa.sn2ov.subsurveyplus.R;
 import cn.buaa.sn2ov.subsurveyplus.base.ui.BaseFragment;
+import cn.buaa.sn2ov.subsurveyplus.db.RealmHelper;
+import cn.buaa.sn2ov.subsurveyplus.model.TaskInfo;
+import cn.buaa.sn2ov.subsurveyplus.model.response.task.TransferAllTaskItem;
+import cn.buaa.sn2ov.subsurveyplus.model.response.task.TransferNewestTaskResult;
 import cn.buaa.sn2ov.subsurveyplus.model.response.user.UserItem;
+import cn.buaa.sn2ov.subsurveyplus.model.table.TransRealm;
 import cn.buaa.sn2ov.subsurveyplus.ui.adapter.TransferSurveyDataPerAdapter;
 import cn.buaa.sn2ov.subsurveyplus.util.AccountHelper;
 import cn.buaa.sn2ov.subsurveyplus.util.StringUtils;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by SN2OV on 2017/3/11.
@@ -47,13 +55,15 @@ public class TransferRecordedFragment extends BaseFragment {
     ImageView tsAddFiveIV;
 
     private UserItem user;
+    private TaskInfo taskInfo;
     private TransferSurveyDataPerAdapter tsDataPerAdapter;
     private HashMap<String, String> perData = new HashMap<String, String>();
     private ArrayList<HashMap<String, String>> totalData = new ArrayList<HashMap<String,String>>();
     private int id = 0 ,peopleTotalNum = 0;
-    private int tsRowID;
+    private String tsRowID;
     private SharedPreferences preferences;
     private Vibrator vibrator;
+    private TransRealm transRealm;
 
     @Override
     protected int getLayoutId() {
@@ -73,6 +83,13 @@ public class TransferRecordedFragment extends BaseFragment {
     @Override
     public void initData() {
         user = AccountHelper.getUser();
+        taskInfo = AccountHelper.getTasks();
+        transRealm = new TransRealm();
+        transRealm.setName(user.getRealName());
+        transRealm.setDate(taskInfo.getTsDate());
+        transRealm.setTimePeriod(taskInfo.getTsTimePeriod());
+        transRealm.setStation(taskInfo.getTsStation());
+        transRealm.setDire(taskInfo.getTsLoc());
     }
 
     @Override
@@ -80,7 +97,7 @@ public class TransferRecordedFragment extends BaseFragment {
 
         vibrator = (Vibrator)getActivity().getSystemService(Service.VIBRATOR_SERVICE);
 
-//        initRowID();
+        initRowID();
         totalData.add(insertData("序号", "时间", "当前人数", "总人数"));
         tsDataPerAdapter = new TransferSurveyDataPerAdapter(totalData, getActivity());
         tsnDataPerLV.setAdapter(tsDataPerAdapter);
@@ -100,32 +117,36 @@ public class TransferRecordedFragment extends BaseFragment {
     void onAddClick(View view){
         //设置系统时间
         String curTime = StringUtils.getSystemTime();
-//        TransferSurveyTimeRecordedNewActivity.tsEntity.setSurveyTime(curTime);
+        transRealm.setSurveyTime(curTime);
         id++;
         switch(view.getId()){
             case R.id.tsnAddOneIV:
                 peopleTotalNum++;
                 totalData.add(insertData(id+"",curTime,"1",peopleTotalNum+""));
-//                TransferSurveyTimeRecordedNewActivity.tsEntity.setCount("1");
+                transRealm.setCount("1");
                 break;
             case R.id.tsnAddTwoIV:
                 peopleTotalNum+=2;
-//                TransferSurveyTimeRecordedNewActivity.tsEntity.setCount("2");
+                transRealm.setCount("2");
                 totalData.add(insertData(id+"",curTime,"2",peopleTotalNum+""));
                 break;
             case R.id.tsnAddFiveIV:
                 peopleTotalNum+=5;
-//                TransferSurveyTimeRecordedNewActivity.tsEntity.setCount("5");
+                transRealm.setCount("5");
                 totalData.add(insertData(id+"",curTime,"5",peopleTotalNum+""));
                 break;
         }
-//        //主键序号增加
-//        TransferSurveyTimeRecordedNewActivity.tsEntity.setID(tsRowID);
-//        tsRowID++;
-//        SharedPreferences.Editor editor = preferences.edit();
-//        editor.putInt("tsRowID",tsRowID);
-//        editor.commit();
-//        TransferSurveyDataHelper.insertIntoTSSurveyData(context,TransferSurveyTimeRecordedNewActivity.tsEntity);
+        //主键序号增加
+        preferences = getActivity().getSharedPreferences("tsRowID", MODE_PRIVATE);
+        tsRowID = preferences.getInt("tsRowID", 1)+"";//默认为第二个参数1
+        int i_tsRoID = Integer.parseInt(tsRowID);
+        transRealm.setRowId(i_tsRoID+"");
+        i_tsRoID++;
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt("tsRowID",i_tsRoID);
+        editor.commit();
+        RealmHelper realmHelper = new RealmHelper(getContext());
+        realmHelper.addRecord(transRealm);
         tsDataPerAdapter.notifyDataSetChanged();
         tsnDataPerLV.setAdapter(tsDataPerAdapter);
         //震动-立即开始，持续10ms，不循环
@@ -178,5 +199,15 @@ public class TransferRecordedFragment extends BaseFragment {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void initRowID(){
+        preferences = getActivity().getSharedPreferences("tsRowID", MODE_PRIVATE);
+        tsRowID = preferences.getInt("tsRowID", 1)+"";//默认为第二个参数1
+        transRealm.setRowId(tsRowID);
+        //通过sharedPreferences将主键保存起来
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt("tsRowID",Integer.parseInt(tsRowID));
+        editor.commit();
     }
 }

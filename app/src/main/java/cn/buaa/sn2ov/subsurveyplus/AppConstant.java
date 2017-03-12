@@ -20,7 +20,7 @@ public class AppConstant {
     public static final String KEY_MODE_AUTO_CACHE = "auto cache";
 
     //DB NAME
-    public static final String DB_NAME = "sn2ov.realm";
+    public static final String DB_NAME = "subsurvey.realm";
 
 //    public static final String API_REST_URL = "http://10.0.2.2:8080/rest/";
     public static final String API_REST_URL = "http://123.206.20.236:9998/rest/";
@@ -45,5 +45,12 @@ public class AppConstant {
     public static final int OD_SETTING_CODE = 3;
     public static final int STAY_SETTING_CODE = 4;
     public static final int REVERSE_SETTING_CODE = 5;
+
+    //调查类型
+    public static final int WALK_SURVEY = 1;
+    public static final int STAY_SURVEY = 2;
+    public static final int TRANSFER_SURVEY = 3;
+    public static final int OD_SURVEY = 4;
+    public static final int REVERSE_SURVEY = 5;
 
 }
