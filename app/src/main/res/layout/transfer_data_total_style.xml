@@ -19,7 +19,7 @@
         <TextView
             android:id="@+id/tsTotal_NameTV"
             style="@style/InfoTextViewStyle"
-            android:layout_width="60dp" />
+            android:layout_width="80dp" />
 
         <View style="@style/vertical_layout" />
 

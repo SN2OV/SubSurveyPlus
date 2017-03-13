@@ -169,8 +169,8 @@ public class SimpleBackActivity extends BaseActivity{
         }
         else if (mFragment.get() instanceof TransferDataTotalFragment){
             getMenuInflater().inflate(R.menu.survey_data_export, menu);
+            MenuItemCompat.setShowAsAction(menu.getItem(0), MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
         }
-        MenuItemCompat.setShowAsAction(menu.getItem(0), MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
         return super.onCreateOptionsMenu(menu);
     }
 }

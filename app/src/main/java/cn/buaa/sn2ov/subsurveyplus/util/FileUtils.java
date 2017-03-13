@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import cn.buaa.sn2ov.subsurveyplus.AppConstant;
 import cn.buaa.sn2ov.subsurveyplus.model.base.Base;
 import cn.buaa.sn2ov.subsurveyplus.model.table.TransRealm;
 import io.realm.TransRealmRealmProxy;
@@ -52,7 +53,7 @@ public class FileUtils {
         int colCount = 0;
         FileWriter fw;
         BufferedWriter bfw;
-        File sdCardDir = new File(Environment.getExternalStorageDirectory()+"/客流调查") ;
+        File sdCardDir = new File(Environment.getExternalStorageDirectory()+"/客流调查+") ;
         if (!sdCardDir.exists()) {
             sdCardDir.mkdirs();
         }
@@ -111,7 +112,7 @@ public class FileUtils {
         int colCount = 0;
         FileWriter fw;
         BufferedWriter bfw;
-        File sdCardDir = new File(Environment.getExternalStorageDirectory()+"/客流调查") ;
+        File sdCardDir = new File(Environment.getExternalStorageDirectory()+"/客流调查+") ;
         if (!sdCardDir.exists()) {
             sdCardDir.mkdirs();
         }
@@ -645,6 +646,73 @@ public class FileUtils {
                 listPath(f.getAbsolutePath());
         }
         return allDir;
+    }
+
+    public static void ExportToCSV(List<?> list, String[] headerArr, String fileName, int surveyType) {
+        int rowCount = list.size();
+        int colCount = headerArr.length;
+        FileWriter fw;
+        BufferedWriter bfw;
+        File sdCardDir = new File(Environment.getExternalStorageDirectory()+"/客流调查+") ;
+        if (!sdCardDir.exists()) {
+            sdCardDir.mkdirs();
+        }
+        File saveFile = new File(sdCardDir, fileName);
+        try {
+            fw = new FileWriter(saveFile);
+            bfw = new BufferedWriter(fw);
+            if (rowCount > 0) {
+                bfw.write(new String(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF}));
+                for (int i = 0; i < colCount; i++) {
+                    if (i != colCount - 1)
+                        bfw.write(headerArr[i] + ',');
+                    else
+                        bfw.write(headerArr[i]);
+                }
+                // 写好表头后换行
+                bfw.newLine();
+                // 写入数据
+                for (int i = 0; i < rowCount; i++) {
+                    Log.v("导出数据", "正在导出第" + (i + 1) + "条");
+                    switch (surveyType){
+                        case AppConstant.TRANSFER_SURVEY:
+                            TransRealm trans = (TransRealm) list.get(i);
+//                            String value = trans.getRowId()+","+trans.getName()+","+trans.getDate()+","+trans.getTimePeriod()+","+trans.getStation()
+//                                +","+trans.getDire()+","+trans.getSurveyTime()+","+trans.getCount();
+//                            bfw.write(value.getBytes("utf-8")+"");
+                            bfw.write(new String((trans.getRowId()+",").getBytes("utf-8")));
+                            bfw.write(new String((trans.getName()+",").getBytes("utf-8")));
+                            bfw.write(new String((trans.getDate()+",").getBytes("utf-8")));
+                            bfw.write(new String((trans.getTimePeriod()+",").getBytes("utf-8")));
+                            bfw.write(new String((trans.getStation()+",").getBytes("utf-8")));
+                            bfw.write(new String((trans.getDire()+",").getBytes("utf-8")));
+                            bfw.write(new String((trans.getSurveyTime()+",").getBytes("utf-8")));
+                            bfw.write(new String((trans.getCount()).getBytes("utf-8")));
+                            break;
+                    }
+
+//                    if (j != colCount - 1)  {
+//                        String value = StringUtils.getFieldValueByName(fields[j].getName().toString(),list.get(i)).toString();
+//                        String temp =new String((value + ',').getBytes("utf-8"));
+//                        bfw.write(temp);
+//                    }
+//                    else{
+//                        String value = StringUtils.getFieldValueByName(fields[j].toString(),list.get(i)).toString();
+//                        bfw.write(value+"");  //不加""的话，容易造成空指针错误，因为数据库有得项没有
+//                    }
+                    // 写好每条记录后换行
+                    bfw.newLine();
+                }
+            }
+            // 将缓存数据写入文件
+            bfw.flush();
+            // 释放缓存
+            bfw.close();
+            // Toast.makeText(mContext, "导出完毕！", Toast.LENGTH_SHORT).show();
+            Log.v("导出数据", "导出完毕！");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public enum PathStatus {

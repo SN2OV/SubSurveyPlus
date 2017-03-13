@@ -17,7 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.stetho.Stetho;
-import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
+//import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -47,11 +47,11 @@ public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Stetho.initialize(
-            Stetho.newInitializerBuilder(this)
-                .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
-                .enableWebKitInspector(RealmInspectorModulesProvider.builder(this).build())
-                .build());
+//        Stetho.initialize(
+//            Stetho.newInitializerBuilder(this)
+//                .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+//                .enableWebKitInspector(RealmInspectorModulesProvider.builder(this).build())
+//                .build());
         sContext = getApplicationContext();
         sResource = sContext.getResources();
         init();

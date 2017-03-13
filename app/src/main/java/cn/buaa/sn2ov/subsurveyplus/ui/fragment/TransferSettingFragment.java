@@ -140,7 +140,7 @@ public class TransferSettingFragment extends BaseFragment implements SwipeRefres
             taskInfo.setTsDate(result.getTeamTask().getSurveyDate());
             taskInfo.setTsStation(result.getStation());
             taskInfo.setTsLoc(result.getPerTask().getPosition());
-            taskInfo.setTsTimePeriod(result.getTeamTask().getTimeStart()+"~"+result.getTeamTask().getTimeEnd());
+            taskInfo.setTsTimePeriod(result.getTeamTask().getTimePeriod());
             AccountHelper.updateTaskCache(taskInfo);
         }
 
@@ -211,7 +211,8 @@ public class TransferSettingFragment extends BaseFragment implements SwipeRefres
             taskInfo.setTsDate(transferAllTaskItem.getTeamTask().getSurveyDate());
             taskInfo.setTsStation(transferAllTaskItem.getStation());
             taskInfo.setTsLoc(transferAllTaskItem.getPerTask().getPosition());
-            taskInfo.setTsTimePeriod(transferAllTaskItem.getTeamTask().getTimeStart()+"~"+transferAllTaskItem.getTeamTask().getTimeEnd());
+            taskInfo.setTsTimePeriod(transferAllTaskItem.getTeamTask().getTimePeriod());
+//                transferAllTaskItem.getTeamTask().getTimeStart()+"~"+transferAllTaskItem.getTeamTask().getTimeEnd());
             AccountHelper.updateTaskCache(taskInfo);
             return;
         }
@@ -308,9 +309,4 @@ public class TransferSettingFragment extends BaseFragment implements SwipeRefres
                 break;
         }
     }
-
-//    @Override
-//    public void onClick(View v) {
-//        Router.showSimpleBackForResult(getFragmentManager().findFragmentByTag(AppConstant.FRAGMENT_TRANSFER_SETTING),AppConstant.TRANSFER_SETTING_CODE,SimpleBackPage.TRANSFER_ALL);
-//    }
 }

@@ -355,13 +355,15 @@ public class SurveyUtils {
 //		else if(surveyName.equals("OD调查"))
 //			c = ODSurveyDataHelper.queryODSurveyData(context);
 		if(surveyName.equals("换乘量调查")){
-			header = new String[]{"序号","姓名"};
+			header = new String[]{"序号","姓名","日期","调查时段","车站","调查方向","时间","人数"};
 			list = realmHelper.findTransAllRecord();
+			TransRealm transRealm = (TransRealm) list.get(0);
+			String transName = transRealm.getDate()+"换乘量调查.csv";
+			FileUtils.ExportToCSV(list,header,transName,AppConstant.TRANSFER_SURVEY);
 		}
 //		else if(surveyName.equals("反向乘车调查"))
 //			c = ReverseSurveyDataHelper.queryRSSurveyData(context);
 
-		FileUtils.ExportToCSV(list,header,fileName);
 	}
 
 	public static void delSurveyInfo(Class cls, Context context){
@@ -743,6 +745,7 @@ public class SurveyUtils {
 //				break;
 			case AppConstant.TRANSFER_SURVEY:
 				list = realmHelper.findTransAllRecord();
+				//TODO 第一行数据
 				for(int i = 0;i<list.size();i++){
 					TransRealm temp = (TransRealm)list.get(i);
 					map.put("name",temp.getName());
@@ -930,8 +933,18 @@ public class SurveyUtils {
 						String time;
 						if(Integer.parseInt(lastMinute)/5 == 11)
 							time = lastHour + ":" + Integer.parseInt(lastMinute)/5*5 + " - " + (Integer.parseInt(lastHour)+1) + ":00";
-						else
-							time = lastHour + ":" + Integer.parseInt(lastMinute)/5*5 + " - " + lastHour + ":" + (Integer.parseInt(lastMinute)/5+1)*5;
+						else{
+							int tempMinuteFrom = Integer.parseInt(lastMinute)/5*5;
+							int tempMinuteTo = (Integer.parseInt(lastMinute)/5+1)*5;
+							String v_tempMinuteFrom = tempMinuteFrom +"";
+							String v_tempMinuteTo = tempMinuteTo + "";
+							if(tempMinuteFrom<10)
+								v_tempMinuteFrom = "0"+tempMinuteFrom;
+							if(tempMinuteTo<10)
+								v_tempMinuteTo = "0"+tempMinuteTo;
+							time = lastHour + ":" + v_tempMinuteFrom + " - " + lastHour + ":" + v_tempMinuteTo;
+						}
+
 						map.put("surveyTime",time);
 						map.put("count",sum+"");
 						totalDataArr.add(map);
@@ -1258,7 +1271,7 @@ public class SurveyUtils {
 				surveyName = timePeriod + "换乘量调查_" + station +"站_"+ dire +"_" + name +"_"  +date;
 
 
-				newFilePath = Environment.getExternalStorageDirectory()+"/客流调查/"+surveyName+".xlsx";
+				newFilePath = Environment.getExternalStorageDirectory()+"/客流调查+/"+surveyName+".xlsx";
 				assetData = assetManager.open("ExcelTemplate/TransferSurveyTemplate.xlsx");
 				srcTemplateFile = new File(newFilePath);
 				FileUtils.ConcertInputStreamToFile(assetData,srcTemplateFile);

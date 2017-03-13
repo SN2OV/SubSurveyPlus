@@ -22,6 +22,9 @@ public class TransRealm extends RealmObject {
     private String endTime;
     private String startTime;
 
+    public TransRealm() {
+    }
+
     public String getRowId() {
         return rowId;
     }

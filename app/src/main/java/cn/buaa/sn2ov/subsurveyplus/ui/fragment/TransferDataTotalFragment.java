@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnItemLongClick;
 import cn.buaa.sn2ov.subsurveyplus.AppConstant;
 import cn.buaa.sn2ov.subsurveyplus.AppContext;
 import cn.buaa.sn2ov.subsurveyplus.R;
@@ -27,6 +28,8 @@ import cn.buaa.sn2ov.subsurveyplus.model.table.TransRealm;
 import cn.buaa.sn2ov.subsurveyplus.ui.adapter.TransferSurveyTotalCountAdapter;
 import cn.buaa.sn2ov.subsurveyplus.util.SurveyUtils;
 import io.realm.RealmResults;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by SN2OV on 2017/3/12.
@@ -152,5 +155,48 @@ public class TransferDataTotalFragment extends BaseFragment {
             tsSurveyDataTotalLV.setAdapter(tsSurveyTotalCountAdapter);
             tsSurveyTotalCountAdapter.notifyDataSetChanged();
         }
+    }
+
+    @OnItemLongClick(R.id.tsSurveyDataTotalLV)
+    public boolean onItemLongClick(final int position,final long id){
+        Dialog dialog = new AlertDialog.Builder(getContext()).setTitle("删除选中调查数据").setIcon(R.drawable.app_logo)
+            .setMessage("确认删除吗？").setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    tsInfo.remove(position);
+                    //db operation
+                    RealmHelper realmHelper = new RealmHelper(getContext());
+                    realmHelper.deleteRecordByID(TransRealm.class,id+"");
+                    //删除后处理序号顺序 odInfo.size()-1因为多一行没用的表头数据
+                    for(int i = position+1;i<=tsInfo.size();i++){
+//                        realmHelper.updateID(TransRealm.class,i);
+                        realmHelper.updateID(TransRealm.class,i);
+                        //这里和原来的版本不同，因为原来的list中包含表头文字
+                        tsInfo.get(i-1).setRowId((i-1)+"");
+                    }
+                    realmHelper.commitTransaction();
+                    preferences = getActivity().getSharedPreferences("tsRowID", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    //处理序号
+                    tsRowID = preferences.getInt("tsRowID", 1);
+                    tsRowID --;
+                    editor.putInt("tsRowID", tsRowID);
+                    editor.commit();
+
+                    AppContext.toast("删除成功");
+                    //TODO 由于Realm而暂时注释
+//                    tsSurveyTotalCountAdapter.notifyDataSetChanged();
+                    tsSurveyDataTotalLV.setAdapter(tsSurveyTotalCountAdapter);
+                }
+            }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            }).create();
+        //点击dialog以外地方不消失
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+        return true;
     }
 }

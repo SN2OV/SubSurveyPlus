@@ -36,6 +36,7 @@ import cn.buaa.sn2ov.subsurveyplus.model.table.TransRealm;
 import cn.buaa.sn2ov.subsurveyplus.ui.adapter.TransferSurveyDataPerAdapter;
 import cn.buaa.sn2ov.subsurveyplus.util.AccountHelper;
 import cn.buaa.sn2ov.subsurveyplus.util.StringUtils;
+import io.realm.Realm;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -163,43 +164,46 @@ public class TransferRecordedFragment extends BaseFragment {
         tsDataPerAdapter = new TransferSurveyDataPerAdapter(totalData, getActivity());
         tsnDataPerLV.setAdapter(tsDataPerAdapter);
         tsDataPerAdapter.notifyDataSetChanged();
-//                TransferSurveyDataHelper.delTransferSurveyInfoByNewestID(context);
-
-//                SharedPreferences.Editor editor = getSharedPreferences("tsRowID", MODE_WORLD_WRITEABLE).edit();
-//                tsRowID--;
-//                editor.putInt("tsRowID", 1);
-//                editor.commit();
+        RealmHelper realmHelper = new RealmHelper(getContext());
+        realmHelper.deleteLatestRecord(TransRealm.class);
+        preferences = getActivity().getSharedPreferences("tsRowID", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        tsRowID = preferences.getInt("tsRowID", 1)+"";
+        int i_tsRoID = Integer.parseInt(tsRowID);
+        i_tsRoID--;
+        editor.putInt("tsRowID", i_tsRoID);
+        editor.commit();
         AppContext.toast("已撤销一条记录");
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()){
-            case R.id.transfer_survey_menu_revoke:
-                int latestIndex = totalData.size()-1;
-                if(latestIndex == 0)
-                    break;
-//                peopleTotalNum -= Integer.parseInt(totalData.get(latestIndex).get("perCount"));
-//                id--;
-                totalData.remove(latestIndex);
-                tsDataPerAdapter = new TransferSurveyDataPerAdapter(totalData, getActivity());
-                tsnDataPerLV.setAdapter(tsDataPerAdapter);
-                tsDataPerAdapter.notifyDataSetChanged();
-//                TransferSurveyDataHelper.delTransferSurveyInfoByNewestID(context);
-
-//                SharedPreferences.Editor editor = getSharedPreferences("tsRowID", MODE_WORLD_WRITEABLE).edit();
-//                tsRowID--;
-//                editor.putInt("tsRowID", 1);
-//                editor.commit();
-                AppContext.toast("已撤销一条记录");
-                break;
-            case android.R.id.home:
-                Log.i("TAG", "=========选中返回键");
-                getActivity().finish();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch(item.getItemId()){
+//            case R.id.transfer_survey_menu_revoke:
+//                int latestIndex = totalData.size()-1;
+//                if(latestIndex == 0)
+//                    break;
+////                peopleTotalNum -= Integer.parseInt(totalData.get(latestIndex).get("perCount"));
+////                id--;
+//                totalData.remove(latestIndex);
+//                tsDataPerAdapter = new TransferSurveyDataPerAdapter(totalData, getActivity());
+//                tsnDataPerLV.setAdapter(tsDataPerAdapter);
+//                tsDataPerAdapter.notifyDataSetChanged();
+////                TransferSurveyDataHelper.delTransferSurveyInfoByNewestID(context);
+//
+////                SharedPreferences.Editor editor = getSharedPreferences("tsRowID", MODE_WORLD_WRITEABLE).edit();
+////                tsRowID--;
+////                editor.putInt("tsRowID", 1);
+////                editor.commit();
+//                AppContext.toast("已撤销一条记录");
+//                break;
+//            case android.R.id.home:
+//                Log.i("TAG", "=========选中返回键");
+//                getActivity().finish();
+//                break;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     public void initRowID(){
         preferences = getActivity().getSharedPreferences("tsRowID", MODE_PRIVATE);

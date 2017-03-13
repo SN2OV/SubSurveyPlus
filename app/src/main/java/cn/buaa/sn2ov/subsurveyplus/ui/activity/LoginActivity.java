@@ -32,6 +32,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.buaa.sn2ov.subsurveyplus.AppContext;
 import cn.buaa.sn2ov.subsurveyplus.R;
 import cn.buaa.sn2ov.subsurveyplus.api.remote.ApiFactory;
 import cn.buaa.sn2ov.subsurveyplus.base.BaseObserver;
@@ -432,7 +434,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         @Override
         public void onError(Throwable e) {
-
+           showProgress(false);
+           AppContext.toast("网络连接超时");
+           UserItem user = AccountHelper.getUser();
+           if(user!=null){
+               mEmailView.setText(user.getUserName());
+               mPasswordView.setText(user.getPassword());
+           }
            return;
         }
 

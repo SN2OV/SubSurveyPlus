@@ -55,4 +55,45 @@ public class RealmHelper {
             return false;
         }
     }
+
+    public void deleteLatestRecord(Class<? extends RealmObject> cls){
+        mRealm.beginTransaction();
+        mRealm.where(cls).findAll().removeLast();
+        mRealm.commitTransaction();
+    }
+
+    //注意：这里不能commit，应为要和后面的update一起提交。
+    public boolean deleteRecordByID(Class<? extends RealmObject> cls,String id){
+        mRealm.beginTransaction();
+        RealmObject result = mRealm.where(cls).equalTo("rowId",id).findFirst();
+        if(result==null)
+            return false;
+        result.removeFromRealm();
+//        mRealm.commitTransaction();
+        return true;
+    }
+
+    //注意：这里不能begin，应为要和前面的del一起提交。
+    public void updateTransID(int id){
+//        mRealm.beginTransaction();
+        TransRealm transRealm = mRealm.where(TransRealm.class).equalTo("rowId",id+"").findFirst();
+        transRealm.setRowId((id-1)+"");
+        mRealm.copyToRealmOrUpdate(transRealm);
+//        mRealm.commitTransaction();
+    }
+
+    public void commitTransaction(){
+        mRealm.commitTransaction();
+    }
+
+    //注意：这里不能begin，应为要和前面的del一起提交。
+    public void updateID(Class<? extends RealmObject> cls,int id){
+        RealmObject result = mRealm.where(cls).equalTo("rowId",id+"").findFirst();
+        if(cls == TransRealm.class){
+            TransRealm newResult = (TransRealm)result;
+            newResult.setRowId((id-1)+"");
+            mRealm.copyToRealmOrUpdate(newResult);
+        }
+    }
+
 }

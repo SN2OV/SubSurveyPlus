@@ -46,7 +46,7 @@ public class ExportHandler extends android.os.Handler{
                 break;
         }
 
-        AppContext.toast("调查数据已导出至/sdcard/客流调查/");
+        AppContext.toast("调查数据已导出至/sdcard/客流调查+/");
         super.handleMessage(msg);
         Looper.loop();
     }
