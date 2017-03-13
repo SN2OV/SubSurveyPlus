@@ -166,13 +166,19 @@ public class TransferDataTotalFragment extends BaseFragment {
                     tsInfo.remove(position);
                     //db operation
                     RealmHelper realmHelper = new RealmHelper(getContext());
-                    realmHelper.deleteRecordByID(TransRealm.class,id+"");
+                    if(id<10)
+                        realmHelper.deleteRecordByID(TransRealm.class,"0"+id);
+                    else
+                        realmHelper.deleteRecordByID(TransRealm.class,id+"");
                     //删除后处理序号顺序 odInfo.size()-1因为多一行没用的表头数据
                     for(int i = position+1;i<=tsInfo.size();i++){
 //                        realmHelper.updateID(TransRealm.class,i);
                         realmHelper.updateID(TransRealm.class,i);
                         //这里和原来的版本不同，因为原来的list中包含表头文字
-                        tsInfo.get(i-1).setRowId((i-1)+"");
+                        if((i-1)<10)
+                            tsInfo.get(i-1).setRowId("0"+(i-1));
+                        else
+                            tsInfo.get(i-1).setRowId((i-1)+"");
                     }
                     realmHelper.commitTransaction();
                     preferences = getActivity().getSharedPreferences("tsRowID", MODE_PRIVATE);

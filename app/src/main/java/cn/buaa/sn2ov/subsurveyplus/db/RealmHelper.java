@@ -88,10 +88,18 @@ public class RealmHelper {
 
     //注意：这里不能begin，应为要和前面的del一起提交。
     public void updateID(Class<? extends RealmObject> cls,int id){
-        RealmObject result = mRealm.where(cls).equalTo("rowId",id+"").findFirst();
+        String v_id;
+        if(id<10)
+            v_id = "0"+id;
+        else
+            v_id = ""+id;
+        RealmObject result = mRealm.where(cls).equalTo("rowId",v_id).findFirst();
         if(cls == TransRealm.class){
             TransRealm newResult = (TransRealm)result;
-            newResult.setRowId((id-1)+"");
+            if((id-1)<10){
+                newResult.setRowId("0"+(id-1));
+            }else
+                newResult.setRowId((id-1)+"");
             mRealm.copyToRealmOrUpdate(newResult);
         }
     }

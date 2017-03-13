@@ -141,7 +141,10 @@ public class TransferRecordedFragment extends BaseFragment {
         preferences = getActivity().getSharedPreferences("tsRowID", MODE_PRIVATE);
         tsRowID = preferences.getInt("tsRowID", 1)+"";//默认为第二个参数1
         int i_tsRoID = Integer.parseInt(tsRowID);
-        transRealm.setRowId(i_tsRoID+"");
+        if(i_tsRoID<10)
+            transRealm.setRowId("0"+i_tsRoID);
+        else
+            transRealm.setRowId(i_tsRoID+"");
         i_tsRoID++;
         SharedPreferences.Editor editor = preferences.edit();
         editor.putInt("tsRowID",i_tsRoID);
@@ -208,7 +211,10 @@ public class TransferRecordedFragment extends BaseFragment {
     public void initRowID(){
         preferences = getActivity().getSharedPreferences("tsRowID", MODE_PRIVATE);
         tsRowID = preferences.getInt("tsRowID", 1)+"";//默认为第二个参数1
-        transRealm.setRowId(tsRowID);
+        if(preferences.getInt("tsRowID", 1)<10)
+            transRealm.setRowId("0"+tsRowID);
+        else
+            transRealm.setRowId(tsRowID);
         //通过sharedPreferences将主键保存起来
         SharedPreferences.Editor editor = preferences.edit();
         editor.putInt("tsRowID",Integer.parseInt(tsRowID));
