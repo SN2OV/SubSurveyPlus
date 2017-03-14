@@ -15,14 +15,17 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.buaa.sn2ov.subsurveyplus.R;
+import cn.buaa.sn2ov.subsurveyplus.base.adapter.ListBaseAdapter;
+import cn.buaa.sn2ov.subsurveyplus.model.Entity;
+import cn.buaa.sn2ov.subsurveyplus.model.response.task.TransferAllTaskItem;
 import cn.buaa.sn2ov.subsurveyplus.model.table.TransRealm;
 
-public class TransferSurveyTotalCountAdapter extends BaseAdapter {
+public class TransferSurveyTotalCountAdapter extends ListBaseAdapter {
 
 	private List<TransRealm> transRealms = new ArrayList<TransRealm>();
 	private Context context = null;
 	
-	class ViewHolder{
+	static class ViewHolder{
 		@BindView(R.id.tsTotal_IDTV)
 		TextView tsTotal_IDTV;
 		@BindView(R.id.tsTotal_NameTV)
@@ -44,47 +47,56 @@ public class TransferSurveyTotalCountAdapter extends BaseAdapter {
 			ButterKnife.bind(this,view);
 		}
 	}
-	
+
+	public TransferSurveyTotalCountAdapter(){
+		this.context = context;
+	}
+
+	public TransferSurveyTotalCountAdapter(Context context){
+		this.context = context;
+	}
+
 	public TransferSurveyTotalCountAdapter(Context context, List<TransRealm> transRealms){
 		this.context = context;
 		this.transRealms = transRealms;
 	}
 	
 	@Override
-	public int getCount() {
-		return transRealms.size();
-	}
-
-	@Override
-	public Object getItem(int pos) {
-		return transRealms.get(pos);
-	}
-
-	@Override
 	public long getItemId(int pos) {
 		return pos;
 	}
 
 	@Override
-	public View getView(int pos, View convertView, ViewGroup parent) {
-		
-		ViewHolder holder = null;
-		if(convertView == null){
-			convertView = LayoutInflater.from(context).inflate(R.layout.transfer_data_total_style, null);
-			holder = new ViewHolder(convertView);
+	public View getRealView(int pos, View convertView, ViewGroup parent) {
+
+//		ViewHolder holder = null;
+//		if(convertView == null){
+//			convertView = LayoutInflater.from(context).inflate(R.layout.transfer_data_total_style, null);
+//			holder = new ViewHolder(convertView);
+//			convertView.setTag(holder);
+//		}else{
+//			holder = (ViewHolder)convertView.getTag();
+//		}
+		TransferSurveyTotalCountAdapter.ViewHolder holder;
+		if (convertView == null || convertView.getTag() == null) {
+			convertView = getLayoutInflater(parent.getContext()).inflate(
+				R.layout.transfer_data_total_style, null);
+			holder = new TransferSurveyTotalCountAdapter.ViewHolder(convertView);
 			convertView.setTag(holder);
-		}else{
-			holder = (ViewHolder)convertView.getTag();
+		} else {
+			holder = (TransferSurveyTotalCountAdapter.ViewHolder) convertView.getTag();
 		}
-		
-		holder.tsTotal_IDTV.setText(transRealms.get(pos).getRowId());
-		holder.tsTotal_NameTV.setText(transRealms.get(pos).getName());
-		holder.tsTotal_DateTV.setText(transRealms.get(pos).getDate());
-		holder.tsTotal_TimePeriodTV.setText(transRealms.get(pos).getTimePeriod());
-		holder.tsTotal_StationTV.setText(transRealms.get(pos).getStation());
-		holder.tsTotal_DireTV.setText(transRealms.get(pos).getDire());
-		holder.tsTotal_TimeTV.setText(transRealms.get(pos).getSurveyTime());
-		holder.tsTotal_CountTotalTV.setText(transRealms.get(pos).getCount());
+
+		TransRealm transRealm = (TransRealm)mDatas.get(pos);
+
+		holder.tsTotal_IDTV.setText(transRealm.getRowId());
+		holder.tsTotal_NameTV.setText(transRealm.getName());
+		holder.tsTotal_DateTV.setText(transRealm.getDate());
+		holder.tsTotal_TimePeriodTV.setText(transRealm.getTimePeriod());
+		holder.tsTotal_StationTV.setText(transRealm.getStation());
+		holder.tsTotal_DireTV.setText(transRealm.getDire());
+		holder.tsTotal_TimeTV.setText(transRealm.getSurveyTime());
+		holder.tsTotal_CountTotalTV.setText(transRealm.getCount());
 		
 		if(pos == 0){
 			convertView.setBackgroundResource(R.color.head_bg);
@@ -106,7 +118,5 @@ public class TransferSurveyTotalCountAdapter extends BaseAdapter {
 		
 		return convertView;
 	}
-	
-	
 
 }

@@ -20,8 +20,6 @@ import cn.buaa.sn2ov.subsurveyplus.model.response.task.TransferPerTaskItem;
 
 public class TransAllTaskAdapter extends ListBaseAdapter {
 
-//    private TransItemOnClick transItemOnClick;
-
     static class ViewHolder {
 
         @BindView(R.id.item_survey_iv)
@@ -71,10 +69,5 @@ public class TransAllTaskAdapter extends ListBaseAdapter {
 
         return convertView;
     }
-
-//    @Override
-//    public boolean isEnabled(int position) {
-//        return true;
-//    }
 
 }

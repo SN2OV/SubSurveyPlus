@@ -6,12 +6,10 @@ import java.util.List;
 
 import cn.buaa.sn2ov.subsurveyplus.AppConstant;
 import cn.buaa.sn2ov.subsurveyplus.model.table.TransRealm;
-import cn.buaa.sn2ov.subsurveyplus.ui.fragment.TransferDataTotalFragment;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmObject;
 import io.realm.RealmResults;
-import rx.schedulers.TrampolineScheduler;
 
 /**
  * Created by SN2OV on 2017/3/12.
@@ -22,7 +20,9 @@ public class RealmHelper {
     private final Realm mRealm;
 
     public RealmHelper(Context context) {
-        mRealm = Realm.getInstance(new RealmConfiguration.Builder(context).deleteRealmIfMigrationNeeded().name(db_name).build());
+        Realm.init(context);
+        mRealm = Realm.getDefaultInstance();
+//        mRealm = Realm.getInstance(new RealmConfiguration.Builder(context).deleteRealmIfMigrationNeeded().name(db_name).build());
     }
 
     public void addRecord(RealmObject record) {
@@ -36,6 +36,7 @@ public class RealmHelper {
         return mRealm.copyToRealm(records);
     }
 
+
     //TODO 可以试试上面那个方法
     public List<TransRealm> findTransAllRecord(){
         RealmResults<TransRealm> records = mRealm.where(TransRealm.class).findAll();
@@ -46,7 +47,8 @@ public class RealmHelper {
     public boolean deleteRealmObjectAll(Class<? extends RealmObject> cls){
         try {
             mRealm.beginTransaction();
-            mRealm.clear(cls);
+            mRealm.delete(cls);
+//            mRealm.clear(cls);
             mRealm.commitTransaction();
             return true;
         } catch (Exception e) {
@@ -58,7 +60,8 @@ public class RealmHelper {
 
     public void deleteLatestRecord(Class<? extends RealmObject> cls){
         mRealm.beginTransaction();
-        mRealm.where(cls).findAll().removeLast();
+        mRealm.where(cls).findAll().deleteLastFromRealm();
+//        mRealm.where(cls).findAll().removeLast();
         mRealm.commitTransaction();
     }
 
@@ -68,7 +71,8 @@ public class RealmHelper {
         RealmObject result = mRealm.where(cls).equalTo("rowId",id).findFirst();
         if(result==null)
             return false;
-        result.removeFromRealm();
+        result.deleteFromRealm();
+//        result.removeFromRealm();
 //        mRealm.commitTransaction();
         return true;
     }

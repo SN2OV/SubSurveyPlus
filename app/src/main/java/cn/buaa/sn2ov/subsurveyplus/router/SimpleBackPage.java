@@ -4,6 +4,7 @@ import cn.buaa.sn2ov.subsurveyplus.ui.activity.LoginActivity;
 import cn.buaa.sn2ov.subsurveyplus.ui.fragment.PersonCenterInfoSettingFragment;
 import cn.buaa.sn2ov.subsurveyplus.ui.fragment.TransAllTaskFragment;
 import cn.buaa.sn2ov.subsurveyplus.ui.fragment.TransferDataTotalFragment;
+import cn.buaa.sn2ov.subsurveyplus.ui.fragment.TransferDataTotalNewFragment;
 import cn.buaa.sn2ov.subsurveyplus.ui.fragment.TransferRecordedFragment;
 
 /**
@@ -17,7 +18,7 @@ public enum SimpleBackPage {
 
     PERSON_INFO_SETTING(6,"个人信息设置",PersonCenterInfoSettingFragment.class),
     TRANSFER_RECORDED(8,"换乘量调查", TransferRecordedFragment.class),
-    TRANSFER_DATA_TOTAL(9,"换乘量全部数据",TransferDataTotalFragment.class)
+    TRANSFER_DATA_TOTAL(9,"换乘量全部数据",TransferDataTotalNewFragment.class)
     ;
 
     private int id;

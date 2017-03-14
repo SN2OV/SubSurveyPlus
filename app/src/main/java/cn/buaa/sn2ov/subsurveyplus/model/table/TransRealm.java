@@ -1,5 +1,6 @@
 package cn.buaa.sn2ov.subsurveyplus.model.table;
 
+import cn.buaa.sn2ov.subsurveyplus.base.interf.IBaseResult;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -120,4 +121,5 @@ public class TransRealm extends RealmObject {
     public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
+
 }

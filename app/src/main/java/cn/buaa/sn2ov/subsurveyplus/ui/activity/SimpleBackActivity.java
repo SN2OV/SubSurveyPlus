@@ -19,6 +19,7 @@ import cn.buaa.sn2ov.subsurveyplus.base.ui.BaseActivity;
 import cn.buaa.sn2ov.subsurveyplus.base.ui.BaseFragment;
 import cn.buaa.sn2ov.subsurveyplus.router.SimpleBackPage;
 import cn.buaa.sn2ov.subsurveyplus.ui.fragment.TransferDataTotalFragment;
+import cn.buaa.sn2ov.subsurveyplus.ui.fragment.TransferDataTotalNewFragment;
 import cn.buaa.sn2ov.subsurveyplus.ui.fragment.TransferRecordedFragment;
 import cn.buaa.sn2ov.subsurveyplus.view.dialog.WaitDialog;
 
@@ -150,8 +151,8 @@ public class SimpleBackActivity extends BaseActivity{
                 }
                 break;
             case R.id.survey_data_export:
-                if (mFragment.get() instanceof TransferDataTotalFragment) {
-                    ((TransferDataTotalFragment)mFragment.get()).showExportDialog();
+                if (mFragment.get() instanceof TransferDataTotalNewFragment) {
+                    ((TransferDataTotalNewFragment)mFragment.get()).showExportDialog();
                 } else {
                     return super.onOptionsItemSelected(item);
                 }
@@ -167,7 +168,7 @@ public class SimpleBackActivity extends BaseActivity{
         if (mFragment.get() instanceof TransferRecordedFragment) {
             getMenuInflater().inflate(R.menu.transfer_survey_time_recorded, menu);
         }
-        else if (mFragment.get() instanceof TransferDataTotalFragment){
+        else if (mFragment.get() instanceof TransferDataTotalNewFragment){
             getMenuInflater().inflate(R.menu.survey_data_export, menu);
             MenuItemCompat.setShowAsAction(menu.getItem(0), MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
         }

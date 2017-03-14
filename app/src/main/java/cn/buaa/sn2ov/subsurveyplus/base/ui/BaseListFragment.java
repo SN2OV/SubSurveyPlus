@@ -25,6 +25,9 @@ import cn.buaa.sn2ov.subsurveyplus.model.Entity;
 import cn.buaa.sn2ov.subsurveyplus.model.base.ListEntity;
 import cn.buaa.sn2ov.subsurveyplus.base.interf.IBaseResult;
 import cn.buaa.sn2ov.subsurveyplus.view.empty.EmptyLayout;
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.RealmResults;
 import retrofit2.adapter.rxjava.HttpException;
 
 /**
@@ -82,6 +85,8 @@ public abstract class BaseListFragment<T extends Entity> extends BaseFragment
 
         @Override
         public void onNext(IBaseResult<?> result) {
+            if(mSwipeRefreshLayout!=null)
+                mSwipeRefreshLayout.setEnabled(true);
             if (!result.isOk()) {
                 executeOnLoadDataError(null);
                 return;
@@ -111,6 +116,59 @@ public abstract class BaseListFragment<T extends Entity> extends BaseFragment
         }
     };
 
+    //观察者
+    protected BaseObserver mRealmSubscriber = new BaseObserver<RealmResults<?>>() {
+
+        @Override
+        public void onError(Throwable e) {
+            if (e instanceof HttpException) {
+                executeOnLoadDataError(null);
+            } else if (e instanceof IOException) {
+                executeOnLoadDataError(null);
+            } else if (e instanceof ApiException) {
+                ApiException exception = (ApiException) e;
+                if (exception.isTokenExpried()) {
+                    if (isAdded()) {
+                        //handle ui
+                    }
+                } else {
+                    AppContext.toast(exception.getMessage());
+                }
+            } else {
+                executeOnLoadDataError(null);
+            }
+
+            executeOnLoadFinish();
+
+        }
+
+        @Override
+        public void onNext(RealmResults<?> results) {
+            if(mSwipeRefreshLayout!=null)
+                mSwipeRefreshLayout.setEnabled(false);
+            if(results == null){
+                executeOnLoadDataError(null);
+                return;
+            }
+            if (isAdded()) {
+                if (mState == STATE_REFRESH) {
+                    onRefreshNetworkSuccess();
+                }
+                RealmResults<RealmObject> re = (RealmResults<RealmObject>)results;
+                RealmList<RealmObject> realmList = new RealmList<RealmObject>();
+                realmList.addAll(re.subList(0, re.size()));
+                //数据适配ListView
+                executeOnLoadDataSuccess((List)realmList);
+                AppContext.toast("刷新完成");
+            }
+        }
+
+        @Override
+        public void onCompleted() {
+            executeOnLoadFinish();
+        }
+    };
+
 
     @Override
     protected int getLayoutId() {
@@ -122,7 +180,7 @@ public abstract class BaseListFragment<T extends Entity> extends BaseFragment
                              Bundle savedInstanceState) {
         mInflater = inflater;
         View view = inflater.inflate(getLayoutId(), container, false);
-
+        initData();
         return view;
     }
 
@@ -256,6 +314,19 @@ public abstract class BaseListFragment<T extends Entity> extends BaseFragment
         return false;
     }
 
+//    protected boolean compareTo(List<? extends Entity> data, Entity enity) {
+//        int s = data.size();
+//        if (enity != null) {
+//            for (int i = 0; i < s; i++) {
+//
+//                if (enity.getId() != null && enity.getId().equals(data.get(i).getId())) {
+//                    return true;
+//                }
+//            }
+//        }
+//        return false;
+//    }
+
     protected int getPageSize() {
         return 10;
     }
@@ -275,10 +346,18 @@ public abstract class BaseListFragment<T extends Entity> extends BaseFragment
         }
         //之前页面中存在数据的话，就不重新加载
         for (int i = 0; i < data.size(); i++) {
-            if (compareTo(mAdapter.getData(), data.get(i))) {
-                data.remove(i);
-                i--;
+            if(data.get(i) instanceof Entity){
+                if (compareTo(mAdapter.getData(), data.get(i))) {
+                    data.remove(i);
+                    i--;
+                }
+            }else{
+//                RealmObject realmData = (RealmObject) mAdapter.getData().get(i);
+//                realmData.
+//                if(data.get(i).getId().equals())
+
             }
+
         }
 
         int adapterState = ListBaseAdapter.STATE_EMPTY_ITEM;
@@ -293,6 +372,7 @@ public abstract class BaseListFragment<T extends Entity> extends BaseFragment
         }
         mAdapter.setState(adapterState);
         mAdapter.addItems(data);
+
         if (mAdapter.getCount() == 1) {
             if (needShowEmptyNoData()) {
                 mErrorLayout.setErrorType(EmptyLayout.STATE_NODATA);
@@ -367,5 +447,9 @@ public abstract class BaseListFragment<T extends Entity> extends BaseFragment
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem,
                          int visibleItemCount, int totalItemCount) {
+    }
+
+    public boolean isDBState(){
+        return false;
     }
 }

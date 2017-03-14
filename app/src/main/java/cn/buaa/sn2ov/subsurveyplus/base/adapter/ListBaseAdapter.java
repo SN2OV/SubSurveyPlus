@@ -19,6 +19,8 @@ import cn.buaa.sn2ov.subsurveyplus.R;
 import cn.buaa.sn2ov.subsurveyplus.model.Entity;
 import cn.buaa.sn2ov.subsurveyplus.util.FromOSChina.OSUtil;
 import cn.buaa.sn2ov.subsurveyplus.util.StringUtils;
+import io.realm.RealmObject;
+import io.realm.RealmResults;
 
 /**
  * Created by SN2OV on 2017/2/23.
@@ -155,6 +157,10 @@ public class ListBaseAdapter<T extends Entity> extends BaseAdapter {
         }
         notifyDataSetChanged();
     }
+
+//    public void addRealmItems(RealmResults<RealmObject> data){
+//
+//    }
 
     public void addItem(T obj) {
         if (mDatas != null) {

@@ -390,8 +390,6 @@ public class SurveyUtils {
 		ArrayList<HashMap<String ,String>> totalDataArr;
 		ArrayList<HashMap<String ,String>> perDataArr;
 		HashMap<String,String> headData;
-		Cursor cursor = null;
-		AppContext appContext = (AppContext)context.getApplicationContext();
 		UserItem user = AccountHelper.getUser();
 		AssetManager assetManager = context.getAssets();
 		switch (surveyType){
