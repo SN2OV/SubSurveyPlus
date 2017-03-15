@@ -160,12 +160,15 @@ public abstract class BaseListFragment<T extends Entity> extends BaseFragment
                 //数据适配ListView
                 executeOnLoadDataSuccess((List)realmList);
                 AppContext.toast("刷新完成");
+                //暂时不刷新完的操作放在这里
+                executeOnLoadFinish();
             }
         }
 
         @Override
         public void onCompleted() {
             executeOnLoadFinish();
+            super.onCompleted();
         }
     };
 
@@ -283,7 +286,7 @@ public abstract class BaseListFragment<T extends Entity> extends BaseFragment
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position,
                             long id) {
-        AppContext.toast("第"+position+"项");
+//        AppContext.toast("第"+position+"项");
     }
 
 
@@ -328,7 +331,7 @@ public abstract class BaseListFragment<T extends Entity> extends BaseFragment
 //    }
 
     protected int getPageSize() {
-        return 10;
+        return 20;
     }
 
     protected void onRefreshNetworkSuccess() {
@@ -364,7 +367,8 @@ public abstract class BaseListFragment<T extends Entity> extends BaseFragment
 
         if ((mAdapter.getCount() + data.size()) == 0) {
             adapterState = ListBaseAdapter.STATE_EMPTY_ITEM;
-        } else if (data.size() == 0 || (data.size() < getPageSize() && mCurrentPage == 0)) {
+//        } else if (data.size() == 0 || (data.size() < getPageSize() && mCurrentPage == 0)) {
+        } else if (data.size() == 0 || (data.size() < getPageSize())) {
             adapterState = ListBaseAdapter.STATE_NO_MORE;
             mAdapter.notifyDataSetChanged();
         } else {

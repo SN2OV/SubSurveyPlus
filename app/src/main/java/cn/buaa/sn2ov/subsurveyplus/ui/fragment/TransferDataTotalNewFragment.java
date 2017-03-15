@@ -13,6 +13,7 @@ import android.widget.ListView;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import butterknife.BindView;
@@ -35,6 +36,7 @@ import cn.buaa.sn2ov.subsurveyplus.util.SurveyUtils;
 import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import retrofit2.adapter.rxjava.HttpException;
 import rx.Observable;
@@ -75,11 +77,29 @@ public class TransferDataTotalNewFragment extends BaseListFragment {
         Observable.defer(new Func0<Observable<RealmResults<TransRealm>>>() {
             @Override
             public Observable<RealmResults<TransRealm>> call() {
-//                RealmHelper realmHelper = new RealmHelper(getContext());
-//                List<TransRealm> transDbData = (List<TransRealm>)realmHelper.findAllRecord(TransRealm.class);
                 Realm.init(getActivity());
                 Realm realm = Realm.getDefaultInstance();
-                return realm.where(TransRealm.class).findAll().asObservable();
+                RealmQuery<TransRealm> query = realm.where(TransRealm.class);
+//                query.beginsWith("rowId",mCurrentPage+"").notEqualTo("rowId",mCurrentPage+"0");
+//                query.or().equalTo("rowId",(mCurrentPage+1)*10+"");
+                query.beginsWith("rowId",2*mCurrentPage+"").notEqualTo("rowId",2*mCurrentPage+"0");
+                query.or().beginsWith("rowId",(2*mCurrentPage+1)+"");
+                query.or().equalTo("rowId",((mCurrentPage+1)*2)*10+"");
+                RealmResults<TransRealm> resultAll = query.findAll();
+
+
+//                RealmResults<TransRealm> resultAll = realm.where(TransRealm.class).beginsWith("rowId",mCurrentPage+"").findAll();
+//                RealmResults<TransRealm> resultSelect = realm.where(TransRealm.class).equalTo("rowId","-1").findAll();
+//                for(int i=0;i<resultAll.size();i++)
+//                    if(i>=mCurrentPage*getPageSize()&&i<(mCurrentPage+1)*getPageSize())
+                //切一部分数据failure
+//                List<TransRealm> result = resultAll.subList(mCurrentPage*getPageSize(),(mCurrentPage+1)*getPageSize());
+//                RealmResults<TransRealm> realmResults = (RealmResults<TransRealm>)result;
+                return resultAll.asObservable();
+//                resultAll.asObservable()
+//                        resultSelect.add(resultAll.get(i));
+//                }
+//                return resultSelect.asObservable();
 
             }
         })

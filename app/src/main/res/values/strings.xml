@@ -30,7 +30,8 @@
     <string name="error_view_network_error_click_to_refresh">没有可用的网络</string>
     <string name="tip_network_error">没有可用的网络</string>
     <string name="tip_load_data_error">对不起,无法加载数据.</string>
-    <string name="loading">加载中…</string>
+    <!--<string name="loading">加载中…</string>-->
+    <string name="loading">加载更多</string>
     <string name="loading_no_more">没有更多了</string>
     <string name="main_tab_meizhi1">微信精选</string>
     <string name="main_tab_meizhi2">今日干货</string>
