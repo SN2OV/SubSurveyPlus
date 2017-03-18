@@ -3,11 +3,16 @@ package cn.buaa.sn2ov.subsurveyplus.base.ui;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.HorizontalScrollView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.ScrollView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,6 +48,8 @@ public abstract class BaseListFragment<T extends Entity> extends BaseFragment
     protected SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.listview)
     protected ListView mListView;
+    @BindView(R.id.refresh_HorizontalScrollView)
+    HorizontalScrollView refresh_HorizontalScrollView;
     protected ListBaseAdapter<T> mAdapter;
 
     @BindView(R.id.error_layout)
@@ -57,6 +64,10 @@ public abstract class BaseListFragment<T extends Entity> extends BaseFragment
 
     private Unbinder unBinder;
 
+    private View lastView, firstView;
+    private boolean flag, isFirst = true;
+    private boolean isUp, isDown;
+    private int lastY;
     //观察者
     protected BaseObserver mSubscriber = new BaseObserver<IBaseResult<?>>() {
 
@@ -223,6 +234,7 @@ public abstract class BaseListFragment<T extends Entity> extends BaseFragment
 
         mListView.setOnItemClickListener(this);
         mListView.setOnScrollListener(this);
+//        mListView.setOnTouchListener(this);
 
         if (mAdapter != null) {
             mListView.setAdapter(mAdapter);
@@ -243,6 +255,27 @@ public abstract class BaseListFragment<T extends Entity> extends BaseFragment
         if (mStoreEmptyState != -1) {
             mErrorLayout.setErrorType(mStoreEmptyState);
         }
+
+//        refresh_HorizontalScrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+//
+//            @Override
+//            public void onScrollChanged() {
+//                int scrollY = refresh_HorizontalScrollView.getScrollY();
+//                if(scrollY == 0) mSwipeRefreshLayout.setEnabled(true);
+//                else mSwipeRefreshLayout.setEnabled(false);
+//            }
+//        });
+
+        mListView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+            @Override
+            public void onScrollChanged() {
+                int scrollY = mListView.getFirstVisiblePosition();
+                if(scrollY == 0)
+                    mSwipeRefreshLayout.setEnabled(true);
+                else
+                    mSwipeRefreshLayout.setEnabled(false);
+            }
+        });
     }
 
     @Override
@@ -376,6 +409,7 @@ public abstract class BaseListFragment<T extends Entity> extends BaseFragment
         }
         mAdapter.setState(adapterState);
         mAdapter.addItems(data);
+        mAdapter.notifyDataSetChanged();
 
         if (mAdapter.getCount() == 1) {
             if (needShowEmptyNoData()) {
@@ -451,9 +485,98 @@ public abstract class BaseListFragment<T extends Entity> extends BaseFragment
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem,
                          int visibleItemCount, int totalItemCount) {
+        /**
+         * 从这里获取最后一个item的View和第一个item的View
+         */
+        lastView = view.getChildAt(totalItemCount - firstVisibleItem - 1);
+        firstView = view.getChildAt(firstVisibleItem);
     }
 
     public boolean isDBState(){
         return false;
     }
-}
+
+//    @Override
+//    public boolean onTouch(View view, MotionEvent motionEvent) {
+//        mListView.requestDisallowInterceptTouchEvent(true);
+//        int action = motionEvent.getAction();
+//        if (action == MotionEvent.ACTION_DOWN) {
+//            lastY = (int) motionEvent.getY();
+//        } else if (action == MotionEvent.ACTION_MOVE) {
+//            /**
+//             * 这里判断是向下还是向上滑动
+//             */
+//            if (lastY > motionEvent.getY()) {
+//                isDown = true;
+//                isUp = false;
+//            } else {
+//                isDown = false;
+//                isUp = true;
+//            }
+//        }
+//
+//        if (mListView != null) {
+//            if (firstView != null && isUp) {
+//                /**
+//                 * 如果ListView已经初始化并且firstView不为空
+//                 * 而且不是第一次加载视图（因为第一次加载视图getTop肯定为0）并且向上滑动
+//                 *
+//                 */
+//                if (firstView.getTop() == 0) {
+//                    flag = true;
+//                } else {
+//                    flag = false;
+//                }
+//            }
+//            if (lastView != null && isDown) {
+//                /**
+//                 * 这里判断坐标，如果lastView的Bottom等于这个ListView的高度并且是往下滑
+//                 * 则把flag设置为true
+//                 */
+//
+//                int childHeight = mListView.getChildAt(0).getHeight();
+//                int childCount = mListView.getChildCount();
+//                int totalChildHeight = childHeight * childCount;
+//
+//                if ((lastView.getBottom()) == view.getHeight() || totalChildHeight < view.getHeight()) {
+//                    flag = true;
+//                } else {
+//                    flag = false;
+//                }
+//                isFirst = false;
+//            }
+//        }
+//
+//        /**
+//         * flag 为 true的时候 ScrollView开始获得事件
+//         */
+//        if (flag && !isFirst) {
+//            refresh_HorizontalScrollView.requestDisallowInterceptTouchEvent(false);
+//        } else {
+//            refresh_HorizontalScrollView.requestDisallowInterceptTouchEvent(true);
+//        }
+//        return false;
+//    }
+
+    //    public void setListViewHeightBasedOnChildren(ListView listView) {
+//        ListAdapter listAdapter = listView.getAdapter();
+//        if (listAdapter == null) {
+//            return;
+//        }
+//        int totalHeight = 0;
+//        for (int i = 0, len = listAdapter.getCount(); i < len; i++) {
+//            // listAdapter.getCount()返回数据项的数目
+//            View listItem = listAdapter.getView(i, null, listView);
+//            // 计算子项View 的宽高
+//            listItem.measure(0, 0);
+//            // 统计所有子项的总高度
+//            totalHeight += listItem.getMeasuredHeight();
+//        }
+//        ViewGroup.LayoutParams params = listView.getLayoutParams();
+//        params.height = totalHeight+ (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+//        // listView.getDividerHeight()获取子项间分隔符占用的高度
+//        // params.height最后得到整个ListView完整显示需要的高度
+//        listView.setLayoutParams(params);
+//    }
+
+    }

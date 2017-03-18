@@ -2,6 +2,7 @@ package cn.buaa.sn2ov.subsurveyplus.ui.fragment;
 
 import android.content.Intent;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -53,4 +54,5 @@ public class TransAllTaskFragment extends BaseListFragment<TransferAllTaskItem> 
         getActivity().setResult(AppConstant.OD_SETTING_CODE,it);
         getActivity().finish();
     }
+
 }

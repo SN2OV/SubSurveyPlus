@@ -38,7 +38,6 @@ import java.util.Map;
 import cn.buaa.sn2ov.subsurveyplus.AppConstant;
 import cn.buaa.sn2ov.subsurveyplus.model.base.Base;
 import cn.buaa.sn2ov.subsurveyplus.model.table.TransRealm;
-import io.realm.TransRealmRealmProxy;
 
 
 public class FileUtils {
