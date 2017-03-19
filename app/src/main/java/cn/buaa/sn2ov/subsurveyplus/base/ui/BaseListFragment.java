@@ -265,7 +265,6 @@ public abstract class BaseListFragment<T extends Entity> extends BaseFragment
 //                else mSwipeRefreshLayout.setEnabled(false);
 //            }
 //        });
-
         mListView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
             @Override
             public void onScrollChanged() {
@@ -276,6 +275,7 @@ public abstract class BaseListFragment<T extends Entity> extends BaseFragment
                     mSwipeRefreshLayout.setEnabled(false);
             }
         });
+
     }
 
     @Override

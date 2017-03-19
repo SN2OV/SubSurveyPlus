@@ -62,21 +62,13 @@ public class TransferSurveyTotalCountAdapter extends ListBaseAdapter {
 	}
 	
 	@Override
-	public long getItemId(int pos) {
-		return pos;
+	public int getCount() {
+		return super.getCount()+1;
 	}
 
 	@Override
 	public View getRealView(int pos, View convertView, ViewGroup parent) {
 
-//		ViewHolder holder = null;
-//		if(convertView == null){
-//			convertView = LayoutInflater.from(context).inflate(R.layout.transfer_data_total_style, null);
-//			holder = new ViewHolder(convertView);
-//			convertView.setTag(holder);
-//		}else{
-//			holder = (ViewHolder)convertView.getTag();
-//		}
 		TransferSurveyTotalCountAdapter.ViewHolder holder;
 		if (convertView == null || convertView.getTag() == null) {
 			convertView = getLayoutInflater(parent.getContext()).inflate(
@@ -87,18 +79,22 @@ public class TransferSurveyTotalCountAdapter extends ListBaseAdapter {
 			holder = (TransferSurveyTotalCountAdapter.ViewHolder) convertView.getTag();
 		}
 
-		TransRealm transRealm = (TransRealm)mDatas.get(pos);
+		if(pos%2 !=0){
+			convertView.setBackgroundColor(Color.argb(250 ,  255 ,  255 ,  255 ));
+		}else{
+			convertView.setBackgroundColor(Color.argb(250 ,  224 ,  243 ,  250 ));
+		}
 
-		holder.tsTotal_IDTV.setText(transRealm.getRowId());
-		holder.tsTotal_NameTV.setText(transRealm.getName());
-		holder.tsTotal_DateTV.setText(transRealm.getDate());
-		holder.tsTotal_TimePeriodTV.setText(transRealm.getTimePeriod());
-		holder.tsTotal_StationTV.setText(transRealm.getStation());
-		holder.tsTotal_DireTV.setText(transRealm.getDire());
-		holder.tsTotal_TimeTV.setText(transRealm.getSurveyTime());
-		holder.tsTotal_CountTotalTV.setText(transRealm.getCount());
-		
 		if(pos == 0){
+			holder.tsTotal_IDTV.setText("序号");
+			holder.tsTotal_NameTV.setText("姓名");
+			holder.tsTotal_DateTV.setText("调查日期");
+			holder.tsTotal_TimePeriodTV.setText("时段");
+			holder.tsTotal_StationTV.setText("车站");
+			holder.tsTotal_DireTV.setText("方向");
+			holder.tsTotal_TimeTV.setText("时间");
+			holder.tsTotal_CountTotalTV.setText("人数");
+
 			convertView.setBackgroundResource(R.color.head_bg);
 			holder.tsTotal_IDTV.setTextColor(Color.WHITE);
 			holder.tsTotal_NameTV.setTextColor(Color.WHITE);
@@ -109,13 +105,66 @@ public class TransferSurveyTotalCountAdapter extends ListBaseAdapter {
 			holder.tsTotal_TimeTV.setTextColor(Color.WHITE);
 			holder.tsTotal_CountTotalTV.setTextColor(Color.WHITE);
 		}else{
-			if(pos%2 !=0){
-				convertView.setBackgroundColor(Color.argb(250 ,  255 ,  255 ,  255 ));
-			}else{
-				convertView.setBackgroundColor(Color.argb(250 ,  224 ,  243 ,  250 ));
-			}
+			TransRealm transRealm = (TransRealm)mDatas.get(pos-1);
+			holder.tsTotal_IDTV.setText(transRealm.getRowId());
+			holder.tsTotal_NameTV.setText(transRealm.getName());
+			holder.tsTotal_DateTV.setText(transRealm.getDate());
+			holder.tsTotal_TimePeriodTV.setText(transRealm.getTimePeriod());
+			holder.tsTotal_StationTV.setText(transRealm.getStation());
+			holder.tsTotal_DireTV.setText(transRealm.getDire());
+			holder.tsTotal_TimeTV.setText(transRealm.getSurveyTime());
+			holder.tsTotal_CountTotalTV.setText(transRealm.getCount());
+
+			holder.tsTotal_IDTV.setTextColor(Color.BLACK);
+			holder.tsTotal_NameTV.setTextColor(Color.BLACK);
+			holder.tsTotal_DateTV.setTextColor(Color.BLACK);
+			holder.tsTotal_TimePeriodTV.setTextColor(Color.BLACK);
+			holder.tsTotal_StationTV.setTextColor(Color.BLACK);
+			holder.tsTotal_DireTV.setTextColor(Color.BLACK);
+			holder.tsTotal_TimeTV.setTextColor(Color.BLACK);
+			holder.tsTotal_CountTotalTV.setTextColor(Color.BLACK);
 		}
+
+
 		
+//		if(holder.tsTotal_IDTV.getText().toString().equals("序号")){
+//			convertView.setBackgroundResource(R.color.head_bg);
+//			holder.tsTotal_IDTV.setTextColor(Color.WHITE);
+//			holder.tsTotal_NameTV.setTextColor(Color.WHITE);
+//			holder.tsTotal_DateTV.setTextColor(Color.WHITE);
+//			holder.tsTotal_TimePeriodTV.setTextColor(Color.WHITE);
+//			holder.tsTotal_StationTV.setTextColor(Color.WHITE);
+//			holder.tsTotal_DireTV.setTextColor(Color.WHITE);
+//			holder.tsTotal_TimeTV.setTextColor(Color.WHITE);
+//			holder.tsTotal_CountTotalTV.setTextColor(Color.WHITE);
+//		}else{
+//			if(pos%2 !=0){
+//				convertView.setBackgroundColor(Color.argb(250 ,  255 ,  255 ,  255 ));
+//			}else{
+//				convertView.setBackgroundColor(Color.argb(250 ,  224 ,  243 ,  250 ));
+//			}
+//		}
+//		if(pos==0){
+//			convertView.setBackgroundResource(R.color.head_bg);
+//			holder.tsTotal_IDTV.setTextColor(Color.WHITE);
+//			holder.tsTotal_NameTV.setTextColor(Color.WHITE);
+//			holder.tsTotal_DateTV.setTextColor(Color.WHITE);
+//			holder.tsTotal_TimePeriodTV.setTextColor(Color.WHITE);
+//			holder.tsTotal_StationTV.setTextColor(Color.WHITE);
+//			holder.tsTotal_DireTV.setTextColor(Color.WHITE);
+//			holder.tsTotal_TimeTV.setTextColor(Color.WHITE);
+//			holder.tsTotal_CountTotalTV.setTextColor(Color.WHITE);
+//		}else {
+//			holder.tsTotal_IDTV.setTextColor(Color.BLACK);
+//			holder.tsTotal_NameTV.setTextColor(Color.BLACK);
+//			holder.tsTotal_DateTV.setTextColor(Color.BLACK);
+//			holder.tsTotal_TimePeriodTV.setTextColor(Color.BLACK);
+//			holder.tsTotal_StationTV.setTextColor(Color.BLACK);
+//			holder.tsTotal_DireTV.setTextColor(Color.BLACK);
+//			holder.tsTotal_TimeTV.setTextColor(Color.BLACK);
+//			holder.tsTotal_CountTotalTV.setTextColor(Color.BLACK);
+//		}
+
 		return convertView;
 	}
 

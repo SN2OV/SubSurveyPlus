@@ -23,9 +23,10 @@
         android:layout_alignParentStart="true">
         <HorizontalScrollView
             android:id="@+id/refresh_HorizontalScrollView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
+            android:fillViewport="true"
             android:scrollbars="none"
             >
             <cn.buaa.sn2ov.subsurveyplus.view.TotalDtataListView

@@ -30,8 +30,8 @@ public class TransAllTaskAdapter extends ListBaseAdapter {
         TextView task;
         @BindView(R.id.item_survey_timeTV)
         TextView time;
-        @BindView(R.id.item_survey_CV)
-        CardView item_survey_CV;
+//        @BindView(R.id.item_survey_CV)
+//        CardView item_survey_CV;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);

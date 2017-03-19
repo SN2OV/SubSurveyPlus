@@ -3,6 +3,7 @@ package cn.buaa.sn2ov.subsurveyplus.view;
 import android.content.Context;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 
@@ -14,6 +15,7 @@ public class TotalDataSwipeRefreshLayout extends SwipeRefreshLayout {
 
     private int mTouchSlop;
     private float mPrevX;
+    private float mPrevY;
 
     public TotalDataSwipeRefreshLayout(Context context) {
         super(context);
@@ -30,13 +32,20 @@ public class TotalDataSwipeRefreshLayout extends SwipeRefreshLayout {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 mPrevX = MotionEvent.obtain(event).getX();
+                mPrevY = MotionEvent.obtain(event).getY();
                 break;
 
             case MotionEvent.ACTION_MOVE:
                 final float eventX = event.getX();
+                final float eventY = event.getY();
                 float xDiff = Math.abs(eventX - mPrevX);
 
                 if (xDiff > mTouchSlop) {
+                    return false;
+                }
+
+                if(eventY < mPrevY){
+                    Log.d("d","上滑");
                     return false;
                 }
 //                //todo 暂时截止拦截
