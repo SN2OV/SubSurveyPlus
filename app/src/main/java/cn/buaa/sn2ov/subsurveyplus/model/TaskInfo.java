@@ -12,6 +12,9 @@ public class TaskInfo extends Base {
     private String tsStation;
     private String tsLoc;
     private String tsTimePeriod;
+    private int tsTeamTaskID;
+    private int tsPerTaskID;
+
 
     public String getTsDate() {
         return tsDate;
@@ -43,5 +46,21 @@ public class TaskInfo extends Base {
 
     public void setTsTimePeriod(String tsTimePeriod) {
         this.tsTimePeriod = tsTimePeriod;
+    }
+
+    public int getTsTeamTaskID() {
+        return tsTeamTaskID;
+    }
+
+    public void setTsTeamTaskID(int tsTeamTaskID) {
+        this.tsTeamTaskID = tsTeamTaskID;
+    }
+
+    public int getTsPerTaskID() {
+        return tsPerTaskID;
+    }
+
+    public void setTsPerTaskID(int tsPerTaskID) {
+        this.tsPerTaskID = tsPerTaskID;
     }
 }

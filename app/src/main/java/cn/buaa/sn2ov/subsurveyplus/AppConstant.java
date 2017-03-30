@@ -22,8 +22,8 @@ public class AppConstant {
     //DB NAME
     public static final String DB_NAME = "subsurvey.realm";
 
-//    public static final String API_REST_URL = "http://10.0.2.2:8080/rest/";
-    public static final String API_REST_URL = "http://123.206.20.236:9998/rest/";
+    public static final String API_REST_URL = "http://10.0.2.2:8080/rest/";
+//    public static final String API_REST_URL = "http://123.206.20.236:9998/rest/";
     public static final String FRAGMENT_TRANSFER_SETTING = "换乘量当前任务";
     public static final String FRAGMENT_WALK_SETTING = "走行时间当前任务";
     public static final String FRAGMENT_OD_SETTING = "OD当前任务";

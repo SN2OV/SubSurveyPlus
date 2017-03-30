@@ -647,7 +647,7 @@ public class FileUtils {
         return allDir;
     }
 
-    public static void ExportToCSV(List<?> list, String[] headerArr, String fileName, int surveyType) {
+    public static File ExportToCSV(List<?> list, String[] headerArr, String fileName, int surveyType) {
         int rowCount = list.size();
         int colCount = headerArr.length;
         FileWriter fw;
@@ -712,6 +712,7 @@ public class FileUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return saveFile;
     }
 
     public enum PathStatus {

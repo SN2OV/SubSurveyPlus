@@ -141,6 +141,8 @@ public class TransferSettingFragment extends BaseFragment implements SwipeRefres
             taskInfo.setTsStation(result.getStation());
             taskInfo.setTsLoc(result.getPerTask().getPosition());
             taskInfo.setTsTimePeriod(result.getTeamTask().getTimePeriod());
+            taskInfo.setTsTeamTaskID(result.getTeamTask().getTeamTaskId());
+            taskInfo.setTsPerTaskID(result.getPerTask().getTid());
             AccountHelper.updateTaskCache(taskInfo);
         }
 
@@ -212,6 +214,8 @@ public class TransferSettingFragment extends BaseFragment implements SwipeRefres
             taskInfo.setTsStation(transferAllTaskItem.getStation());
             taskInfo.setTsLoc(transferAllTaskItem.getPerTask().getPosition());
             taskInfo.setTsTimePeriod(transferAllTaskItem.getTeamTask().getTimePeriod());
+            taskInfo.setTsTeamTaskID(transferAllTaskItem.getTeamTask().getTeamTaskId());
+            taskInfo.setTsPerTaskID(transferAllTaskItem.getPerTask().getTid());
 //                transferAllTaskItem.getTeamTask().getTimeStart()+"~"+transferAllTaskItem.getTeamTask().getTimeEnd());
             AccountHelper.updateTaskCache(taskInfo);
             return;
@@ -242,7 +246,7 @@ public class TransferSettingFragment extends BaseFragment implements SwipeRefres
     }
 
     private void sendRequest(){
-        ApiFactory.getTranserApi().getNewestTransTask(user.getUid())
+        ApiFactory.getTranserNewestApi().getNewestTransTask(user.getUid())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(mSubscriber);

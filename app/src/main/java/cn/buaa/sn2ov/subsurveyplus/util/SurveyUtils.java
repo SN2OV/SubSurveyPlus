@@ -6,6 +6,7 @@ import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Environment;
+import android.text.format.DateFormat;
 import android.widget.TextView;
 
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -18,14 +19,22 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import cn.buaa.sn2ov.subsurveyplus.AppConstant;
 import cn.buaa.sn2ov.subsurveyplus.AppContext;
+import cn.buaa.sn2ov.subsurveyplus.R;
+import cn.buaa.sn2ov.subsurveyplus.api.remote.ApiFactory;
 import cn.buaa.sn2ov.subsurveyplus.db.RealmHelper;
 import cn.buaa.sn2ov.subsurveyplus.model.response.user.UserItem;
 import cn.buaa.sn2ov.subsurveyplus.model.table.TransRealm;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class SurveyUtils {
 	
@@ -343,11 +352,12 @@ public class SurveyUtils {
 //		surveyEntity.setGetOffDire(user.getWsOffDire());
 //	}
 
-	public static void exportToCSV(String surveyName, Context context){
+	public static File exportToCSV(String surveyName, Context context){
 		String fileName = surveyName + StringUtils.getCurDate() + "源数据.csv";
 		String header[] = {"序号","dd"};
 		List<?> list = null;
 		RealmHelper realmHelper = new RealmHelper(context);
+		String userName = AccountHelper.getUser().getRealName();
 //		if(surveyName.equals("走行调查"))
 //			c = WalkSurveyDataHelper.queryWalkSurveyData(context);
 //		else if(surveyName.equals("留乘调查"))
@@ -358,9 +368,10 @@ public class SurveyUtils {
 			header = new String[]{"序号","姓名","日期","调查时段","车站","调查方向","时间","人数"};
 			list = realmHelper.findTransAllRecord();
 			TransRealm transRealm = (TransRealm) list.get(0);
-			String transName = transRealm.getDate()+"换乘量调查.csv";
-			FileUtils.ExportToCSV(list,header,transName,AppConstant.TRANSFER_SURVEY);
-		}
+			String transName = transRealm.getDate()+transRealm.getTimePeriod()+"换乘量调查_"+transRealm.getStation()+"_"+transRealm.getDire()+"_"+userName+".csv";
+			return FileUtils.ExportToCSV(list,header,transName,AppConstant.TRANSFER_SURVEY);
+		}else
+			return null;
 //		else if(surveyName.equals("反向乘车调查"))
 //			c = ReverseSurveyDataHelper.queryRSSurveyData(context);
 
@@ -386,12 +397,13 @@ public class SurveyUtils {
 	 * @param context
 	 * @throws IOException
      */
-	public static void  ExportToExcel(int surveyType,Context context) throws IOException {
+	public static File  ExportToExcel(int surveyType,Context context) throws IOException {
 		ArrayList<HashMap<String ,String>> totalDataArr;
 		ArrayList<HashMap<String ,String>> perDataArr;
 		HashMap<String,String> headData;
 		UserItem user = AccountHelper.getUser();
 		AssetManager assetManager = context.getAssets();
+		File file = null;
 		switch (surveyType){
 //			case AppConfig.WALK_SURVEY:
 //				//获取Excel表头表体数据源
@@ -427,7 +439,7 @@ public class SurveyUtils {
 				//获取处理过的表体数据
 				totalDataArr = SurveyUtils.getBodyDataForExcel(AppConstant.TRANSFER_SURVEY,perDataArr);
 				//将数据填充到Excel
-				SurveyUtils.insertDataIntoExcel(AppConstant.TRANSFER_SURVEY,headData,totalDataArr,assetManager);
+				file = SurveyUtils.insertDataIntoExcel(AppConstant.TRANSFER_SURVEY,headData,totalDataArr,assetManager);
 				break;
 //			case AppConfig.REVERSE_SURVEY:
 //				headData = SurveyUtils.getHeadDataSourceForExcel(AppConfig.REVERSE_SURVEY,context,user);
@@ -437,6 +449,7 @@ public class SurveyUtils {
 //				SurveyUtils.insertDataIntoExcel(AppConfig.REVERSE_SURVEY,headData,totalDataArr,assetManager);
 //				break;
 		}
+		return file;
 	}
 
 	public static String getValue(XSSFCell xssfCell) {
@@ -974,7 +987,7 @@ public class SurveyUtils {
 	 * @param totalDataArr
 	 * @throws IOException
      */
-	public static void insertDataIntoExcel(int surveyType , HashMap<String,String> headData , ArrayList<HashMap<String ,String>> totalDataArr, AssetManager assetManager) throws IOException {
+	public static File insertDataIntoExcel(int surveyType , HashMap<String,String> headData , ArrayList<HashMap<String ,String>> totalDataArr, AssetManager assetManager) throws IOException {
 		String newFilePath,name,date,station,timePeriod,surveyName = "",dire,type,carriageLoc;
 		File file = null,srcTemplateFile;
 		InputStream assetData;
@@ -1266,7 +1279,7 @@ public class SurveyUtils {
 				station = headData.get("station");
 				dire = headData.get("dire");
 				timePeriod = headData.get("timePeriod");
-				surveyName = timePeriod + "换乘量调查_" + station +"站_"+ dire +"_" + name +"_"  +date;
+				surveyName = date + timePeriod + "换乘量调查_" + station +"站_"+ dire +"_" + name;
 
 
 				newFilePath = Environment.getExternalStorageDirectory()+"/客流调查+/"+surveyName+".xlsx";
@@ -1482,6 +1495,7 @@ public class SurveyUtils {
 //				fos.close();
 //				break;
 		}
+		return file;
 	}
 
 	public static String getTimeInterval(String endDate, String startDate) {
@@ -1545,6 +1559,7 @@ public class SurveyUtils {
 //
 //		return false;
 //	}
+
 
 
 }

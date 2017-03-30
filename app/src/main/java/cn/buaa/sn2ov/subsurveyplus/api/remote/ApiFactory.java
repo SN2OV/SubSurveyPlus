@@ -19,6 +19,7 @@ public enum ApiFactory {
     private static UserApi sUserApi;
     private static TransferNewestApi sTrasferApi;
     private static TransferAllApi sTransferAllApi;
+    private static TransferApi sTransferApi;
 
     ApiFactory() {
     }
@@ -30,7 +31,7 @@ public enum ApiFactory {
         return sUserApi;
     }
 
-    public static TransferNewestApi getTranserApi(){
+    public static TransferNewestApi getTranserNewestApi(){
         if(sTrasferApi == null){
             ApiFactory.sTrasferApi = createApi(AppConstant.API_REST_URL,TransferNewestApi.class, TransNewestTaskConverterFactory.create());
         }
@@ -42,6 +43,13 @@ public enum ApiFactory {
             ApiFactory.sTransferAllApi = createApi(AppConstant.API_REST_URL,TransferAllApi.class, BaseGsonConverterFactory.create());
         }
         return sTransferAllApi;
+    }
+
+    public static TransferApi getTranserApi(){
+        if(sTransferApi == null){
+            ApiFactory.sTransferApi = createApi(AppConstant.API_REST_URL,TransferApi.class, BaseGsonConverterFactory.create());
+        }
+        return sTransferApi;
     }
 
     /**

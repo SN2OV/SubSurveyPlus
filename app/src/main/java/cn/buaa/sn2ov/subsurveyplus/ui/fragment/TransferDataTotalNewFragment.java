@@ -7,14 +7,19 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Message;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.widget.ListView;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.OnItemLongClick;
@@ -22,24 +27,32 @@ import cn.buaa.sn2ov.subsurveyplus.AppConstant;
 import cn.buaa.sn2ov.subsurveyplus.AppContext;
 import cn.buaa.sn2ov.subsurveyplus.R;
 import cn.buaa.sn2ov.subsurveyplus.api.exception.ApiException;
+import cn.buaa.sn2ov.subsurveyplus.api.remote.ApiFactory;
 import cn.buaa.sn2ov.subsurveyplus.base.BaseObserver;
+import cn.buaa.sn2ov.subsurveyplus.base.BaseResult;
 import cn.buaa.sn2ov.subsurveyplus.base.adapter.ListBaseAdapter;
 import cn.buaa.sn2ov.subsurveyplus.base.interf.IBaseResult;
 import cn.buaa.sn2ov.subsurveyplus.base.ui.BaseListFragment;
 import cn.buaa.sn2ov.subsurveyplus.db.RealmHelper;
 import cn.buaa.sn2ov.subsurveyplus.handler.ExportHandler;
+import cn.buaa.sn2ov.subsurveyplus.model.TaskInfo;
 import cn.buaa.sn2ov.subsurveyplus.model.base.ListEntity;
+import cn.buaa.sn2ov.subsurveyplus.model.response.user.UserItem;
 import cn.buaa.sn2ov.subsurveyplus.model.table.TransRealm;
 import cn.buaa.sn2ov.subsurveyplus.ui.adapter.TransAllTaskAdapter;
 import cn.buaa.sn2ov.subsurveyplus.ui.adapter.TransferSurveyTotalCountAdapter;
+import cn.buaa.sn2ov.subsurveyplus.util.AccountHelper;
 import cn.buaa.sn2ov.subsurveyplus.util.SurveyUtils;
 import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import retrofit2.adapter.rxjava.HttpException;
 import rx.Observable;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func0;
@@ -133,13 +146,14 @@ public class TransferDataTotalNewFragment extends BaseListFragment {
                 public void run() {
                     try {
                         //导出指定模板中的数据
-                        SurveyUtils.ExportToExcel(AppConstant.TRANSFER_SURVEY,context);
+                        uploadFile(SurveyUtils.ExportToExcel(AppConstant.TRANSFER_SURVEY,context));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                     //导出csv原始数据
-                    SurveyUtils.exportToCSV("换乘量调查",context);
-                    //listView即时删除
+                    uploadFile(SurveyUtils.exportToCSV("换乘量调查",context));
+
+                    //TODO 导入成功后再删除
                     SurveyUtils.delSurveyInfo(TransRealm.class, context);
 
                     Message msg = new Message();
@@ -223,6 +237,44 @@ public class TransferDataTotalNewFragment extends BaseListFragment {
     //初始化表头
     private void initInfoArraylist(){
 
+    }
+
+    public void uploadFile(File file){
+        if (file == null || !file.exists() || file.length() == 0) {
+            AppContext.toast("上传文件失败");
+        } else {
+            RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
+            UserItem user = AccountHelper.getUser();
+            TaskInfo taskInfo = AccountHelper.getTasks();
+//            HashMap<String,Object> fileInfo = new HashMap<>();
+//            fileInfo.put("uid",user.getUid());
+//            fileInfo.put("teamTaskID",taskInfo.getTsTeamTaskID());
+//            fileInfo.put("pertaskID",taskInfo.getTsPerTaskID());
+//            fileInfo.put("fileName",file.getName());
+
+            ApiFactory.getTranserApi().uploadTransferDataFile(file.getName(),user.getUid(),taskInfo.getTsTeamTaskID(),taskInfo.getTsPerTaskID(),requestBody)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<BaseResult>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        return;
+                    }
+
+                    @Override
+                    public void onNext(BaseResult result) {
+                        if(!result.isOk()){
+                            AppContext.toast("上传失败");
+                        }else{
+                            AppContext.toast("上传成功");
+                        }
+                    }
+                });
+        }
     }
 }
 
