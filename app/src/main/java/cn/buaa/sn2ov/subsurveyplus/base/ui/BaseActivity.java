@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+import com.umeng.message.PushAgent;
 
 import butterknife.ButterKnife;
 import cn.buaa.sn2ov.subsurveyplus.AppContext;
@@ -28,6 +29,7 @@ import cn.buaa.sn2ov.subsurveyplus.view.dialog.DialogHelper;
 import cn.buaa.sn2ov.subsurveyplus.view.dialog.IDialog;
 import cn.buaa.sn2ov.subsurveyplus.view.dialog.WaitDialog;
 
+import static anet.channel.util.Utils.context;
 import static cn.buaa.sn2ov.subsurveyplus.R.id.container;
 
 /**
@@ -48,6 +50,8 @@ public abstract class BaseActivity extends RxAppCompatActivity implements View.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AppContext.saveDisplaySize(this);
+
+        PushAgent.getInstance(context).onAppStart();
 
         if (!hasActionBar()) {
             supportRequestWindowFeature(Window.FEATURE_NO_TITLE);

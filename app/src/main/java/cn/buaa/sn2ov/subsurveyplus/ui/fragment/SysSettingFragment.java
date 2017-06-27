@@ -11,10 +11,18 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.buaa.sn2ov.subsurveyplus.AppContext;
 import cn.buaa.sn2ov.subsurveyplus.R;
+import cn.buaa.sn2ov.subsurveyplus.api.remote.ApiFactory;
+import cn.buaa.sn2ov.subsurveyplus.base.BaseObserver;
+import cn.buaa.sn2ov.subsurveyplus.base.interf.IBaseResult;
 import cn.buaa.sn2ov.subsurveyplus.base.ui.BaseFragment;
+import cn.buaa.sn2ov.subsurveyplus.model.response.user.UserItem;
 import cn.buaa.sn2ov.subsurveyplus.ui.activity.LoginActivity;
+import cn.buaa.sn2ov.subsurveyplus.ui.activity.MainActivity;
 import cn.buaa.sn2ov.subsurveyplus.util.AccountHelper;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by SN2OV on 2017/2/26.
@@ -62,6 +70,29 @@ public class SysSettingFragment extends BaseFragment {
        it.setClass(getContext(), LoginActivity.class);
        startActivity(it);
        getActivity().finish();
+       int uid = AccountHelper.getUserId();
        AccountHelper.clearUserCache();
+        ApiFactory.getUserApi().delToken(uid)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(mSubscriber);
     }
+
+    //观察者
+    protected BaseObserver mSubscriber = new BaseObserver<IBaseResult<?>>() {
+
+        @Override
+        public void onError(Throwable e) {
+            AppContext.toast("网络连接超时");
+            return;
+        }
+
+        @Override
+        public void onNext(IBaseResult<?> result) {
+        }
+
+        @Override
+        public void onCompleted() {
+        }
+    };
 }

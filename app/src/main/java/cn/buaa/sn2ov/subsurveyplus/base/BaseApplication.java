@@ -9,6 +9,7 @@ import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import android.os.Build;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.stetho.Stetho;
+import com.umeng.message.IUmengRegisterCallback;
+import com.umeng.message.PushAgent;
 //import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
 
 import java.util.Arrays;
@@ -25,6 +28,8 @@ import java.util.Iterator;
 import java.util.Set;
 
 import cn.buaa.sn2ov.subsurveyplus.R;
+import cn.buaa.sn2ov.subsurveyplus.model.response.user.UserItem;
+import cn.buaa.sn2ov.subsurveyplus.util.AccountHelper;
 import io.realm.Realm;
 import okhttp3.OkHttpClient;
 
@@ -47,6 +52,23 @@ public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        PushAgent mPushAgent = PushAgent.getInstance(this);
+        //注册推送服务，每次调用register方法都会回调该接口
+        mPushAgent.register(new IUmengRegisterCallback() {
+            @Override
+            public void onSuccess(String deviceToken) {
+                Log.d("myToken",deviceToken);
+                SharedPreferences pref = BaseApplication.this.getSharedPreferences("device_info",MODE_PRIVATE);
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putString("device_token",deviceToken);
+                editor.commit();
+                //注册成功会返回device token
+            }
+            @Override
+            public void onFailure(String s, String s1) {
+                Log.d("failure",s+s1);
+            }
+        });
 //        Stetho.initialize(
 //            Stetho.newInitializerBuilder(this)
 //                .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))

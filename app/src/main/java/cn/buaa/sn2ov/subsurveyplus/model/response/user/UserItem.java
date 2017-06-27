@@ -16,6 +16,7 @@ public class UserItem extends Entity{
     private String idCard;
     private String nfc;
     private String avatarUrl;
+    private String device_token;
 
     public int getUid() {
         return uid;
@@ -87,5 +88,13 @@ public class UserItem extends Entity{
 
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
+    }
+
+    public String getDevice_token() {
+        return device_token;
+    }
+
+    public void setDevice_token(String device_token) {
+        this.device_token = device_token;
     }
 }

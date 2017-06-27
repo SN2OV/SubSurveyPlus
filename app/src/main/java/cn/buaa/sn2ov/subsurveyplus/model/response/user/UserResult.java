@@ -11,6 +11,7 @@ public class UserResult<T> implements IBaseResult<T> {
     private int code;
     private int flag;
     private String msg;
+    private String device_token;
     //必须和json中对应 所以只能用user不可以为data
     private T user;
 //    private T testList;
@@ -49,8 +50,23 @@ public class UserResult<T> implements IBaseResult<T> {
         this.msg = msg;
     }
 
+    public String getDevice_token() {
+        return device_token;
+    }
 
-    //    public T getTestList() {
+    public void setDevice_token(String device_token) {
+        this.device_token = device_token;
+    }
+
+    public T getUser() {
+        return user;
+    }
+
+    public void setUser(T user) {
+        this.user = user;
+    }
+
+//    public T getTestList() {
 //        return testList;
 //    }
 //

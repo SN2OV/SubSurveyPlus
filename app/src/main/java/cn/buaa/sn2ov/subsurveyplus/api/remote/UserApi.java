@@ -24,10 +24,14 @@ import retrofit2.http.Query;
 public interface UserApi {
 
     @GET("validate")
-    Observable<UserResult<UserItem>> getValidation(@Query("userName")String userName,@Query("password") String password);
+    Observable<UserResult<UserItem>> getValidation(@Query("userName")String userName,@Query("password") String password,@Query("device_token") String device_token);
 
     @POST("update/user/")
     Observable<UserResult<UserItem>> editUser(@Body UserItem user);
+
+    @GET("token/del")
+    Observable<UserResult<UserItem>> delToken(@Query("uid")int uid);
+
 
     @Multipart
     @POST("avatar/upload/")

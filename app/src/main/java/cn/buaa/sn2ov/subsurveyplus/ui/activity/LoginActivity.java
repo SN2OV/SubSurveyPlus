@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -111,8 +112,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         UserItem user = AccountHelper.getUser();
         if(user!=null)
             loginWithCache(user);
-
-
     }
 
     private void populateAutoComplete() {
@@ -254,7 +253,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            ApiFactory.getUserApi().getValidation(userName, password)
+            SharedPreferences pref = getSharedPreferences("device_info",MODE_PRIVATE);
+            String device_token = pref.getString("device_token",null);//第二个参数为默认值
+            ApiFactory.getUserApi().getValidation(userName, password,device_token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mSubscriber);
@@ -265,7 +266,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         String userName = user.getUserName();
         String password = user.getPassword();
         showProgress(true);
-        ApiFactory.getUserApi().getValidation(userName, password)
+        SharedPreferences pref = getSharedPreferences("device_info",MODE_PRIVATE);
+        String device_token = pref.getString("device_token",null);//第二个参数为默认值
+        ApiFactory.getUserApi().getValidation(userName, password,device_token)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(mSubscriber);
