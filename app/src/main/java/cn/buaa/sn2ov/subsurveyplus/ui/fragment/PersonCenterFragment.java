@@ -9,8 +9,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.function.Predicate;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -75,7 +81,7 @@ public class PersonCenterFragment extends BaseFragment {
             personCenter_avatarIV.setImageDrawable(getResources().getDrawable(R.drawable.avatar_default));
         else{
             String avatarUrl = AppConstant.API_REST_URL+"avatar/get/"+user.getAvatarUrl()+"_s.jpg";
-            Glide.with(this).load(avatarUrl).into(personCenter_avatarIV);
+            Glide.with(this).load(avatarUrl).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(personCenter_avatarIV);
         }
     }
 

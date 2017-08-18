@@ -25,7 +25,9 @@ android {
     }
     packagingOptions {
         exclude 'META-INF/LICENSE'
+        exclude "lib/arm64-v8a/librealm-jni.so"
     }
+
 }
 
 repositories {
@@ -70,4 +72,5 @@ dependencies {
 //    compile 'com.uphyca:stetho_realm:0.9.0'
     compile files('libs/poi-3.12-android-a.jar')
     compile files('libs/poi-ooxml-schemas-3.12-20150511-a.jar')
+    compile 'org.greenrobot:eventbus:3.0.0'
 }

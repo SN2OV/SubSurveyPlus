@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.ViewGroup;
 import android.widget.ListView;
 
 import java.io.File;
@@ -20,6 +21,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
+import java.util.concurrent.ThreadFactory;
 
 import butterknife.BindView;
 import butterknife.OnItemLongClick;
@@ -74,6 +77,7 @@ public class TransferDataTotalNewFragment extends BaseListFragment {
 
     @Override
     public void initData() {
+
         context = getActivity();
         handler = new ExportHandler(context);
     }
@@ -140,7 +144,6 @@ public class TransferDataTotalNewFragment extends BaseListFragment {
             initInfoArraylist();
             mAdapter.clear();
             mAdapter.notifyDataSetChanged();
-
             new Thread(new Runnable() {
                 @Override
                 public void run() {

@@ -6,13 +6,6 @@
 
     <!-- google 官方下拉刷新 -->
 
-    <cn.buaa.sn2ov.subsurveyplus.view.empty.EmptyLayout
-        android:id="@+id/error_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"/>
-
-
     <cn.buaa.sn2ov.subsurveyplus.view.TotalDataSwipeRefreshLayout
         android:id="@+id/swiperefreshlayout"
         android:layout_width="fill_parent"
@@ -41,4 +34,9 @@
         </HorizontalScrollView>
     </cn.buaa.sn2ov.subsurveyplus.view.TotalDataSwipeRefreshLayout>
 
+    <cn.buaa.sn2ov.subsurveyplus.view.empty.EmptyLayout
+        android:id="@+id/baselist_error_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
 </RelativeLayout>

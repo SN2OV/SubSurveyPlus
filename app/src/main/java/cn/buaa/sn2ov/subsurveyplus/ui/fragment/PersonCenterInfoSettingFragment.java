@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.io.File;
 import java.util.Calendar;
@@ -142,7 +143,7 @@ public class PersonCenterInfoSettingFragment extends BaseFragment {
             personInfoSetting_avatarIV.setImageDrawable(getResources().getDrawable(R.drawable.avatar_default));
         else{
             String avatarUrl = AppConstant.API_REST_URL+"avatar/get/"+user.getAvatarUrl()+"_s.jpg";
-            Glide.with(this).load(avatarUrl).into(personInfoSetting_avatarIV);
+            Glide.with(this).load(avatarUrl).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(personInfoSetting_avatarIV);
         }
     }
 

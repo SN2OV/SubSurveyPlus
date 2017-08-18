@@ -208,6 +208,8 @@ public class ListBaseAdapter<T extends Entity> extends BaseAdapter {
             if (getState() == STATE_LOAD_MORE || getState() == STATE_NO_MORE
                 || mState == STATE_EMPTY_ITEM
                 || getState() == STATE_NETWORK_ERROR) {
+                //footerView显示"加载更多"
+                //View inflate(int resource , ViewGroup root, boolean attachToRoot) 第二个参数是指实例的布局所要放入的根视图。
                 this.mFooterView = (LinearLayout) LayoutInflater.from(
                     parent.getContext()).inflate(R.layout.item_footer,
                     null);

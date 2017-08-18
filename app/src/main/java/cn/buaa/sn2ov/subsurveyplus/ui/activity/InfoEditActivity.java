@@ -8,6 +8,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.buaa.sn2ov.subsurveyplus.AppContext;
@@ -45,7 +52,24 @@ public class InfoEditActivity extends BaseActivity {
 
     @Override
     public void onClick(View view) {
+        HashSet<String> hhh = new HashSet<>();
+        HashMap<String,String> hashMap = new HashMap<>();
+        hashMap.put(null,null);
+        hhh.add(null);
+        Queue<Integer> queue = new LinkedList<Integer>();
+        Hashtable<Integer,Integer> a = new Hashtable<>();
+        a.put(1,1);
+        a.put(null,1);
+        a.put(2,null);
+        int root = 0;
+        queue.add(root);
+        while(!queue.isEmpty()){
 
+        }
+//        Iterator iterator = hhh.iterator();
+//        while(iterator.hasNext()){
+//            iterator.next();
+//        }
     }
 
     @Override

@@ -1,6 +1,8 @@
 package cn.buaa.sn2ov.subsurveyplus.base.ui;
 
+import android.app.Dialog;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -17,6 +19,7 @@ import android.widget.ScrollView;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,6 +32,8 @@ import cn.buaa.sn2ov.subsurveyplus.base.adapter.ListBaseAdapter;
 import cn.buaa.sn2ov.subsurveyplus.model.Entity;
 import cn.buaa.sn2ov.subsurveyplus.model.base.ListEntity;
 import cn.buaa.sn2ov.subsurveyplus.base.interf.IBaseResult;
+import cn.buaa.sn2ov.subsurveyplus.view.TotalDataSwipeRefreshLayout;
+import cn.buaa.sn2ov.subsurveyplus.view.TotalDtataListView;
 import cn.buaa.sn2ov.subsurveyplus.view.empty.EmptyLayout;
 import io.realm.RealmList;
 import io.realm.RealmObject;
@@ -45,14 +50,15 @@ public abstract class BaseListFragment<T extends Entity> extends BaseFragment
     public static final String BUNDLE_KEY_CATALOG = "BUNDLE_KEY_CATALOG";
 
     @BindView(R.id.swiperefreshlayout)
-    protected SwipeRefreshLayout mSwipeRefreshLayout;
+    protected TotalDataSwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.listview)
     protected ListView mListView;
     @BindView(R.id.refresh_HorizontalScrollView)
     HorizontalScrollView refresh_HorizontalScrollView;
+
     protected ListBaseAdapter<T> mAdapter;
 
-    @BindView(R.id.error_layout)
+    @BindView(R.id.baselist_error_layout)
     protected EmptyLayout mErrorLayout;
 
     protected int mStoreEmptyState = -1;
@@ -265,6 +271,8 @@ public abstract class BaseListFragment<T extends Entity> extends BaseFragment
 //                else mSwipeRefreshLayout.setEnabled(false);
 //            }
 //        });
+        //TODO 这句话影响EmptyLayout的加载。。，但是删了的话就不能解决滑动冲突
+        //好吧又不影响了- -
         mListView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
             @Override
             public void onScrollChanged() {
@@ -423,6 +431,7 @@ public abstract class BaseListFragment<T extends Entity> extends BaseFragment
 
     protected void executeOnLoadDataError(String error) {
         if (mCurrentPage == 0) {
+            mErrorLayout.getVisibility();
             mErrorLayout.setErrorType(EmptyLayout.STATE_NETWORK_ERROR);
         } else {
             mCurrentPage--;

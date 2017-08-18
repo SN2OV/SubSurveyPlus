@@ -1,6 +1,7 @@
 package cn.buaa.sn2ov.subsurveyplus.ui.fragment;
 
 import android.content.Intent;
+import android.icu.math.BigDecimal;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -35,7 +36,6 @@ public class TransAllTaskFragment extends BaseListFragment<TransferAllTaskItem> 
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(mSubscriber);
-
     }
 
     @Override

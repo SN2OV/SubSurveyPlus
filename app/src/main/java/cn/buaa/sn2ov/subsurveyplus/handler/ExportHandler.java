@@ -6,6 +6,9 @@ import android.os.Looper;
 import android.os.Message;
 import android.view.LayoutInflater;
 
+import java.util.HashMap;
+import java.util.HashSet;
+
 import cn.buaa.sn2ov.subsurveyplus.AppConstant;
 import cn.buaa.sn2ov.subsurveyplus.AppContext;
 
@@ -16,10 +19,6 @@ import cn.buaa.sn2ov.subsurveyplus.AppContext;
 public class ExportHandler extends android.os.Handler{
 
     Context context ;
-
-    public ExportHandler(Context context){
-        this.context = context;
-    }
 
     @Override
     public void handleMessage(Message msg) {
@@ -49,6 +48,10 @@ public class ExportHandler extends android.os.Handler{
         AppContext.toast("调查数据已导出至/sdcard/客流调查+/");
         super.handleMessage(msg);
         Looper.loop();
+    }
+
+    public ExportHandler(Context context){
+        this.context = context;
     }
 
 }

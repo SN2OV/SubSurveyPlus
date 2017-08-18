@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import cn.buaa.sn2ov.subsurveyplus.AppConstant;
 import cn.buaa.sn2ov.subsurveyplus.AppContext;
@@ -102,7 +103,7 @@ public class MainActivity extends AppCompatActivity
             nav_head_avatarIV.setImageDrawable(getResources().getDrawable(R.drawable.avatar_default));
         else{
             String avatarUrl = AppConstant.API_REST_URL+"avatar/get/"+user.getAvatarUrl()+"_s.jpg";
-            Glide.with(this).load(avatarUrl).into(nav_head_avatarIV);
+            Glide.with(this).load(avatarUrl).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(nav_head_avatarIV);
         }
     }
 
