@@ -26,6 +26,7 @@ public class TotalDataSwipeRefreshLayout extends SwipeRefreshLayout {
         mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
     }
 
+    //不设置的话，在顶端斜向下滑动还是会触发刷新
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
 
@@ -34,6 +35,8 @@ public class TotalDataSwipeRefreshLayout extends SwipeRefreshLayout {
                 mPrevX = MotionEvent.obtain(event).getX();
                 mPrevY = MotionEvent.obtain(event).getY();
                 break;
+//            default:
+//                return true;
 
             case MotionEvent.ACTION_MOVE:
                 final float eventX = event.getX();
@@ -43,11 +46,10 @@ public class TotalDataSwipeRefreshLayout extends SwipeRefreshLayout {
                 if (xDiff > mTouchSlop) {
                     return false;
                 }
-
-                if(eventY < mPrevY){
-                    Log.d("d","上滑");
-                    return false;
-                }
+//                if(eventY < mPrevY){
+//                    Log.d("d","上滑");
+//                    return false;
+//                }
 //                //todo 暂时截止拦截
 //                return false;
 //            default:

@@ -52,9 +52,9 @@ public abstract class BaseListFragment<T extends Entity> extends BaseFragment
     @BindView(R.id.swiperefreshlayout)
     protected TotalDataSwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.listview)
-    protected ListView mListView;
-    @BindView(R.id.refresh_HorizontalScrollView)
-    HorizontalScrollView refresh_HorizontalScrollView;
+    protected TotalDtataListView mListView;
+//    @BindView(R.id.refresh_HorizontalScrollView)
+//    HorizontalScrollView refresh_HorizontalScrollView;
 
     protected ListBaseAdapter<T> mAdapter;
 
@@ -272,8 +272,9 @@ public abstract class BaseListFragment<T extends Entity> extends BaseFragment
 //            }
 //        });
         //TODO 这句话影响EmptyLayout的加载。。，但是删了的话就不能解决滑动冲突
-        //好吧又不影响了- -
-        mListView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+        //这句话还可以监听scrollView、SwipeRefreshLayout啊。。
+//         mListView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+        view.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
             @Override
             public void onScrollChanged() {
                 int scrollY = mListView.getFirstVisiblePosition();
@@ -281,6 +282,7 @@ public abstract class BaseListFragment<T extends Entity> extends BaseFragment
                     mSwipeRefreshLayout.setEnabled(true);
                 else
                     mSwipeRefreshLayout.setEnabled(false);
+                System.out.println();
             }
         });
 
