@@ -129,7 +129,7 @@ public class InfoEditActivity extends BaseActivity {
     }
 
     //观察者
-    protected BaseObserver mSubscriber = new BaseObserver<IBaseResult<?>>() {
+    protected BaseObserver  mSubscriber = new BaseObserver<IBaseResult<?>>() {
 
         @Override
         public void onError(Throwable e) {

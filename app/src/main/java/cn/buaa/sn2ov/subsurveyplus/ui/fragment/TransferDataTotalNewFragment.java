@@ -9,8 +9,17 @@ import android.os.Bundle;
 import android.os.Message;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,8 +28,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ThreadFactory;
 
@@ -46,6 +58,7 @@ import cn.buaa.sn2ov.subsurveyplus.ui.adapter.TransAllTaskAdapter;
 import cn.buaa.sn2ov.subsurveyplus.ui.adapter.TransferSurveyTotalCountAdapter;
 import cn.buaa.sn2ov.subsurveyplus.util.AccountHelper;
 import cn.buaa.sn2ov.subsurveyplus.util.SurveyUtils;
+import cn.buaa.sn2ov.subsurveyplus.view.TotalDataSwipeRefreshLayout;
 import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmObject;
@@ -71,6 +84,10 @@ public class TransferDataTotalNewFragment extends BaseListFragment {
 
     @BindView(R.id.listview)
     ListView listView;
+    @BindView(R.id.base_chart)
+    LineChart base_chart;
+    @BindView(R.id.swiperefreshlayout)
+    TotalDataSwipeRefreshLayout totalDataSwipeRefreshLayout;
 
     private Context context;
     private ExportHandler handler;
@@ -124,6 +141,57 @@ public class TransferDataTotalNewFragment extends BaseListFragment {
             .subscribe(mRealmSubscriber);
     }
 
+    //TODO 切换界面显示
+    public void switchUI(){
+        base_chart.setVisibility(View.VISIBLE);
+        totalDataSwipeRefreshLayout.setVisibility(View.GONE);
+        //将纵轴去掉
+        XAxis xAxis = base_chart.getXAxis();
+        xAxis.setTextSize(11);
+        YAxis yAxis = base_chart.getAxisLeft();
+        yAxis.setTextSize(11);
+        base_chart.getAxisRight().setTextSize(11);
+//        xAxis.setEnabled(false);
+        //从数据库中获取数据
+        Realm realm = Realm.getDefaultInstance();
+        RealmQuery<TransRealm> query = realm.where(TransRealm.class);
+        RealmResults<TransRealm> resultAll = query.findAll();
+        //将查询出来的数据进行处理
+        String surveyTime="",tempSurveyTime="-1";
+        int count =0,totalCount = 0;
+        LinkedHashMap<String,Integer> timeCountHash = new LinkedHashMap<>();
+        for(int i=0;i<resultAll.size();i++){
+            count = Integer.parseInt(resultAll.get(i).getCount());
+            surveyTime = resultAll.get(i).getSurveyTime().substring(0,5);
+            if(timeCountHash.containsKey(surveyTime)){
+                timeCountHash.put(surveyTime,timeCountHash.get(surveyTime)+count);
+            }else{
+                timeCountHash.put(surveyTime,count);
+            }
+        }
+
+
+        //将数据添加到chart中
+        List<Entry> dataEntry = new ArrayList<>();
+        Iterator iter = timeCountHash.keySet().iterator();
+        while (iter.hasNext()){
+            String  perTime = (String)iter.next();
+            int  perCount = timeCountHash.get(perTime);
+            int i_time = Integer.parseInt(perTime.substring(0,2)+perTime.substring(3,5));
+            Entry entry = new Entry(i_time,perCount);
+            dataEntry.add(entry);
+        }
+        LineDataSet lineDataSet = new LineDataSet(dataEntry,"换乘量数据");
+        LineData lineData = new LineData(lineDataSet);
+        lineData.setValueTextSize(11);
+        base_chart.setData(lineData);
+        Description description = new Description();
+        description.setText("记录每分钟通过横截面人数");
+        description.setTextSize(11);
+        base_chart.setDescription(description);
+        base_chart.invalidate();
+    }
+
     //点击导出弹出导出对话框
     public void showExportDialog(){
         Dialog dialog = new AlertDialog.Builder(getContext()).setTitle("导出数据").setIcon(R.drawable.app_logo)
@@ -156,7 +224,7 @@ public class TransferDataTotalNewFragment extends BaseListFragment {
                     //导出csv原始数据
                     uploadFile(SurveyUtils.exportToCSV("换乘量调查",context));
 
-                    //TODO 导入成功后再删除
+                    //导入成功后再删除
                     SurveyUtils.delSurveyInfo(TransRealm.class, context);
 
                     Message msg = new Message();

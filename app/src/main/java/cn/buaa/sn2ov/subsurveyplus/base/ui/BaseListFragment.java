@@ -271,7 +271,7 @@ public abstract class BaseListFragment<T extends Entity> extends BaseFragment
 //                else mSwipeRefreshLayout.setEnabled(false);
 //            }
 //        });
-        //TODO 这句话影响EmptyLayout的加载。。，但是删了的话就不能解决滑动冲突
+        //但是删了的话就不能解决滑动冲突
         //这句话还可以监听scrollView、SwipeRefreshLayout啊。。
 //         mListView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
         view.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {

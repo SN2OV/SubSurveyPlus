@@ -157,6 +157,13 @@ public class SimpleBackActivity extends BaseActivity{
                     return super.onOptionsItemSelected(item);
                 }
                 break;
+            case R.id.survey_data_exchange:
+                if (mFragment.get() instanceof TransferDataTotalNewFragment) {
+                    ((TransferDataTotalNewFragment)mFragment.get()).switchUI();
+                } else {
+                    return super.onOptionsItemSelected(item);
+                }
+                break;
             default:
                 break;
         }

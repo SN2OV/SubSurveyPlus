@@ -3,7 +3,7 @@ apply plugin: 'realm-android'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+    buildToolsVersion '26.0.2'
     aaptOptions {
         cruncherEnabled = false
         useNewCruncher = false
@@ -31,9 +31,9 @@ android {
 }
 
 repositories {
-    maven {
-        url 'https://github.com/uPhyca/stetho-realm/raw/master/maven-repo'
-    }
+    maven {url 'https://github.com/uPhyca/stetho-realm/raw/master/maven-repo'}
+    maven { url "https://jitpack.io" }
+    google()
 }
 
 dependencies {
@@ -73,4 +73,5 @@ dependencies {
     compile files('libs/poi-3.12-android-a.jar')
     compile files('libs/poi-ooxml-schemas-3.12-20150511-a.jar')
     compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
 }

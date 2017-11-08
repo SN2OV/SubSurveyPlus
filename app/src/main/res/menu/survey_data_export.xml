@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <item
+        android:id="@+id/survey_data_exchange"
+        android:icon="@drawable/data_exchange"
+        android:showAsAction="ifRoom"
+        android:title="交换"/>
+    <item
         android:id="@+id/survey_data_export"
-        android:orderInCategory="1"
         android:icon="@drawable/data_export"
-        android:showAsAction="always"
+        android:showAsAction="ifRoom"
         android:title="导出"/>
 
 </menu>

@@ -35,8 +35,8 @@ public class TotalDataSwipeRefreshLayout extends SwipeRefreshLayout {
                 mPrevX = MotionEvent.obtain(event).getX();
                 mPrevY = MotionEvent.obtain(event).getY();
                 break;
-//            default:
-//                return true;
+            default:
+                return true;
 
             case MotionEvent.ACTION_MOVE:
                 final float eventX = event.getX();

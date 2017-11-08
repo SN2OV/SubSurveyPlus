@@ -47,7 +47,6 @@
         <activity
             android:name=".ui.activity.SimpleBackActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait"
             android:theme="@style/MyNoActionBar"
             android:windowSoftInputMode="stateHidden|stateUnchanged"/>
         <activity android:name=".ui.activity.InfoEditActivity">

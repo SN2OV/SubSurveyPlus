@@ -40,7 +40,7 @@ public class TransferDataTotalFragment extends BaseFragment {
     @BindView(R.id.tsSurveyDataTotalLV)
     ListView tsSurveyDataTotalLV;
 
-    public TransferSurveyTotalCountAdapter tsSurveyTotalCountAdapter;
+        public TransferSurveyTotalCountAdapter tsSurveyTotalCountAdapter;
     public Context context = null;
     public List<TransRealm> tsInfo;
     private ExportHandler handler;
@@ -147,7 +147,7 @@ public class TransferDataTotalFragment extends BaseFragment {
     //仅删除
     private class onTSExportNeutralClickListener implements DialogInterface.OnClickListener{
         @Override
-        public void onClick(DialogInterface dialog, int which) {
+        public void onClick(DialogInterface dionTSExportNeutralClickListeneralog, int which) {
             SurveyUtils.delSurveyInfo(TransRealm.class, getActivity());
             initInfoArraylist();
             //listView即时删除

@@ -34,6 +34,12 @@
         </HorizontalScrollView>
     </cn.buaa.sn2ov.subsurveyplus.view.TotalDataSwipeRefreshLayout>
 
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/base_chart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+
     <cn.buaa.sn2ov.subsurveyplus.view.empty.EmptyLayout
         android:id="@+id/baselist_error_layout"
         android:layout_width="match_parent"
