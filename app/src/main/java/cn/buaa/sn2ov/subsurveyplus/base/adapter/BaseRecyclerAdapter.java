@@ -65,7 +65,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
         this.mInflater = LayoutInflater.from(context);
         BEHAVIOR_MODE = mode;
         mState = STATE_HIDE;
-        //mFooterView = mInflater.inflate(R.layout.footer_view, null);
+        //mFooterView = mInflater.inflate(R.fragment_transfer_pertask.footer_view, null);
         initListener();
     }
 

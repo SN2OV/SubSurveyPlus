@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@color/white">
+
+    <TextView
+        android:id="@+id/transfer_pertask_nameTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@+id/imageView2"
+        android:text="1号点位换乘通道A"
+        android:textColor="@color/black"
+        android:textSize="16dp"/>
+
+    <TextView
+        android:id="@+id/transfer_pertask_positionTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/transfer_pertask_nameTV"
+        android:layout_below="@+id/transfer_pertask_nameTV"
+        android:layout_marginTop="10dp"
+        android:text="换乘通道A"/>
+
+    <TextView
+        android:id="@+id/transfer_pertask_timeTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/transfer_pertask_positionTV"
+        android:layout_alignBottom="@+id/transfer_pertask_positionTV"
+        android:layout_marginStart="14dp"
+        android:layout_toEndOf="@+id/transfer_pertask_positionTV"
+        android:text="13:00-15:00"/>
+
+    <TextView
+        android:id="@+id/transfer_pertask_peopleTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/transfer_pertask_positionTV"
+        android:layout_below="@+id/transfer_pertask_positionTV"
+        android:layout_marginTop="10dp"
+        android:text="刘笑凡、张三、李四"/>
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/transfer_pertask_posNOTV"
+        android:layout_marginEnd="13dp"
+        app:srcCompat="@drawable/common_icon_arrow_highlighted"/>
+
+    <TextView
+        android:id="@+id/transfer_pertask_posNOTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/transfer_pertask_timeTV"
+        android:layout_alignBottom="@+id/transfer_pertask_timeTV"
+        android:layout_marginEnd="27dp"
+        android:layout_toStartOf="@+id/imageView4"
+        android:text="1号点位"/>
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="5dp"
+        app:srcCompat="@drawable/transfer_survey"/>
+
+</RelativeLayout>

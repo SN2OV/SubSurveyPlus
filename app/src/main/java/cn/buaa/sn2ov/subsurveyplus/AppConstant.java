@@ -29,12 +29,15 @@ public class AppConstant {
     public static final String API_REST_URL = "http://123.206.20.236:9998/rest/";
     public static final String FRAGMENT_TRANSFER_SETTING = "换乘量当前任务";
     public static final String FRAGMENT_WALK_SETTING = "走行时间当前任务";
-    public static final String FRAGMENT_OD_SETTING = "OD当前任务";
+    //OD当前任务
+    public static final String FRAGMENT_OD_SETTING = "换乘量团队任务";
     public static final String FRAGMENT_STAY_SETTING = "留乘当前任务";
     public static final String FRAGMENT_REVERSE_SETTING = "反向乘车当前任务";
     public static final String FRAGMENT_PERSONAL_SETTING = "个人中心";
     public static final String FRAGMENT_SYSTEM_SETTING = "系统设置";
     public static final String FRAGMENT_PERSONAL_INFO_SETTING = "个人信息设置";
+
+    public static final String FRAGMENT_TRANSFER_PER = "换乘量个人任务";
 
 
     public static final String TRANSFER_CACHE = "transfer_cache.data";

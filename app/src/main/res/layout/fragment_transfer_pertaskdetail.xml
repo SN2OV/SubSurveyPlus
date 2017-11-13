@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:id="@+id/transfer_pertaskdetail_nameRL"
+            style="@style/settingStyle"
+            android:clickable="true" >
+
+            <TextView
+                android:id="@+id/transfer_pertaskdetail_nameTagTV"
+                style="@style/psTvStyleTag"
+                android:text="名称" />
+
+            <ImageView
+                android:id="@+id/transfer_pertaskdetail_nameIV"
+                style = "@style/psIvStyle"/>
+
+            <TextView
+                android:id="@+id/transfer_pertaskdetail_nameTV"
+                style="@style/psTvStyle"
+                android:layout_toLeftOf="@+id/transfer_pertaskdetail_nameIV"
+                android:text="1号点位换乘通道A" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/transfer_pertaskdetail_posNoRL"
+            style="@style/settingStyle"
+            android:clickable="true" >
+
+            <TextView
+                android:id="@+id/transfer_pertaskdetail_posNoTagTV"
+                style="@style/psTvStyleTag"
+                android:text="调查点位" />
+
+            <ImageView
+                android:id="@+id/transfer_pertaskdetail_posNoIV"
+                style = "@style/psIvStyle"/>
+
+            <TextView
+                android:id="@+id/transfer_pertaskdetail_posNoTV"
+                style="@style/psTvStyle"
+                android:layout_toLeftOf="@+id/transfer_pertaskdetail_posNoIV"
+                android:text="1号点位" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/transfer_pertaskdetail_locationRL"
+            style="@style/settingStyle"
+            android:clickable="true" >
+
+            <TextView
+                android:id="@+id/transfer_pertaskdetail_locationTagTV"
+                style="@style/psTvStyleTag"
+                android:text="调查位置" />
+
+            <ImageView
+                android:id="@+id/transfer_pertaskdetail_locationIV"
+                style = "@style/psIvStyle"/>
+
+            <TextView
+                android:id="@+id/transfer_pertaskdetail_locationTV"
+                style="@style/psTvStyle"
+                android:layout_toLeftOf="@+id/transfer_pertaskdetail_locationIV"
+                android:text="换乘通道A" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/transfer_pertaskdetail_teamtaskSubRL"
+            style="@style/settingStyle"
+            android:clickable="true" >
+
+            <TextView
+                android:id="@+id/transfer_pertaskdetail_teamtaskSubTagTV"
+                style="@style/psTvStyleTag"
+                android:text="所属团队任务" />
+
+            <ImageView
+                android:id="@+id/transfer_pertaskdetail_teamtaskSubIV"
+                style = "@style/psIvStyle"/>
+
+            <TextView
+                android:id="@+id/transfer_pertaskdetail_teamtaskSubTV"
+                style="@style/psTvStyle"
+                android:layout_toLeftOf="@+id/transfer_pertaskdetail_teamtaskSubIV"
+                android:text="20171011知春路换乘量调查" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="用户列表"
+            android:gravity="center_horizontal"
+            android:textSize="20sp"
+            android:textColor="@color/black"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/transfer_pertaskdetail_user1RL"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="18dp">
+
+                <TextView
+                    android:id="@+id/transfer_pertaskdetail_user1nameTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:text="刘笑凡"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/transfer_pertaskdetail_user1phoneTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/transfer_pertaskdetail_user1nameTV"
+                    android:layout_alignBottom="@+id/transfer_pertaskdetail_user1nameTV"
+                    android:layout_marginStart="15dp"
+                    android:layout_toEndOf="@+id/transfer_pertaskdetail_user1nameTV"
+                    android:text="15901103019"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"/>
+
+                <ImageView
+                    android:id="@+id/transfer_pertaskdetail_user1IV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="15dp"
+                    app:srcCompat="@drawable/success"/>
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="11dp"
+                    android:textSize="18sp"
+                    android:layout_toStartOf="@+id/transfer_pertaskdetail_user1IV"
+                    android:text="10/12/19:00"
+                    android:textColor="@color/black"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/transfer_pertaskdetail_user2RL"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="3dp"
+                >
+
+                <TextView
+                    android:id="@+id/transfer_pertaskdetail_user2nameTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:text="李四"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/transfer_pertaskdetail_user2phoneTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="33dp"
+                    android:layout_toEndOf="@+id/transfer_pertaskdetail_user2nameTV"
+                    android:text="18200279098"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"/>
+
+                <ImageView
+                    android:id="@+id/transfer_pertaskdetail_user2IV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="15dp"
+                    app:srcCompat="@drawable/error"/>
+
+                <ImageView
+                    android:id="@+id/imageView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/transfer_pertaskdetail_user2IV"
+                    android:layout_alignTop="@+id/transfer_pertaskdetail_user2phoneTV"
+                    android:layout_marginEnd="14dp"
+                    android:layout_toStartOf="@+id/transfer_pertaskdetail_user2IV"
+                    app:srcCompat="@drawable/send"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

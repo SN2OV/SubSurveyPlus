@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:background="@color/white"
+                android:layout_height="100dp"
+    >
+
+    <TextView
+        android:id="@+id/transfer_alltask_nameTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/transfer_alltask_weekdayIV"
+        android:layout_marginLeft="40dp"
+        android:layout_marginStart="15dp"
+        android:layout_toEndOf="@+id/transfer_alltask_weekdayIV"
+        android:text="20171010知春路换乘量调查"
+        android:textColor="@color/black"
+        android:textSize="16dp"/>
+
+    <ImageView
+        android:id="@+id/transfer_alltask_weekdayIV"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="5dp"
+        app:srcCompat="@drawable/weekday"/>
+
+    <TextView
+        android:id="@+id/transfer_alltask_stationTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/transfer_alltask_nameTV"
+        android:layout_below="@+id/transfer_alltask_nameTV"
+        android:text="知春路"/>
+
+    <TextView
+        android:id="@+id/transfer_alltask_timeTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/transfer_alltask_stationTV"
+        android:layout_below="@+id/transfer_alltask_stationTV"
+        android:text="13:00-15:00"/>
+
+    <TextView
+        android:id="@+id/transfer_alltask_countTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/transfer_alltask_timeTV"
+        android:layout_alignBottom="@+id/transfer_alltask_timeTV"
+        android:layout_marginStart="46dp"
+        android:layout_toEndOf="@+id/transfer_alltask_timeTV"
+        android:text="5人"/>
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="23dp"
+        app:srcCompat="@drawable/common_icon_arrow_highlighted"/>
+
+</RelativeLayout>
